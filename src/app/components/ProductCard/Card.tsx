@@ -1,6 +1,7 @@
 "use client";
 import React, { useState } from "react";
 import "./Card.css";
+import Link from "next/link";
 
 interface CardProps {
   id: number;
@@ -15,6 +16,7 @@ interface CardProps {
 }
 
 const Card: React.FC<CardProps> = ({
+  id,
   name,
   description,
   hotPrice,
@@ -29,25 +31,27 @@ const Card: React.FC<CardProps> = ({
 
   return (
     <div className="card">
-      <img src={image} alt={name} className="card-image" />
-      <h3 className="card-title">
-        {name}
-        {isRecommended && (
-          <span role="img" aria-label="thumbs up">
-            {" "}
-            👍
-          </span>
-        )}
-      </h3>
-      <p className="card-description">{truncatedDescription}</p>
-      <div className="card-price">
-        <span>{hotPrice}.-</span>
-      </div>
-      <div className="card-quantity">
-        <button>-</button>
-        <input type="text" value="0" readOnly aria-label="quantity" />
-        <button>+</button>
-      </div>
+      <Link href={`/description/${id}`}>
+        <img src={image} alt={name} className="card-image" />
+        <h3 className="card-title">
+          {name}
+          {isRecommended && (
+            <span role="img" aria-label="thumbs up">
+              {" "}
+              👍
+            </span>
+          )}
+        </h3>
+        <p className="card-description">{truncatedDescription}</p>
+        <div className="card-price">
+          <span>{hotPrice}.-</span>
+        </div>
+        <div className="card-quantity">
+          <button>-</button>
+          <input type="text" value="0" readOnly aria-label="quantity" />
+          <button>+</button>
+        </div>
+      </Link>
     </div>
   );
 };
