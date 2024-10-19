@@ -8,13 +8,19 @@
 
 .product-image {
   position: absolute;
-  top: -170px;
+  /* top: -170px; */
+  top: -26%;
   left: 50%;
   transform: translateX(-50%);
-  width: 320px;
+  /* width: 320px; */
+  width: 31%;
   height: auto;
   z-index: 1;
 }
+
+@media screen and (max-width: 600px) {
+
+  }
 
 .product-details {
   position: relative;
