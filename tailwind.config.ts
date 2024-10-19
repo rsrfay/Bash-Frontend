@@ -12,8 +12,13 @@ const config: Config = {
         background: "var(--background)",
         foreground: "var(--foreground)",
       },
+      fontFamily: {
+        adlam: ['"ADLaM Display"', "sans-serif"], // Custom font 'ADLaM Display'
+        montserrat: ['"Montserrat"', "sans-serif"], // Custom font 'Montserrat'
+      },
     },
   },
   plugins: [],
 };
+
 export default config;
