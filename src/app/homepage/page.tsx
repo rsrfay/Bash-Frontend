@@ -130,13 +130,25 @@ const products: Product[] = [
 
 export default function Home() {
   return (
-    <div>
+    <main>
+      <div className="dumpcontainer">
+        
+      </div>
       <div className="search-container">
         <SearchBar onSearch={function (term: string): void {
           throw new Error("Function not implemented.");
         } } />
       </div>
-      <div className="menu-title">
+      <div className="recommeded-container">
+        filter / option
+      </div>
+      <div className="title">
+        <h1> RECOMMENDED</h1>
+      </div>
+      <div className="recommeded-container">
+      recommeded items
+      </div>
+      <div className="title">
         <h1> EXPLORE OUR MENU </h1>
       </div>
       <div className="card-container">
@@ -155,6 +167,6 @@ export default function Home() {
           />
         ))}
       </div>
-    </div>
+    </main>
   );
 }

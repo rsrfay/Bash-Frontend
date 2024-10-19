@@ -1,13 +1,12 @@
+/* 
 .searchContainer {
     display: flex;
     align-items: center;
     border-radius: 25px;
     padding: 10px;
-    background-color: #fff;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    width: 90%;
+    max-width: max-content;
     height: auto;
-    margin: 0% 5% 3% 5%;
   }
   
   .searchInput {
@@ -27,4 +26,49 @@
     color: #494E50;
     margin-left: 5px;
     font-size: 20px;
+  } */
+
+  .searchContainer {
+    display: flex;
+    align-items: center;
+    border-radius: 50px; /* Make the whole container rounded */
+    padding: 5px 9px;
+    border: 1px solid #5c4033; /* Brown border around the search bar */
+    background-color: white; /* Background for the input field */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Optional shadow for depth */
+    width: 100%;
+    max-width: 290px; /* Set max width for the search bar */
+    position: relative;
   }
+  
+  .searchInput {
+    border: none;
+    outline: none;
+    flex-grow: 1;
+    padding: 10px 20px;
+    font-size: 16px;
+    border-radius: 50%;
+    color: #5c4033; 
+  }
+  
+  .searchInput::placeholder {
+    color: #5c4033; 
+  }
+  
+  .searchIcon {
+    background-color: #5c4033; /* Dark brown background for the icon */
+    border-radius: 50%; /* Fully round icon background */
+    color: white; /* White icon color */
+    padding: 10px;
+    position: absolute;
+    right: 0;
+    font-size: 20px; /* Adjust icon size */
+    cursor: pointer; /* Pointer cursor for the icon */
+    height: 50px;
+    width: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 2px;
+  }
+  
