@@ -1,5 +1,11 @@
+.search-container{
+    display: flex;
+    justify-content: flex-end;
+    width: 300px;
+}
 .menu-title {
     padding: 10%;
+    padding-top: 0;
     padding-bottom: 0;
 }
 
