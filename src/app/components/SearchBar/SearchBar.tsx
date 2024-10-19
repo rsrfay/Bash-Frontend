@@ -1,7 +1,7 @@
-import React from 'react';
-import styles from './SearchBar.module.css';
+import React from "react";
+import styles from "./SearchBar.module.css";
 import { CiSearch } from "react-icons/ci";
-import { useSearchParams, usePathname, useRouter } from 'next/navigation';
+import { useSearchParams, usePathname, useRouter } from "next/navigation";
 import { useDebouncedCallback } from "use-debounce";
 
 interface SearchBarProps {
@@ -9,7 +9,11 @@ interface SearchBarProps {
   placeholder?: string; // Optional placeholder prop
 }
 
-export default function SearchBar({ onSearch, placeholder = "Search a product..." }: SearchBarProps) { // Default placeholder
+export default function SearchBar({
+  onSearch,
+  placeholder = "Search a product...",
+}: SearchBarProps) {
+  // Default placeholder
   const searchParams = useSearchParams();
   const { replace } = useRouter();
   const pathname = usePathname();
@@ -31,7 +35,6 @@ export default function SearchBar({ onSearch, placeholder = "Search a product...
 
   return (
     <div className={styles.searchContainer}>
-      <CiSearch className={styles.searchIcon} />
       <input
         type="text"
         className={styles.searchInput}
@@ -39,8 +42,9 @@ export default function SearchBar({ onSearch, placeholder = "Search a product...
         onChange={(e) => {
           handleSearch(e.target.value);
         }}
-        defaultValue={searchParams.get('name')?.toString()}
+        defaultValue={searchParams.get("name")?.toString()}
       />
+      <CiSearch className={styles.searchIcon} />
     </div>
   );
 }
