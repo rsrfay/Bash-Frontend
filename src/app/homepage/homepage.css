@@ -63,11 +63,19 @@
   .recommeded-container {
     background-color: #674636;
     height: 50px;
-    margin: 3%;
+    margin: 1%;
     margin-left: 10%;
     margin-right: 10%;
     display: flex;
     justify-content: center; 
     color: white
+  }
+
+  .filterbar-container{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    width: 100%;
   }
   

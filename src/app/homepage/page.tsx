@@ -3,7 +3,12 @@
 import { useState } from "react";
 import Card from "../components/ProductCard/Card";
 import SearchBar from "../components/SearchBar/SearchBar";
+import FilterBar from "../components/FilterBar/FilterBar";
 import "./homepage.css";
+import { FaCoffee, FaBreadSlice, FaIceCream, FaBeer, FaFilter } from "react-icons/fa"; // Import icons
+import { CiCircleChevDown, CiCircleChevUp, CiLemon } from "react-icons/ci";
+import { RiDrinks2Fill, RiDrinksLine } from "react-icons/ri";
+
 
 interface Product {
   id: number;
@@ -128,7 +133,27 @@ const products: Product[] = [
   },
 ];
 
+const filters = [
+  { label: "All" }, 
+  { label: "Coffee", icon: <FaCoffee /> },
+  { label: "Matcha", icon: <RiDrinksLine /> },
+  { label: "Non-Coffee", icon: <RiDrinks2Fill /> },
+  { label: "Bakery", icon: <FaBreadSlice /> },
+  { label: "Refreshment", icon: <CiLemon /> },
+  { label: "Price", icon: <CiCircleChevDown /> }, 
+  { label: "Price", icon: <CiCircleChevUp /> }, 
+
+];
+
 export default function Home() {
+  const [selectedFilter, setSelectedFilter] = useState('All');
+
+  const handleFilterSelect = (filter: string) => {
+    setSelectedFilter(filter);
+    // Implement your filtering logic here
+    console.log(`Selected filter: ${filter}`);
+  };
+
   return (
     <main>
       <div className="dumpcontainer">
@@ -139,8 +164,12 @@ export default function Home() {
           throw new Error("Function not implemented.");
         } } />
       </div>
-      <div className="recommeded-container">
-        filter / option
+      <div className="filterbar-container">
+        <FilterBar
+          filters={filters}
+          selectedFilter={selectedFilter}
+          onFilterSelect={handleFilterSelect}
+        />
       </div>
       <div className="title">
         <h1> RECOMMENDED</h1>
