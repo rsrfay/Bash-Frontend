@@ -175,7 +175,22 @@ export default function Home() {
         <h1> RECOMMENDED</h1>
       </div>
       <div className="recommeded-container">
-      recommeded items
+      {products
+        .filter((product) => product.isRecommended)
+        .map((product) => (
+          <Card
+            key={product.id}
+            id={product.id}
+            name={product.name}
+            description={product.description}
+            hotPrice={product.hotPrice}
+            coldPrice={product.coldPrice}
+            category={product.category}
+            TypeOfDrinks={product.TypeOfDrinks}
+            isRecommended={product.isRecommended}
+            image={product.image}
+          />
+        ))}
       </div>
       <div className="title">
         <h1> EXPLORE OUR MENU </h1>

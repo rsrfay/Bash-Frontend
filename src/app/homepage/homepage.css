@@ -64,14 +64,15 @@
   }
 
   .recommeded-container {
-    background-color: #674636;
-    height: 50px;
-    margin: 1%;
-    margin-left: 10%;
-    margin-right: 10%;
+    padding: 3% 9% 0% 9%; /* top, right, bottom, left */
     display: flex;
-    justify-content: center; 
-    color: white
+    gap: 30px;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+  }
+
+  .recommeded-container::-webkit-scrollbar {
+    display: none;
   }
 
   .filterbar-container{
