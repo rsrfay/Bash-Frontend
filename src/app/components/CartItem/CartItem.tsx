@@ -6,6 +6,7 @@ type CartItemProps = {
   itemDetails: string;
   quantity: number;
   price: number;
+  image: string
 };
 
 const CartCardItem: React.FC<CartItemProps> = ({
@@ -13,10 +14,13 @@ const CartCardItem: React.FC<CartItemProps> = ({
   itemDetails,
   quantity,
   price,
+  image,
 }) => {
   return (
     <div className={styles.cartItemContainer}>
-      <div className={styles.imagePlaceholder}></div>
+      <div className={styles.imagePlaceholder}>
+        <img src={image}  className="card-image" />
+      </div>
       <div className={styles.itemInfo}>
         <h3 className={styles.itemName}>{itemName}</h3>
         <p className={styles.itemDetails}>{itemDetails}</p>
@@ -27,7 +31,6 @@ const CartCardItem: React.FC<CartItemProps> = ({
         </div>
       </div>
       <div className={styles.itemPrice}>{price * quantity} Baht</div>
-      <button className={styles.deleteButton}>🗑️</button>
     </div>
   );
 };
