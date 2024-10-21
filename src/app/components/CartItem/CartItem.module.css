@@ -1,0 +1,63 @@
+.cartItemContainer {
+  display: flex;
+  align-items: center;
+  padding: 16px;
+  background-color: #fafafa;
+  border: 2px solid rgba(103, 70, 54, 0.3);
+  border-radius: 16px;
+}
+
+.imagePlaceholder {
+  width: 100px;
+  height: 100px;
+  background-color: rgba(224, 224, 224, 0.5);
+  border-radius: 8px;
+  margin-right: 40px;
+}
+
+.itemInfo {
+  flex-grow: 0.9;
+}
+
+.itemName {
+  font-size: 18px;
+  margin-bottom: 4px;
+}
+
+.itemDetails {
+  font-size: 14px;
+  color: #757575;
+}
+
+.quantityControl {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.decrementButton,
+.incrementButton {
+  width: 32px;
+  height: 32px;
+  border: 2px solid #674636;
+  cursor: pointer;
+  border-radius: 30px;
+}
+
+.quantity {
+  font-size: 16px;
+}
+
+.itemPrice {
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.deleteButton {
+  background: none;
+  border: none;
+  cursor: pointer;
+  margin-left: 16px;
+  font-size: 20px;
+}

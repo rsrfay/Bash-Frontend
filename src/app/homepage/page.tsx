@@ -4,6 +4,7 @@ import { useState } from "react";
 import Card from "../components/ProductCard/Card";
 import SearchBar from "../components/SearchBar/SearchBar";
 import FilterBar from "../components/FilterBar/FilterBar";
+import NavBar from "../components/Navbar/Nav";
 import "./homepage.css";
 import { FaCoffee, FaBreadSlice, FaIceCream, FaBeer, FaFilter } from "react-icons/fa"; // Import icons
 import { CiCircleChevDown, CiCircleChevUp, CiLemon } from "react-icons/ci";
@@ -156,6 +157,7 @@ export default function Home() {
 
   return (
     <main>
+      <NavBar />
       <div className="dumpcontainer">
         
       </div>
