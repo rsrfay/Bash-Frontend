@@ -6,7 +6,9 @@ type CartItemProps = {
   itemDetails: string;
   quantity: number;
   price: number;
-  image: string
+  image: string;
+  onIncrease: () => void;
+  onDecrease: () => void;
 };
 
 const CartCardItem: React.FC<CartItemProps> = ({
@@ -15,19 +17,21 @@ const CartCardItem: React.FC<CartItemProps> = ({
   quantity,
   price,
   image,
+  onIncrease,
+  onDecrease,
 }) => {
   return (
     <div className={styles.cartItemContainer}>
       <div className={styles.imagePlaceholder}>
-        <img src={image}  className="card-image" />
+        <img src={image} className="card-image" />
       </div>
       <div className={styles.itemInfo}>
         <h3 className={styles.itemName}>{itemName}</h3>
         <p className={styles.itemDetails}>{itemDetails}</p>
         <div className={styles.quantityControl}>
-          <button className={styles.decrementButton}>-</button>
+          <button onClick={onDecrease} className={styles.decrementButton}>-</button>
           <span className={styles.quantity}>{quantity}</span>
-          <button className={styles.incrementButton}>+</button>
+          <button onClick={onIncrease} className={styles.incrementButton}>+</button>
         </div>
       </div>
       <div className={styles.itemPrice}>{price * quantity} Baht</div>
