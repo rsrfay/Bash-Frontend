@@ -30,6 +30,11 @@ const Card: React.FC<CardProps> = ({
       : description;
 
   return (
+    <main>
+      <link
+        rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=ADLaM+Display&family=Montserrat:wght@400;700&display=swap"
+      />
     <div className="card">
       <Link href={`/description/${id}`}>
         <img src={image} alt={name} className="card-image" />
@@ -53,6 +58,7 @@ const Card: React.FC<CardProps> = ({
         </div>
       </Link>
     </div>
+    </main>
   );
 };
 
