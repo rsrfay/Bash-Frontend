@@ -4,7 +4,7 @@ import { useState } from "react";
 import Card from "../components/ProductCard/Card";
 import SearchBar from "../components/SearchBar/SearchBar";
 import FilterBar from "../components/FilterBar/FilterBar";
-import NavBar from "../components/Navbar/Nav";
+import NavBar from "../components/NavBar/Nav";
 import "./homepage.css";
 import { FaCoffee, FaBreadSlice, FaIceCream, FaBeer, FaFilter } from "react-icons/fa"; // Import icons
 import { CiCircleChevDown, CiCircleChevUp, CiLemon } from "react-icons/ci";
@@ -156,11 +156,8 @@ export default function Home() {
   };
 
   return (
-    <main>
+    <main className="pt-20">
       <NavBar />
-      <div className="dumpcontainer">
-        
-      </div>
       <div className="search-container">
         <SearchBar onSearch={function (term: string): void {
           throw new Error("Function not implemented.");
