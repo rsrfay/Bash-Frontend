@@ -14,7 +14,6 @@ const NavBar: React.FC = () => {
     <nav className={styles.navContainer}>
       <div className={styles.logo}>
         <Link href="/">
-          {/* Replace text with the logo image */}
           <Image src="/images/Bash-Logo.png" alt="Brand Logo" width={70} height={70} />
         </Link>
       </div>
