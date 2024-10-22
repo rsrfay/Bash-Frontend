@@ -1,17 +1,24 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Link from 'next/link';
+import Image from 'next/image'; // Using Next.js Image component
 import styles from './Nav.module.css';
-import Image from 'next/image'
 
 const NavBar: React.FC = () => {
+  const [menuOpen, setMenuOpen] = useState(false);
+
+  const toggleMenu = () => {
+    setMenuOpen(!menuOpen);
+  };
+
   return (
     <nav className={styles.navContainer}>
       <div className={styles.logo}>
         <Link href="/">
-          <p>BrandLogo</p>
+          {/* Replace text with the logo image */}
+          <Image src="/images/Bash-Logo.png" alt="Brand Logo" width={70} height={70} />
         </Link>
       </div>
-      <ul className={styles.navLinks}>
+      <ul className={`${styles.navLinks} ${menuOpen ? styles.open : ''}`}>
         <li>
           <Link href="/about">
             <p>About</p>
@@ -28,12 +35,12 @@ const NavBar: React.FC = () => {
           </Link>
         </li>
       </ul>
-      <div className={styles.menuIcon}>
-        {/* <img src="/menu-icon.svg" alt="Menu" /> */}
-        <Image src={`/Bash-Logo.png`} alt="Menu" width="64" height="64" />
+      <div className={styles.menuIcon} onClick={toggleMenu}>
+        <img src="/menu-icon.svg" alt="Menu" />
       </div>
     </nav>
   );
 };
 
 export default NavBar;
+

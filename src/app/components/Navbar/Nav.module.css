@@ -1,3 +1,4 @@
+/* Main container for the navbar */
 .navContainer {
     display: flex;
     justify-content: space-between;
@@ -11,13 +12,16 @@
     z-index: 1000;
   }
   
-  .logo {
+  /* Logo styling */
+  .logo p {
     font-size: 24px;
     font-weight: bold;
     color: #5c4033;
-    text-decoration: none;
+    margin: 0;
+    cursor: pointer;
   }
   
+  /* Navigation links for larger screens */
   .navLinks {
     display: flex;
     list-style: none;
@@ -27,29 +31,45 @@
     margin: 0 15px;
   }
   
-  .navLinks a {
+  .navLinks p {
     color: #5c4033;
-    text-decoration: none;
     font-size: 16px;
+    cursor: pointer;
     transition: color 0.3s ease;
   }
   
-  .navLinks a:hover {
+  .navLinks p:hover {
     color: #0070f3;
   }
   
+  /* Hide hamburger menu on larger screens */
   .menuIcon {
     display: none;
   }
   
+  /* Media query for mobile phones (max width 768px) */
   @media (max-width: 768px) {
     .navLinks {
-      display: none;
+      display: none; /* Hide the links on small screens */
+      flex-direction: column; /* Stack links vertically */
+      position: absolute;
+      top: 60px;
+      right: 0;
+      background-color: white;
+      width: 100%;
+      padding: 20px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+  
+    .navLinks.open {
+      display: flex; /* Show the links when menu is open */
     }
   
     .menuIcon {
-      display: block;
+      display: block; /* Show the menu icon on small screens */
       cursor: pointer;
+      font-size: 24px;
       color: #5c4033;
     }
   }
+  
