@@ -25,6 +25,7 @@ const data = [
 
 const CartPage: React.FC = () => {
   const [cartItems, setCartItems] = useState(data);
+  const [isSelectMode, setIsSelectMode] = useState(false);
 
   const updateItemQuantity = (id: number, newQuantity: number) => {
     setCartItems((prevItems) =>
@@ -44,6 +45,14 @@ const CartPage: React.FC = () => {
     }
   };
 
+  const handleRemoveItem = (id: number) => {
+    setCartItems((prevItems) => prevItems.filter((item) => item.id !== id));
+  };
+
+  const handleSelectToggle = () => {
+    setIsSelectMode((prev) => !prev);
+  };
+
   return (
     <main>
       <div className={styles.backButtonContainer}>
@@ -51,7 +60,12 @@ const CartPage: React.FC = () => {
       </div>
       <div className={styles.miscContainer}>
         <p className={styles.myCart}>My Cart</p>
-        <button className={styles.cancelButton}>Select</button>
+        <button
+          className={isSelectMode ? styles.cancelButtonActive : styles.cancelButton}
+          onClick={handleSelectToggle}
+        >
+          {isSelectMode ? "Cancel" : "Select"}
+        </button>
       </div>
 
       <div className={styles.itemContainer}>
@@ -65,6 +79,8 @@ const CartPage: React.FC = () => {
             image={item.image}
             onIncrease={() => handleIncreaseQuantity(item.id, item.quantity)}
             onDecrease={() => handleDecreaseQuantity(item.id, item.quantity)}
+            onRemove={() => handleRemoveItem(item.id)}
+            isSelectMode={isSelectMode}
           />
         ))}
       </div>

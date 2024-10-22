@@ -1,5 +1,6 @@
 import React from "react";
 import styles from "./CartItem.module.css";
+import { FaTrash } from "react-icons/fa"; // Bin icon
 
 type CartItemProps = {
   itemName: string;
@@ -9,6 +10,8 @@ type CartItemProps = {
   image: string;
   onIncrease: () => void;
   onDecrease: () => void;
+  onRemove: () => void;
+  isSelectMode: boolean;
 };
 
 const CartCardItem: React.FC<CartItemProps> = ({
@@ -19,6 +22,8 @@ const CartCardItem: React.FC<CartItemProps> = ({
   image,
   onIncrease,
   onDecrease,
+  onRemove,
+  isSelectMode,
 }) => {
   return (
     <div className={styles.cartItemContainer}>
@@ -34,7 +39,15 @@ const CartCardItem: React.FC<CartItemProps> = ({
           <button onClick={onIncrease} className={styles.incrementButton}>+</button>
         </div>
       </div>
-      <div className={styles.itemPrice}>{price * quantity} Baht</div>
+      <div className={styles.itemPrice}>
+        {isSelectMode ? (
+          <div className={styles.removeButton} onClick={onRemove}>
+            <FaTrash className={styles.trashIcon} />
+          </div>
+        ) : (
+          <span>{price * quantity} Baht</span>
+        )}
+      </div>
     </div>
   );
 };

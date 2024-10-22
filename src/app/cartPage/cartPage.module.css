@@ -22,7 +22,8 @@
     font-weight: bold;
 }
 
-.miscContainer button.cancelButton {
+.miscContainer button.cancelButton,
+.miscContainer button.cancelButtonActive {
     padding: 3px 20px;
     font-size: 18px;
     font-weight: bold;
@@ -31,6 +32,11 @@
     border-color: #674636;
     border-width: 3px;
     border-radius: 32px;
+}
+
+.miscContainer button.cancelButtonActive {
+    background-color: #674636;
+    color: white;
 }
 
 .footer {
