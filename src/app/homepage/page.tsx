@@ -4,6 +4,7 @@ import { useState } from "react";
 import Card from "../components/ProductCard/Card";
 import SearchBar from "../components/SearchBar/SearchBar";
 import FilterBar from "../components/FilterBar/FilterBar";
+import Slideshow from "../components/Slideshow/Slideshow";
 import NavBar from "../components/NavBar/Nav";
 import "./homepage.css";
 import { FaCoffee, FaBreadSlice, FaIceCream, FaBeer, FaFilter } from "react-icons/fa"; // Import icons
@@ -170,6 +171,7 @@ export default function Home() {
           throw new Error("Function not implemented.");
         } } />
       </div>
+      <Slideshow />
       <div className="filterbar-container">
         <FilterBar
           filters={filters}
