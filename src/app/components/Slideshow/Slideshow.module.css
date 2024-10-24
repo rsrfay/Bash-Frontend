@@ -1,11 +1,12 @@
 .slideshowContainer {
     width: 100%;
-    max-width: 1000px; 
+    max-width: 1100px; 
     position: relative;
     margin: auto;
     overflow: hidden;
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    margin-bottom: 30px;
   }
   
   .slide {
@@ -68,12 +69,12 @@
     border-radius: 50%;
     user-select: none;
     background-color: rgba(0, 0, 0, 0.5);
-    opacity: 0; /* Initially hidden */
-    transition: opacity 0.5s ease; /* Smooth transition for hover */
+    opacity: 0; 
+    transition: opacity 0.5s ease;
   }
   
   .slideshowContainer:hover .slideshowButton {
-    opacity: 1; /* Show buttons on hover */
+    opacity: 1; 
   }
   
   .prev {
@@ -90,3 +91,37 @@
     background-color: rgba(0, 0, 0, 0.8);
   }
   
+
+  @media (max-width: 600px) {
+    .slideshowContainer {
+      max-width: 100%;
+      border-radius: 5px;
+    }
+  
+    .slide {
+      height: auto; 
+    }
+  
+    .slideshowButton {
+      padding: 12px;
+      font-size: 18px;
+    }
+  
+    .prev {
+      left: 5px;
+    }
+  
+    .next {
+      right: 5px;
+    }
+  
+    .slideshowIndicators {
+      bottom: 10px; 
+    }
+  
+    .dot {
+      height: 8px;
+      width: 8px;
+      margin: 0 3px;
+    }
+  }
