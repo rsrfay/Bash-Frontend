@@ -5,10 +5,12 @@ import Card from "../components/ProductCard/Card";
 import SearchBar from "../components/SearchBar/SearchBar";
 import FilterBar from "../components/FilterBar/FilterBar";
 import Slideshow from "../components/Slideshow/Slideshow";
+import NavBar from "../components/NavBar/Nav";
 import "./homepage.css";
 import { FaCoffee, FaBreadSlice, FaIceCream, FaBeer, FaFilter } from "react-icons/fa"; // Import icons
 import { CiCircleChevDown, CiCircleChevUp, CiLemon } from "react-icons/ci";
 import { RiDrinks2Fill, RiDrinksLine } from "react-icons/ri";
+import PaginationButton from "../components/Pagination/Pagination";
 
 
 interface Product {
@@ -156,10 +158,14 @@ export default function Home() {
   };
 
   return (
-    <main>
-      <div className="dumpcontainer">
-        
-      </div>
+    <main className="pt-20">
+      <header>
+      <link
+        rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=ADLaM+Display&family=Montserrat:wght@400;700&display=swap"
+      />
+      </header>
+      <NavBar />
       <div className="search-container">
         <SearchBar onSearch={function (term: string): void {
           throw new Error("Function not implemented.");
@@ -177,7 +183,22 @@ export default function Home() {
         <h1> RECOMMENDED</h1>
       </div>
       <div className="recommeded-container">
-      recommeded items
+      {products
+        .filter((product) => product.isRecommended)
+        .map((product) => (
+          <Card
+            key={product.id}
+            id={product.id}
+            name={product.name}
+            description={product.description}
+            hotPrice={product.hotPrice}
+            coldPrice={product.coldPrice}
+            category={product.category}
+            TypeOfDrinks={product.TypeOfDrinks}
+            isRecommended={product.isRecommended}
+            image={product.image}
+          />
+        ))}
       </div>
       <div className="title">
         <h1> EXPLORE OUR MENU </h1>
@@ -198,6 +219,7 @@ export default function Home() {
           />
         ))}
       </div>
+      <PaginationButton />
     </main>
   );
 }
