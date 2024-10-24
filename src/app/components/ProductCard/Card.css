@@ -27,6 +27,7 @@
 .card-title {
   font-size: 18px;
   font-weight: bold;
+  height: 60px;
   margin-top: 90px;
   text-align: left;
   font-family: "ADLaM Display", sans-serif;
@@ -36,53 +37,60 @@
   font-size: 14px;
   margin-bottom: 15px;
   text-align: left;
-  flex-grow: 1; /* Makes sure the description takes up remaining space */
-  max-height: 50px; /* Limit the height of the description */
-  overflow: hidden; /* Hide overflow if the description is too long */
+  flex-grow: 1; 
+  max-height: 50px;
+  overflow: hidden;
 }
 
 .card-price {
   font-size: 18px;
   margin-bottom: 15px;
-  text-align: right; /* Align price to the right */
+  text-align: right;
 }
-
-.card-quantity {
+.card-add-to-cart {
+  font-family: "ADLaM Display", sans-serif; 
   display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 2px;
+  justify-content: center;
+  margin-top: 5px; 
 }
 
-.card-quantity button {
-  border: none;
-  border-radius: 50%;
-  width: 30px;
-  height: 30px;
-  font-size: 16px;
+.card-add-to-cart button {
+  color: #674636;
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: background-color 0.2s ease;
-}
-
-.card-quantity button:hover {
-  background-color: #f5f5f5;
-}
-
-.card-quantity input {
-  width: 110px;
+  font-weight: 600;
+  font-size: 22px; 
   text-align: center;
-  border: none;
-  font-size: 16px;
-  background-color: #f5f5f5;
-  border-radius: 30px;
-  box-shadow: 0px 4px 6px #f5f5f5;
-  padding: 5px 7px;
-  outline: none;
+  text-decoration: none;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  transition: all 0.2s ease;
+  width: 80px;
+  height: 40px; 
+  border-radius: 30px; 
+  background-color: #fff;
+  border: 2px solid #674636;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
 }
 
-.card-quantity input:focus {
-  box-shadow: 0px 4px 8px #f5f5f5;
+.card-add-to-cart button:hover {
+  background-color: #fbeee0;
+  border: 2px solid #674636;
+  box-shadow: #674636 4px 4px 0 0;
+}
+
+.card-add-to-cart button:active {
+  box-shadow: #422800 2px 2px 0 0;
+  transform: translate(2px, 2px);
+}
+
+@media (min-width: 768px) {
+  .card-add-to-cart button {
+    width: 90px;
+    height: 45px; 
+    font-size: 24px; 
+  }
 }

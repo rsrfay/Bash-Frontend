@@ -51,9 +51,7 @@ const Card: React.FC<CardProps> = ({
         <div className="card-price">
           <span>{hotPrice}.-</span>
         </div>
-        <div className="card-quantity">
-          <button>-</button>
-          <input type="text" value="0" readOnly aria-label="quantity" />
+        <div className="card-add-to-cart">
           <button>+</button>
         </div>
       </Link>
