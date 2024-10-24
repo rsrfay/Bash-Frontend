@@ -171,13 +171,15 @@ export default function Home() {
           throw new Error("Function not implemented.");
         } } />
       </div>
-      <Slideshow />
       <div className="filterbar-container">
         <FilterBar
           filters={filters}
           selectedFilter={selectedFilter}
           onFilterSelect={handleFilterSelect}
         />
+      </div>
+      <div>
+      <Slideshow />
       </div>
       <div className="title">
         <h1> RECOMMENDED</h1>
