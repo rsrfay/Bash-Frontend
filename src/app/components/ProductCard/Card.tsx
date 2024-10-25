@@ -2,6 +2,7 @@
 import React, { useState } from "react";
 import "./Card.css";
 import Link from "next/link";
+import { motion } from "framer-motion"; 
 
 interface CardProps {
   id: number;

@@ -14,6 +14,12 @@ import {
 import { CiCircleChevDown, CiCircleChevUp, CiLemon } from "react-icons/ci";
 import { RiDrinks2Fill, RiDrinksLine } from "react-icons/ri";
 import PaginationButton from "../components/Pagination/Pagination";
+import { motion } from "framer-motion";
+
+const sectionVariants = {
+  hidden: { opacity: 0, y: 50 },
+  visible: { opacity: 1, y: 0 },
+};
 
 interface Product {
   id: number;
@@ -207,7 +213,7 @@ const products: Product[] = [
     name: "Coke",
     description: "A refreshing carbonated soft drink with a crisp and classic cola flavor.",
     hotPrice: "-",
-    coldPrice: "40",
+    coldPrice: "20",
     category: "Non-Coffee",
     TypeOfDrinks: "Cold",
     isRecommended: false,
@@ -306,7 +312,7 @@ const products: Product[] = [
     name: "Water",
     description: "A refreshing bottle of purified water to quench your thirst and keep you hydrated.",
     hotPrice: "-",
-    coldPrice: "20",
+    coldPrice: "15",
     category: "Non-Coffee",
     TypeOfDrinks: "Cold",
     isRecommended: false,
@@ -321,7 +327,7 @@ const filters = [
   { label: "Non-Coffee", icon: <RiDrinks2Fill /> },
   { label: "Bakery", icon: <FaBreadSlice /> },
   { label: "Refreshment", icon: <CiLemon /> },
-  { label: "Price Down ", icon: <CiCircleChevDown /> },
+  { label: "Price Down", icon: <CiCircleChevDown /> },
   { label: "Price Up", icon: <CiCircleChevUp /> },
 ];
 
@@ -340,26 +346,22 @@ export default function Home() {
       );
     }
 
-    // Handle price sorting (ascending or descending)
-    if (filter === "Price Up") {
-      updatedProducts.sort((a, b) => {
-        const priceA =
-          a.coldPrice !== "-" ? Number(a.coldPrice) : Number(a.hotPrice);
-        const priceB =
-          b.coldPrice !== "-" ? Number(b.coldPrice) : Number(b.hotPrice);
-        return priceA - priceB; // Ascending order
-      });
-    }
+   // Handle price sorting (ascending or descending)
+   if (filter === "Price Down") {
+    updatedProducts.sort((a, b) => {
+      const priceA = a.coldPrice !== "-" ? Number(a.coldPrice) : a.hotPrice !== "-" ? Number(a.hotPrice) : Infinity;
+      const priceB = b.coldPrice !== "-" ? Number(b.coldPrice) : b.hotPrice !== "-" ? Number(b.hotPrice) : Infinity;
+      return priceA - priceB; // Ascending order (lowest to highest)
+    });
+  }
 
-    if (filter === "Price Down") {
-      updatedProducts.sort((a, b) => {
-        const priceA =
-          a.coldPrice !== "-" ? Number(a.coldPrice) : Number(a.hotPrice);
-        const priceB =
-          b.coldPrice !== "-" ? Number(b.coldPrice) : Number(b.hotPrice);
-        return priceB - priceA; // Descending order
-      });
-    }
+if (filter === "Price Up") {
+  updatedProducts.sort((a, b) => {
+    const priceA = a.coldPrice !== "-" ? Number(a.coldPrice) : a.hotPrice !== "-" ? Number(a.hotPrice) : -Infinity;
+    const priceB = b.coldPrice !== "-" ? Number(b.coldPrice) : b.hotPrice !== "-" ? Number(b.hotPrice) : -Infinity;
+    return priceB - priceA; // Descending order (highest to lowest)
+  });
+}
 
     // Update the state with filtered/sorted products
     setFilteredProducts(updatedProducts);
@@ -387,13 +389,19 @@ export default function Home() {
           }}
         />
       </div>
-      <div className="filterbar-container">
+      <motion.div
+        className="filterbar-container"
+        initial="hidden"
+        animate="visible"
+        variants={sectionVariants}
+        transition={{ duration: 0.5, delay: 0.2 }}
+      >
         <FilterBar
           filters={filters}
           selectedFilter={selectedFilter}
           onFilterSelect={handleFilterSelect}
         />
-      </div>
+      </motion.div>
       {selectedFilter === "All" && (
         <div>
           <Slideshow />
@@ -423,7 +431,7 @@ export default function Home() {
       <div className="title">
         <h1> EXPLORE OUR MENU </h1>
       </div>
-      <div className="card-container">
+      {/* <div className="card-container">
         {filteredProducts.map((product) => (
           <Card
             key={product.id}
@@ -438,7 +446,18 @@ export default function Home() {
             image={product.image}
           />
         ))}
-      </div>
+      </div> */}
+      <motion.div
+        className="card-container"
+        initial="hidden"
+        animate="visible"
+        variants={sectionVariants}
+        transition={{ duration: 0.5, delay: 0.7 }}
+      >
+        {filteredProducts.map((product) => (
+          <Card key={product.id} {...product} />
+        ))}
+      </motion.div>
       <PaginationButton />
     </main>
   );
