@@ -29,6 +29,22 @@ const Card: React.FC<CardProps> = ({
       ? description.substring(0, 50) + "..."
       : description;
 
+      const displayPrice = () => {
+        if (hotPrice !== "-" && coldPrice !== "-") {
+          return (
+            <div>
+              <span>{hotPrice}.-  </span> | <span>{coldPrice}.- </span>
+            </div>
+          );
+        } else if (hotPrice !== "-") {
+          return <span>{hotPrice}.- </span>;
+        } else if (coldPrice !== "-") {
+          return <span>{coldPrice}.- </span>;
+        } else {
+          return <span>Price not available</span>;
+        }
+      };
+
   return (
     <main>
       <link
@@ -48,9 +64,7 @@ const Card: React.FC<CardProps> = ({
           )}
         </h3>
         <p className="card-description">{truncatedDescription}</p>
-        <div className="card-price">
-          <span>{hotPrice}.-</span>
-        </div>
+        <div className="card-price">{displayPrice()}</div>
         <div className="card-add-to-cart">
           <button>+</button>
         </div>

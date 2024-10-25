@@ -121,7 +121,7 @@ const products: Product[] = [
     coldPrice: "70",
     category: "Coffee",
     TypeOfDrinks: "Cold",
-    isRecommended: true,
+    isRecommended: false,
     image: "/images/drinks/coconut flower macchiato.png",
   },
   {
@@ -138,10 +138,10 @@ const products: Product[] = [
   },
   {
     id: 10,
-    name: "23.png", // Name should be replaced with actual product name
+    name: "Soft Bread", // Name should be replaced with actual product name
     description: "A delicious assortment of baked goods, perfect for a morning snack or afternoon treat.",
     hotPrice: "-",
-    coldPrice: "-",
+    coldPrice: "70",
     category: "Bakery",
     TypeOfDrinks: "-",
     isRecommended: false,
@@ -149,10 +149,10 @@ const products: Product[] = [
   },
   {
     id: 11,
-    name: "24.png", // Name should be replaced with actual product name
+    name: "Cookies", // Name should be replaced with actual product name
     description: "Freshly baked cookies with a rich, buttery flavor and a soft, chewy texture.",
     hotPrice: "-",
-    coldPrice: "-",
+    coldPrice: "70",
     category: "Bakery",
     TypeOfDrinks: "-",
     isRecommended: false,
@@ -160,10 +160,10 @@ const products: Product[] = [
   },
   {
     id: 12,
-    name: "25.png", // Name should be replaced with actual product name
+    name: "Bread", // Name should be replaced with actual product name
     description: "A soft and fluffy slice of bread, perfect for sandwiches or enjoying with butter.",
     hotPrice: "-",
-    coldPrice: "-",
+    coldPrice: "35",
     category: "Bakery",
     TypeOfDrinks: "-",
     isRecommended: false,
@@ -243,7 +243,7 @@ const products: Product[] = [
     coldPrice: "70",
     category: "Matcha",
     TypeOfDrinks: "Hot/Cold",
-    isRecommended: true,
+    isRecommended: false,
     image: "/images/drinks/matcha latte.png",
   },
   {
@@ -265,7 +265,7 @@ const products: Product[] = [
     coldPrice: "75",
     category: "Matcha",
     TypeOfDrinks: "Cold",
-    isRecommended: true,
+    isRecommended: false,
     image: "/images/drinks/orange matcha.png",
   },
   {
@@ -273,7 +273,7 @@ const products: Product[] = [
     name: "Sandwich",
     description: "A classic sandwich filled with fresh ingredients, perfect for a quick and satisfying meal.",
     hotPrice: "-",
-    coldPrice: "-",
+    coldPrice: "35",
     category: "Bakery",
     TypeOfDrinks: "-",
     isRecommended: false,
@@ -287,7 +287,7 @@ const products: Product[] = [
     coldPrice: "65",
     category: "Non-Coffee",
     TypeOfDrinks: "Hot/Cold",
-    isRecommended: true,
+    isRecommended: false,
     image: "/images/drinks/thai milk tea.png",
   },
   {
