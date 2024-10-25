@@ -3,23 +3,25 @@
 import React, { useState } from "react";
 import styles from "./cartPage.module.css";
 import CartItem from "../components/CartItem/CartItem";
+import { useRouter } from "next/navigation";
+import NavBar from "../components/NavBar/Nav";
 
 const data = [
   {
     id: 1,
     itemName: "Americano",
-    itemDetails: "Freshly brewed coffee",
+    itemDetails: "Freshly brewed coffee 100%",
     quantity: 1,
     price: 20,
     image: "/images/drinks/americano.png",
   },
   {
-    id: 2,
-    itemName: "asdfasdfasdf",
-    itemDetails: "Freshly brewed coffee",
+    id: 4,
+    itemName: "Es-Yen (Thai Style)",
+    itemDetails: "Freshly cold 50%",
     quantity: 1,
     price: 20,
-    image: "/images/drinks/americano.png",
+    image: "/images/drinks/Es-Yen Thai Style.png",
   },
 ];
 
@@ -54,14 +56,17 @@ const CartPage: React.FC = () => {
   };
 
   return (
-    <main>
+    <main className="pt-10">
+      <NavBar />
       <div className={styles.backButtonContainer}>
         <p>&lt; Back</p>
       </div>
       <div className={styles.miscContainer}>
         <p className={styles.myCart}>My Cart</p>
         <button
-          className={isSelectMode ? styles.cancelButtonActive : styles.cancelButton}
+          className={
+            isSelectMode ? styles.cancelButtonActive : styles.cancelButton
+          }
           onClick={handleSelectToggle}
         >
           {isSelectMode ? "Cancel" : "Select"}
@@ -72,6 +77,7 @@ const CartPage: React.FC = () => {
         {cartItems.map((item) => (
           <CartItem
             key={item.id}
+            id={item.id}
             itemName={item.itemName}
             itemDetails={item.itemDetails}
             quantity={item.quantity}
@@ -88,7 +94,13 @@ const CartPage: React.FC = () => {
       <footer className={styles.footer}>
         <div className={styles.totalContainer}>
           <p>Total</p>
-          <p>{cartItems.reduce((total, item) => total + item.price * item.quantity, 0)} Baht</p>
+          <p>
+            {cartItems.reduce(
+              (total, item) => total + item.price * item.quantity,
+              0
+            )}{" "}
+            Baht
+          </p>
         </div>
         <div className={styles.nextButtonContainer}>
           <button className={styles.nextButton}>Next</button>
