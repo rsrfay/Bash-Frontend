@@ -1,6 +1,5 @@
 import React from 'react';
 import styles from './FilterBar.module.css';
-import { CiFilter } from "react-icons/ci"; // Example for the filter icon
 
 interface Filter {
   label: string;

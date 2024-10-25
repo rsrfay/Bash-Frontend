@@ -7,13 +7,16 @@ import FilterBar from "../components/FilterBar/FilterBar";
 import Slideshow from "../components/Slideshow/Slideshow";
 import NavBar from "../components/Navbar/Nav";
 import "./homepage.css";
-import {
-  FaCoffee,
-  FaBreadSlice,
-} from "react-icons/fa"; // Import icons
+import { FaCoffee, FaBreadSlice } from "react-icons/fa"; // Import icons
 import { CiCircleChevDown, CiCircleChevUp, CiLemon } from "react-icons/ci";
 import { RiDrinks2Fill, RiDrinksLine } from "react-icons/ri";
 import PaginationButton from "../components/Pagination/Pagination";
+import { motion } from "framer-motion";
+
+const sectionVariants = {
+  hidden: { opacity: 0, y: 50 },
+  visible: { opacity: 1, y: 0 },
+};
 
 interface Product {
   id: number;
@@ -121,7 +124,7 @@ const products: Product[] = [
     coldPrice: "70",
     category: "Coffee",
     TypeOfDrinks: "Cold",
-    isRecommended: true,
+    isRecommended: false,
     image: "/images/drinks/coconut flower macchiato.png",
   },
   {
@@ -138,10 +141,11 @@ const products: Product[] = [
   },
   {
     id: 10,
-    name: "23.png", // Name should be replaced with actual product name
-    description: "A delicious assortment of baked goods, perfect for a morning snack or afternoon treat.",
+    name: "Soft Bread", // Name should be replaced with actual product name
+    description:
+      "A delicious assortment of baked goods, perfect for a morning snack or afternoon treat.",
     hotPrice: "-",
-    coldPrice: "-",
+    coldPrice: "70",
     category: "Bakery",
     TypeOfDrinks: "-",
     isRecommended: false,
@@ -149,10 +153,11 @@ const products: Product[] = [
   },
   {
     id: 11,
-    name: "24.png", // Name should be replaced with actual product name
-    description: "Freshly baked cookies with a rich, buttery flavor and a soft, chewy texture.",
+    name: "Cookies", // Name should be replaced with actual product name
+    description:
+      "Freshly baked cookies with a rich, buttery flavor and a soft, chewy texture.",
     hotPrice: "-",
-    coldPrice: "-",
+    coldPrice: "70",
     category: "Bakery",
     TypeOfDrinks: "-",
     isRecommended: false,
@@ -160,10 +165,11 @@ const products: Product[] = [
   },
   {
     id: 12,
-    name: "25.png", // Name should be replaced with actual product name
-    description: "A soft and fluffy slice of bread, perfect for sandwiches or enjoying with butter.",
+    name: "Bread", // Name should be replaced with actual product name
+    description:
+      "A soft and fluffy slice of bread, perfect for sandwiches or enjoying with butter.",
     hotPrice: "-",
-    coldPrice: "-",
+    coldPrice: "35",
     category: "Bakery",
     TypeOfDrinks: "-",
     isRecommended: false,
@@ -172,7 +178,8 @@ const products: Product[] = [
   {
     id: 13,
     name: "Caramel Fresh Milk",
-    description: "A smooth and creamy milk drink with a rich caramel flavor, perfect for a sweet indulgence.",
+    description:
+      "A smooth and creamy milk drink with a rich caramel flavor, perfect for a sweet indulgence.",
     hotPrice: "-",
     coldPrice: "65",
     category: "Non-Coffee",
@@ -183,7 +190,8 @@ const products: Product[] = [
   {
     id: 14,
     name: "Cocoa",
-    description: "A rich and creamy chocolate drink made with high-quality cocoa powder and steamed milk.",
+    description:
+      "A rich and creamy chocolate drink made with high-quality cocoa powder and steamed milk.",
     hotPrice: "60",
     coldPrice: "65",
     category: "Non-Coffee",
@@ -194,7 +202,8 @@ const products: Product[] = [
   {
     id: 15,
     name: "Coconut Flower Matcha",
-    description: "A unique blend of matcha tea with the light sweetness of coconut flower nectar.",
+    description:
+      "A unique blend of matcha tea with the light sweetness of coconut flower nectar.",
     hotPrice: "-",
     coldPrice: "70",
     category: "Matcha",
@@ -205,9 +214,10 @@ const products: Product[] = [
   {
     id: 16,
     name: "Coke",
-    description: "A refreshing carbonated soft drink with a crisp and classic cola flavor.",
+    description:
+      "A refreshing carbonated soft drink with a crisp and classic cola flavor.",
     hotPrice: "-",
-    coldPrice: "40",
+    coldPrice: "20",
     category: "Non-Coffee",
     TypeOfDrinks: "Cold",
     isRecommended: false,
@@ -216,7 +226,8 @@ const products: Product[] = [
   {
     id: 17,
     name: "Fruit Sunshine Tea",
-    description: "A light and refreshing tea infused with tropical fruit flavors, perfect for a sunny day.",
+    description:
+      "A light and refreshing tea infused with tropical fruit flavors, perfect for a sunny day.",
     hotPrice: "-",
     coldPrice: "65",
     category: "Refreshment",
@@ -227,7 +238,8 @@ const products: Product[] = [
   {
     id: 18,
     name: "Lemon Yuzu Soda",
-    description: "A sparkling lemon soda with the unique citrus flavor of yuzu, offering a refreshing and tangy taste.",
+    description:
+      "A sparkling lemon soda with the unique citrus flavor of yuzu, offering a refreshing and tangy taste.",
     hotPrice: "-",
     coldPrice: "70",
     category: "Refreshment",
@@ -238,18 +250,20 @@ const products: Product[] = [
   {
     id: 19,
     name: "Matcha Latte",
-    description: "A creamy blend of matcha green tea and steamed milk, offering a perfect balance of sweetness and matcha flavor.",
+    description:
+      "A creamy blend of matcha green tea and steamed milk, offering a perfect balance of sweetness and matcha flavor.",
     hotPrice: "65",
     coldPrice: "70",
     category: "Matcha",
     TypeOfDrinks: "Hot/Cold",
-    isRecommended: true,
+    isRecommended: false,
     image: "/images/drinks/matcha latte.png",
   },
   {
     id: 20,
     name: "Orange Juice",
-    description: "Freshly squeezed orange juice, bursting with citrusy goodness, perfect for a refreshing pick-me-up.",
+    description:
+      "Freshly squeezed orange juice, bursting with citrusy goodness, perfect for a refreshing pick-me-up.",
     hotPrice: "-",
     coldPrice: "55",
     category: "Refreshment",
@@ -260,20 +274,22 @@ const products: Product[] = [
   {
     id: 21,
     name: "Orange Matcha",
-    description: "An innovative combination of earthy matcha and bright orange flavors, creating a refreshing and energizing drink.",
+    description:
+      "An innovative combination of earthy matcha and bright orange flavors, creating a refreshing and energizing drink.",
     hotPrice: "-",
     coldPrice: "75",
     category: "Matcha",
     TypeOfDrinks: "Cold",
-    isRecommended: true,
+    isRecommended: false,
     image: "/images/drinks/orange matcha.png",
   },
   {
     id: 22,
     name: "Sandwich",
-    description: "A classic sandwich filled with fresh ingredients, perfect for a quick and satisfying meal.",
+    description:
+      "A classic sandwich filled with fresh ingredients, perfect for a quick and satisfying meal.",
     hotPrice: "-",
-    coldPrice: "-",
+    coldPrice: "35",
     category: "Bakery",
     TypeOfDrinks: "-",
     isRecommended: false,
@@ -282,18 +298,20 @@ const products: Product[] = [
   {
     id: 23,
     name: "Thai Milk Tea",
-    description: "A rich and creamy Thai milk tea made with strong brewed tea and sweetened condensed milk.",
+    description:
+      "A rich and creamy Thai milk tea made with strong brewed tea and sweetened condensed milk.",
     hotPrice: "60",
     coldPrice: "65",
     category: "Non-Coffee",
     TypeOfDrinks: "Hot/Cold",
-    isRecommended: true,
+    isRecommended: false,
     image: "/images/drinks/thai milk tea.png",
   },
   {
     id: 24,
     name: "Twist Matcha Latte",
-    description: "A twist on the traditional matcha latte, offering a unique blend of flavors for an exciting matcha experience.",
+    description:
+      "A twist on the traditional matcha latte, offering a unique blend of flavors for an exciting matcha experience.",
     hotPrice: "-",
     coldPrice: "70",
     category: "Matcha",
@@ -304,14 +322,15 @@ const products: Product[] = [
   {
     id: 25,
     name: "Water",
-    description: "A refreshing bottle of purified water to quench your thirst and keep you hydrated.",
+    description:
+      "A refreshing bottle of purified water to quench your thirst and keep you hydrated.",
     hotPrice: "-",
-    coldPrice: "20",
+    coldPrice: "15",
     category: "Non-Coffee",
     TypeOfDrinks: "Cold",
     isRecommended: false,
     image: "/images/drinks/water.png",
-  }
+  },
 ];
 
 const filters = [
@@ -321,7 +340,7 @@ const filters = [
   { label: "Non-Coffee", icon: <RiDrinks2Fill /> },
   { label: "Bakery", icon: <FaBreadSlice /> },
   { label: "Refreshment", icon: <CiLemon /> },
-  { label: "Price Down ", icon: <CiCircleChevDown /> },
+  { label: "Price Down", icon: <CiCircleChevDown /> },
   { label: "Price Up", icon: <CiCircleChevUp /> },
 ];
 
@@ -341,23 +360,39 @@ export default function Home() {
     }
 
     // Handle price sorting (ascending or descending)
-    if (filter === "Price Up") {
-      updatedProducts.sort((a, b) => {
-        const priceA =
-          a.coldPrice !== "-" ? Number(a.coldPrice) : Number(a.hotPrice);
-        const priceB =
-          b.coldPrice !== "-" ? Number(b.coldPrice) : Number(b.hotPrice);
-        return priceA - priceB; // Ascending order
-      });
-    }
-
     if (filter === "Price Down") {
       updatedProducts.sort((a, b) => {
         const priceA =
-          a.coldPrice !== "-" ? Number(a.coldPrice) : Number(a.hotPrice);
+          a.coldPrice !== "-"
+            ? Number(a.coldPrice)
+            : a.hotPrice !== "-"
+            ? Number(a.hotPrice)
+            : Infinity;
         const priceB =
-          b.coldPrice !== "-" ? Number(b.coldPrice) : Number(b.hotPrice);
-        return priceB - priceA; // Descending order
+          b.coldPrice !== "-"
+            ? Number(b.coldPrice)
+            : b.hotPrice !== "-"
+            ? Number(b.hotPrice)
+            : Infinity;
+        return priceA - priceB; // Ascending order (lowest to highest)
+      });
+    }
+
+    if (filter === "Price Up") {
+      updatedProducts.sort((a, b) => {
+        const priceA =
+          a.coldPrice !== "-"
+            ? Number(a.coldPrice)
+            : a.hotPrice !== "-"
+            ? Number(a.hotPrice)
+            : -Infinity;
+        const priceB =
+          b.coldPrice !== "-"
+            ? Number(b.coldPrice)
+            : b.hotPrice !== "-"
+            ? Number(b.hotPrice)
+            : -Infinity;
+        return priceB - priceA; // Descending order (highest to lowest)
       });
     }
 
@@ -387,43 +422,54 @@ export default function Home() {
           }}
         />
       </div>
-      <div className="filterbar-container">
+      <motion.div
+        className="filterbar-container"
+        initial="hidden"
+        animate="visible"
+        variants={sectionVariants}
+        transition={{ duration: 0.5, delay: 0.2 }}
+      >
         <FilterBar
           filters={filters}
           selectedFilter={selectedFilter}
           onFilterSelect={handleFilterSelect}
         />
-      </div>
+      </motion.div>
       {selectedFilter === "All" && (
         <div>
           <Slideshow />
         </div>
       )}
-      <div className="title">
-        <h1> RECOMMENDED</h1>
-      </div>
-      <div className="recommeded-container">
-        {products
-          .filter((product) => product.isRecommended)
-          .map((product) => (
-            <Card
-              key={product.id}
-              id={product.id}
-              name={product.name}
-              description={product.description}
-              hotPrice={product.hotPrice}
-              coldPrice={product.coldPrice}
-              category={product.category}
-              TypeOfDrinks={product.TypeOfDrinks}
-              isRecommended={product.isRecommended}
-              image={product.image}
-            />
-          ))}
-      </div>
+      {selectedFilter === "All" && (
+        <div className="title">
+          <h1> RECOMMENDED</h1>
+        </div>
+      )}
+      {selectedFilter === "All" && (
+        <div className="recommeded-container">
+          {products
+            .filter((product) => product.isRecommended)
+            .map((product) => (
+              <Card
+                key={product.id}
+                id={product.id}
+                name={product.name}
+                description={product.description}
+                hotPrice={product.hotPrice}
+                coldPrice={product.coldPrice}
+                category={product.category}
+                TypeOfDrinks={product.TypeOfDrinks}
+                isRecommended={product.isRecommended}
+                image={product.image}
+              />
+            ))}
+        </div>
+      )}
+
       <div className="title">
         <h1> EXPLORE OUR MENU </h1>
       </div>
-      <div className="card-container">
+      {/* <div className="card-container">
         {filteredProducts.map((product) => (
           <Card
             key={product.id}
@@ -438,7 +484,18 @@ export default function Home() {
             image={product.image}
           />
         ))}
-      </div>
+      </div> */}
+      <motion.div
+        className="card-container"
+        initial="hidden"
+        animate="visible"
+        variants={sectionVariants}
+        transition={{ duration: 0.5, delay: 0.7 }}
+      >
+        {filteredProducts.map((product) => (
+          <Card key={product.id} {...product} />
+        ))}
+      </motion.div>
       <PaginationButton />
     </main>
   );
