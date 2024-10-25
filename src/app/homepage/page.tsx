@@ -10,9 +10,6 @@ import "./homepage.css";
 import {
   FaCoffee,
   FaBreadSlice,
-  FaIceCream,
-  FaBeer,
-  FaFilter,
 } from "react-icons/fa"; // Import icons
 import { CiCircleChevDown, CiCircleChevUp, CiLemon } from "react-icons/ci";
 import { RiDrinks2Fill, RiDrinksLine } from "react-icons/ri";
@@ -310,7 +307,7 @@ const products: Product[] = [
     description: "A refreshing bottle of purified water to quench your thirst and keep you hydrated.",
     hotPrice: "-",
     coldPrice: "20",
-    category: "Refreshment",
+    category: "Non-Coffee",
     TypeOfDrinks: "Cold",
     isRecommended: false,
     image: "/images/drinks/water.png",
@@ -397,9 +394,11 @@ export default function Home() {
           onFilterSelect={handleFilterSelect}
         />
       </div>
-      <div>
-        <Slideshow />
-      </div>
+      {selectedFilter === "All" && (
+        <div>
+          <Slideshow />
+        </div>
+      )}
       <div className="title">
         <h1> RECOMMENDED</h1>
       </div>
