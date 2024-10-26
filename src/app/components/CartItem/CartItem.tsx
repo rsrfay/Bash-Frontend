@@ -33,7 +33,7 @@ const CartCardItem: React.FC<CartItemProps> = ({
   return (
     <div
       className={styles.cartItemContainer}
-      onClick={() => router.push(`/description/${id}`)}
+      onClick={() => router.push(`/descriptionCart/${id}`)}
     >
       <div className={styles.imagePlaceholder}>
         <img src={image} className="card-image" />

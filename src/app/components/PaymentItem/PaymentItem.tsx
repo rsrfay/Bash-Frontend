@@ -23,10 +23,7 @@ const PaymentCardItem: React.FC<PaymentItemProps> = ({
   const router = useRouter();
 
   return (
-    <div
-      className={styles.paymentItemContainer}
-      onClick={() => router.push(`/description/${id}`)}
-    >
+    <div className={styles.paymentItemContainer}>
       <div className={styles.imagePlaceholder}>
         <img src={image} className="card-image" />
       </div>
