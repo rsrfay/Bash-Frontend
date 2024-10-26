@@ -340,14 +340,14 @@ const DescriptionPage = () => {
     } else {
       setAddOn((prevAddOn) => {
         if (prevAddOn.includes("None")) {
-          return [selectedAddOn]; 
+          return [selectedAddOn]; // Start fresh if "None" is currently selected
         }
 
         if (prevAddOn.includes(selectedAddOn)) {
-          return prevAddOn.filter((item) => item !== selectedAddOn); 
+          return prevAddOn.filter((item) => item !== selectedAddOn); // Deselect if already selected
         }
 
-        return [...prevAddOn, selectedAddOn]; 
+        return [...prevAddOn, selectedAddOn];  // Allow multiple selections
       });
     }
   };
@@ -391,27 +391,32 @@ const DescriptionPage = () => {
               )}
             </div>
 
-            <h2>Add on</h2>
-            <div className="option-group">
-              <button
-                className={addOn.includes("None") ? "option selected" : "option"}
-                onClick={() => handleAddOnClick("None")}
-              >
-                None
-              </button>
-              <button
-                className={addOn.includes("Oat Milk") ? "option selected" : "option"}
-                onClick={() => handleAddOnClick("Oat Milk")}
-              >
-                Oat Milk
-              </button>
-              <button
-                className={addOn.includes("Brown Sugar Jelly") ? "option selected" : "option"}
-                onClick={() => handleAddOnClick("Brown Sugar Jelly")}
-              >
-                Brown Sugar Jelly
-              </button>
-            </div>
+            {/* Only show Add on section if the category is NOT "Bakery" */}
+            {product.category !== "Bakery" && (
+              <>
+                <h2>Add on</h2>
+                <div className="option-group">
+                  <button
+                    className={addOn.includes("None") ? "option selected" : "option"}
+                    onClick={() => handleAddOnClick("None")}
+                  >
+                    None
+                  </button>
+                  <button
+                    className={addOn.includes("Oat Milk") ? "option selected" : "option"}
+                    onClick={() => handleAddOnClick("Oat Milk")}
+                  >
+                    Oat Milk
+                  </button>
+                  <button
+                    className={addOn.includes("Brown Sugar Jelly") ? "option selected" : "option"}
+                    onClick={() => handleAddOnClick("Brown Sugar Jelly")}
+                  >
+                    Brown Sugar Jelly
+                  </button>
+                </div>
+              </>
+            )}
 
             <h2>Choice of Sweetness</h2>
             <div className="option-group">
