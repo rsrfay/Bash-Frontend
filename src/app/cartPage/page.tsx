@@ -5,6 +5,7 @@ import styles from "./cartPage.module.css";
 import CartItem from "../components/CartItem/CartItem";
 import { useRouter } from "next/navigation";
 import NavBar from "../components/NavBar/Nav";
+import ReturnButton from "../components/ReturnButton/ReturnButton";
 
 const data = [
   {
@@ -58,8 +59,11 @@ const CartPage: React.FC = () => {
   return (
     <main className="pt-10">
       <NavBar />
-      <div className={styles.backButtonContainer}>
+      {/* <div className={styles.backButtonContainer}>
         <p>&lt; Back</p>
+      </div> */}
+      <div className={styles.backButtonContainer}>
+      <ReturnButton />
       </div>
       <div className={styles.miscContainer}>
         <p className={styles.myCart}>My Cart</p>
