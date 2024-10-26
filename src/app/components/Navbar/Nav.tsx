@@ -30,13 +30,10 @@ const NavBar: React.FC = () => {
         </div>
         <ul className={`${styles.navLinks} ${menuOpen ? styles.open : ""}`}>
           <li>
-            <Link href="/cartpage">CART</Link>
+            <Link href="/cartPage">CART</Link>
           </li>
           <li>
-            <Link href="/about">ABOUT</Link>
-          </li>
-          <li>
-            <Link href="/order">ORDER</Link>
+            <Link href="/">MENU</Link>
           </li>
         </ul>
         <div className={styles.menuIcon} onClick={toggleMenu}>
