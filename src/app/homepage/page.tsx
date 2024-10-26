@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Card from "../components/ProductCard/Card";
 import SearchBar from "../components/SearchBar/SearchBar";
 import FilterBar from "../components/FilterBar/FilterBar";
@@ -347,6 +347,7 @@ const filters = [
 export default function Home() {
   const [selectedFilter, setSelectedFilter] = useState("All");
   const [filteredProducts, setFilteredProducts] = useState<Product[]>(products);
+  const [searchTerm, setSearchTerm] = useState("");
 
   // Function to apply filters and sorting
   const applyFilters = (filter: string) => {
@@ -396,6 +397,13 @@ export default function Home() {
       });
     }
 
+    // Filter products based on search term
+    if (searchTerm) {
+      updatedProducts = updatedProducts.filter((product) =>
+        product.name.toLowerCase().includes(searchTerm.toLowerCase())
+      );
+    }
+
     // Update the state with filtered/sorted products
     setFilteredProducts(updatedProducts);
   };
@@ -405,6 +413,15 @@ export default function Home() {
     applyFilters(filter);
     console.log(`Selected filter: ${filter}`);
   };
+
+  const handleSearch = (term: string) => {
+    setSearchTerm(term); // Update search term state
+    applyFilters(selectedFilter); // Reapply filters with the updated search term
+  };
+
+  useEffect(() => {
+    applyFilters(selectedFilter); // Apply filters when the search term or filter changes
+  }, [searchTerm, selectedFilter]);
 
   return (
     <main className="pt-20">
@@ -416,11 +433,7 @@ export default function Home() {
       </header>
       <NavBar />
       <div className="search-container">
-        <SearchBar
-          onSearch={function (term: string): void {
-            throw new Error("Function not implemented.");
-          }}
-        />
+        <SearchBar onSearch={handleSearch} />
       </div>
       <motion.div
         className="filterbar-container"
