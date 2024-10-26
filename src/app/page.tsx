@@ -417,8 +417,9 @@ export default function Home() {
   };
 
   const handleSearch = (term: string) => {
-    setSearchTerm(term); // Update search term state
-    applyFilters(selectedFilter); // Reapply filters with the updated search term
+    setSearchTerm(term); 
+    applyFilters(selectedFilter); 
+    console.log(`Search: ${term}`);
   };
 
   useEffect(() => {
@@ -450,17 +451,17 @@ export default function Home() {
           onFilterSelect={handleFilterSelect}
         />
       </motion.div>
-      {selectedFilter === "All" && (
+      {selectedFilter === "All" && searchTerm === '' &&(
         <div>
           <Slideshow />
         </div>
       )}
-      {selectedFilter === "All" && (
+      {selectedFilter === "All" && searchTerm === '' && (
         <div className="title">
           <h1> RECOMMENDED</h1>
         </div>
       )}
-      {selectedFilter === "All" && (
+      {selectedFilter === "All" && searchTerm === '' && (
         <div className="recommeded-container">
           {products
             .filter((product) => product.isRecommended)
