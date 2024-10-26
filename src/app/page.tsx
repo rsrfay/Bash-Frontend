@@ -15,6 +15,7 @@ import { RiDrinks2Fill, RiDrinksLine } from "react-icons/ri";
 import { GiThermometerCold, GiThermometerHot } from "react-icons/gi";
 import PaginationButton from "./components/Pagination/Pagination";
 import { motion } from "framer-motion";
+import SortByDropdown from "./components/SortByDropdown/Sort";
 
 const sectionVariants = {
   hidden: { opacity: 0, y: 50 },
@@ -345,15 +346,22 @@ const filters = [
   { label: "Refreshment", icon: <CiLemon /> },
   { label: "Hot menu", icon: <GiThermometerHot /> }, 
   { label: "Cold menu", icon: <GiThermometerCold /> },
+  
 ];
 
 export default function Home() {
   const [selectedFilter, setSelectedFilter] = useState("All");
   const [filteredProducts, setFilteredProducts] = useState<Product[]>(products);
   const [searchTerm, setSearchTerm] = useState("");
+  const [sortOrder, setSortOrder] = useState("");
 
+  const handleSortChange = (sortValue: string) => {
+    setSortOrder(sortValue);
+    applyFilters(selectedFilter, sortValue);
+  };
+  
   // Function to apply filters and sorting
-  const applyFilters = (filter: string) => {
+  const applyFilters = (filter: string, sortOrder: string) => {
     let updatedProducts = [...products]; // Make a copy of products
 
     // Handle category filters
@@ -362,6 +370,7 @@ export default function Home() {
         (product) => product.category === filter
       );
     }
+ 
 
     // Handle "Hot menu" and "Cold menu" filters
     if (filter === "Hot menu") {
@@ -374,42 +383,20 @@ export default function Home() {
       );
     }
 
-    // Handle price sorting (ascending or descending)
-    if (filter === "Price Down") {
-      updatedProducts.sort((a, b) => {
-        const priceA =
-          a.coldPrice !== "-"
-            ? Number(a.coldPrice)
-            : a.hotPrice !== "-"
-            ? Number(a.hotPrice)
-            : Infinity;
-        const priceB =
-          b.coldPrice !== "-"
-            ? Number(b.coldPrice)
-            : b.hotPrice !== "-"
-            ? Number(b.hotPrice)
-            : Infinity;
-        return priceA - priceB; // Ascending order (lowest to highest)
-      });
-    }
-
-    if (filter === "Price Up") {
-      updatedProducts.sort((a, b) => {
-        const priceA =
-          a.coldPrice !== "-"
-            ? Number(a.coldPrice)
-            : a.hotPrice !== "-"
-            ? Number(a.hotPrice)
-            : -Infinity;
-        const priceB =
-          b.coldPrice !== "-"
-            ? Number(b.coldPrice)
-            : b.hotPrice !== "-"
-            ? Number(b.hotPrice)
-            : -Infinity;
-        return priceB - priceA; // Descending order (highest to lowest)
-      });
-    }
+    // Apply sorting by price
+  if (sortOrder === "Price Low to High") {
+    updatedProducts.sort((a, b) => {
+      const priceA = a.coldPrice !== "-" ? Number(a.coldPrice) : Number(a.hotPrice);
+      const priceB = b.coldPrice !== "-" ? Number(b.coldPrice) : Number(b.hotPrice);
+      return priceA - priceB; // Sort from low to high
+    });
+  } else if (sortOrder === "Price High to Low") {
+    updatedProducts.sort((a, b) => {
+      const priceA = a.coldPrice !== "-" ? Number(a.coldPrice) : Number(a.hotPrice);
+      const priceB = b.coldPrice !== "-" ? Number(b.coldPrice) : Number(b.hotPrice);
+      return priceB - priceA; // Sort from high to low
+    });
+  }
 
     // Filter products based on search term
     if (searchTerm) {
@@ -424,19 +411,21 @@ export default function Home() {
 
   const handleFilterSelect = (filter: string) => {
     setSelectedFilter(filter);
-    applyFilters(filter);
+    setSortOrder("none");
+    applyFilters(filter, "none");
     console.log(`Selected filter: ${filter}`);
+    
   };
 
   const handleSearch = (term: string) => {
     setSearchTerm(term); 
-    applyFilters(selectedFilter); 
+    applyFilters(selectedFilter, sortOrder); 
     console.log(`Search: ${term}`);
   };
 
   useEffect(() => {
-    applyFilters(selectedFilter); // Apply filters when the search term or filter changes
-  }, [searchTerm, selectedFilter]);
+    applyFilters(selectedFilter, sortOrder); // Apply filters when the search term or filter changes
+  }, [searchTerm, selectedFilter, sortOrder]);
 
   return (
     <main className="pt-20">
@@ -463,6 +452,9 @@ export default function Home() {
           onFilterSelect={handleFilterSelect}
         />
       </motion.div>
+
+    
+
       {selectedFilter === "All" && searchTerm === '' &&(
         <div>
           <Slideshow />
@@ -514,6 +506,9 @@ export default function Home() {
           />
         ))}
       </div> */}
+       {/* Global sorting for all products */}
+      <SortByDropdown onSortChange={handleSortChange} sortValue={sortOrder} />
+
       <motion.div
         className="card-container"
         initial="hidden"
