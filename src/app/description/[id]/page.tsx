@@ -325,13 +325,32 @@ const DescriptionPage = () => {
   const { id } = useParams();
   const [product, setProduct] = useState<Product | null>(null);
   const [type, setType] = useState("Hot");
-  const [addOn, setAddOn] = useState("None");
+  const [addOn, setAddOn] = useState<string[]>(["None"]);
   const [sweetness, setSweetness] = useState("50%");
 
   useEffect(() => {
     const foundProduct = products.find((p) => p.id === Number(id));
     setProduct(foundProduct || null);
   }, [id]);
+
+  // Add-on selection handler
+  const handleAddOnClick = (selectedAddOn: string) => {
+    if (selectedAddOn === "None") {
+      setAddOn(["None"]);
+    } else {
+      setAddOn((prevAddOn) => {
+        if (prevAddOn.includes("None")) {
+          return [selectedAddOn]; 
+        }
+
+        if (prevAddOn.includes(selectedAddOn)) {
+          return prevAddOn.filter((item) => item !== selectedAddOn); 
+        }
+
+        return [...prevAddOn, selectedAddOn]; 
+      });
+    }
+  };
 
   if (!product) {
     return <div>Product not found!</div>;
@@ -375,22 +394,20 @@ const DescriptionPage = () => {
             <h2>Add on</h2>
             <div className="option-group">
               <button
-                className={addOn === "None" ? "option selected" : "option"}
-                onClick={() => setAddOn("None")}
+                className={addOn.includes("None") ? "option selected" : "option"}
+                onClick={() => handleAddOnClick("None")}
               >
                 None
               </button>
               <button
-                className={addOn === "Oat Milk" ? "option selected" : "option"}
-                onClick={() => setAddOn("Oat Milk")}
+                className={addOn.includes("Oat Milk") ? "option selected" : "option"}
+                onClick={() => handleAddOnClick("Oat Milk")}
               >
                 Oat Milk
               </button>
               <button
-                className={
-                  addOn === "Brown Sugar Jelly" ? "option selected" : "option"
-                }
-                onClick={() => setAddOn("Brown Sugar Jelly")}
+                className={addOn.includes("Brown Sugar Jelly") ? "option selected" : "option"}
+                onClick={() => handleAddOnClick("Brown Sugar Jelly")}
               >
                 Brown Sugar Jelly
               </button>
@@ -434,7 +451,7 @@ const DescriptionPage = () => {
               <h3>
                 <strong>Total Price:</strong>{" "}
                 <span>
-                  {type === "Hot" ? product.hotPrice : product.coldPrice}.-
+                  {type === "Hot" ? product.hotPrice : product.coldPrice}.- 
                 </span>
               </h3>
             </div>
