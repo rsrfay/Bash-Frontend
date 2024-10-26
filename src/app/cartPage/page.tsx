@@ -3,9 +3,8 @@
 import React, { useState } from "react";
 import styles from "./cartPage.module.css";
 import CartItem from "../components/CartItem/CartItem";
-import { useRouter } from "next/navigation";
 import NavBar from "../components/NavBar/Nav";
-import ReturnButton from "../components/ReturnButton/ReturnButton";
+import Link from "next/link";
 
 const data = [
   {
@@ -57,14 +56,8 @@ const CartPage: React.FC = () => {
   };
 
   return (
-    <main className="pt-10">
+    <main>
       <NavBar />
-      {/* <div className={styles.backButtonContainer}>
-        <p>&lt; Back</p>
-      </div> */}
-      <div className={styles.backButtonContainer}>
-      <ReturnButton />
-      </div>
       <div className={styles.miscContainer}>
         <p className={styles.myCart}>My Cart</p>
         <button
@@ -107,7 +100,9 @@ const CartPage: React.FC = () => {
           </p>
         </div>
         <div className={styles.nextButtonContainer}>
-          <button className={styles.nextButton}>Next</button>
+          <button className={styles.nextButton}>
+            <Link href="/paymentpage">Next</Link>
+          </button>
         </div>
       </footer>
     </main>
