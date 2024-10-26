@@ -64,11 +64,37 @@
 }
 
 .recommeded-container {
-  padding: 3% 9% 0% 9%; /* top, right, bottom, left */
+  padding: 3% 5% 0% 5% ; /* top, right, bottom, left */
   display: flex;
-  gap: 30px;
+  flex-direction: row;
+  gap: 15px;
+  flex-wrap: nowrap;
   overflow-x: auto;
   scroll-snap-type: x mandatory;
+}
+
+.cardrcmd {
+  flex: 0 0 18%;
+}
+
+@media screen and (max-width: 600px) {
+  .recommeded-container {
+    padding: 3% 1% 0% 3%; /* Adjust padding for mobile */
+  }
+
+  .cardrcmd {
+    flex: 0 0 45%; /* Show ~2 cards per row on mobile */
+  }
+}
+
+@media screen and (min-width: 601px) and (max-width: 768px) { /* iPads */
+  .recommeded-container {
+    padding: 3% 2% 0% 5%; /* Adjust padding for iPad */
+  }
+
+  .cardrcmd {
+    flex: 0 0 30%; /* Show ~3 cards per row on iPad */
+  }
 }
 
 .recommeded-container::-webkit-scrollbar {

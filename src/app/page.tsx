@@ -12,6 +12,7 @@ import NavBar from "./components/Navbar/Nav";
 import { FaCoffee, FaBreadSlice } from "react-icons/fa"; // Import icons
 import { CiCircleChevDown, CiCircleChevUp, CiLemon } from "react-icons/ci";
 import { RiDrinks2Fill, RiDrinksLine } from "react-icons/ri";
+import { GiThermometerCold, GiThermometerHot } from "react-icons/gi";
 import PaginationButton from "./components/Pagination/Pagination";
 import { motion } from "framer-motion";
 
@@ -342,8 +343,8 @@ const filters = [
   { label: "Non-Coffee", icon: <RiDrinks2Fill /> },
   { label: "Bakery", icon: <FaBreadSlice /> },
   { label: "Refreshment", icon: <CiLemon /> },
-  { label: "Price Down", icon: <CiCircleChevDown /> },
-  { label: "Price Up", icon: <CiCircleChevUp /> },
+  { label: "Hot menu", icon: <GiThermometerHot /> }, 
+  { label: "Cold menu", icon: <GiThermometerCold /> },
 ];
 
 export default function Home() {
@@ -356,9 +357,20 @@ export default function Home() {
     let updatedProducts = [...products]; // Make a copy of products
 
     // Handle category filters
-    if (filter !== "All" && filter !== "Price Up" && filter !== "Price Down") {
+    if (filter !== "All" && filter !== "Hot menu" && filter !== "Cold menu") {
       updatedProducts = updatedProducts.filter(
         (product) => product.category === filter
+      );
+    }
+
+    // Handle "Hot menu" and "Cold menu" filters
+    if (filter === "Hot menu") {
+      updatedProducts = updatedProducts.filter(
+      (product) => product.TypeOfDrinks === "Hot" || product.TypeOfDrinks === "Hot/Cold"
+      );
+    } else if (filter === "Cold menu") {
+      updatedProducts = updatedProducts.filter(
+      (product) => product.TypeOfDrinks === "Cold" || product.TypeOfDrinks === "Hot/Cold"
       );
     }
 
@@ -456,31 +468,32 @@ export default function Home() {
           <Slideshow />
         </div>
       )}
-      {selectedFilter === "All" && searchTerm === '' && (
+      {selectedFilter === "All" && (
         <div className="title">
           <h1> RECOMMENDED</h1>
         </div>
       )}
       {selectedFilter === "All" && searchTerm === '' && (
         <div className="recommeded-container">
-          {products
-            .filter((product) => product.isRecommended)
-            .map((product) => (
-              <Card
-                key={product.id}
-                id={product.id}
-                name={product.name}
-                description={product.description}
-                hotPrice={product.hotPrice}
-                coldPrice={product.coldPrice}
-                category={product.category}
-                TypeOfDrinks={product.TypeOfDrinks}
-                isRecommended={product.isRecommended}
-                image={product.image}
-              />
-            ))}
+        {products
+          .filter((product) => product.isRecommended)
+          .map((product) => (
+        <div className="cardrcmd" key={product.id}> {/* Moved cardrcmd inside the map */}
+          <Card
+            id={product.id}
+            name={product.name}
+            description={product.description}
+            hotPrice={product.hotPrice}
+            coldPrice={product.coldPrice}
+            category={product.category}
+            TypeOfDrinks={product.TypeOfDrinks}
+            isRecommended={product.isRecommended}
+            image={product.image}
+          />
         </div>
-      )}
+          ))}
+  </div>
+)}
 
       <div className="title">
         <h1> EXPLORE OUR MENU </h1>
