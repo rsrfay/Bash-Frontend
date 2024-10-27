@@ -39,7 +39,7 @@ const CartPage: React.FC = () => {
   };
 
   return (
-    <main>
+    <main className={styles.main}>
       <NavBar />
       <div className={styles.miscContainer}>
         <p className={styles.myCart}>My Cart</p>

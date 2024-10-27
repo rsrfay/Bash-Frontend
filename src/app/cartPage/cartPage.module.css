@@ -1,3 +1,11 @@
+.main {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  overflow-y: auto;
+  padding-bottom: 150px;
+}
+
 .backButtonContainer {
   padding: 70px 100px 0 100px;
 }
