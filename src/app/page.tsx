@@ -8,12 +8,13 @@ import Card from "./components/ProductCard/Card";
 import SearchBar from "./components/SearchBar/SearchBar";
 import FilterBar from "./components/FilterBar/FilterBar";
 import Slideshow from "./components/Slideshow/Slideshow";
-import NavBar from "./components/Navbar/Nav";
+import NavBar from "./components/NavBar/Nav";
 import { FaCoffee, FaBreadSlice } from "react-icons/fa"; // Import icons
 import { CiCircleChevDown, CiCircleChevUp, CiLemon } from "react-icons/ci";
 import { RiDrinks2Fill, RiDrinksLine } from "react-icons/ri";
 import PaginationButton from "./components/Pagination/Pagination";
 import { motion } from "framer-motion";
+import { CartProvider, useCart } from "../context/CartContext";
 
 const sectionVariants = {
   hidden: { opacity: 0, y: 50 },
@@ -369,14 +370,14 @@ export default function Home() {
           a.coldPrice !== "-"
             ? Number(a.coldPrice)
             : a.hotPrice !== "-"
-            ? Number(a.hotPrice)
-            : Infinity;
+              ? Number(a.hotPrice)
+              : Infinity;
         const priceB =
           b.coldPrice !== "-"
             ? Number(b.coldPrice)
             : b.hotPrice !== "-"
-            ? Number(b.hotPrice)
-            : Infinity;
+              ? Number(b.hotPrice)
+              : Infinity;
         return priceA - priceB; // Ascending order (lowest to highest)
       });
     }
@@ -387,14 +388,14 @@ export default function Home() {
           a.coldPrice !== "-"
             ? Number(a.coldPrice)
             : a.hotPrice !== "-"
-            ? Number(a.hotPrice)
-            : -Infinity;
+              ? Number(a.hotPrice)
+              : -Infinity;
         const priceB =
           b.coldPrice !== "-"
             ? Number(b.coldPrice)
             : b.hotPrice !== "-"
-            ? Number(b.hotPrice)
-            : -Infinity;
+              ? Number(b.hotPrice)
+              : -Infinity;
         return priceB - priceA; // Descending order (highest to lowest)
       });
     }
@@ -417,8 +418,8 @@ export default function Home() {
   };
 
   const handleSearch = (term: string) => {
-    setSearchTerm(term); 
-    applyFilters(selectedFilter); 
+    setSearchTerm(term);
+    applyFilters(selectedFilter);
     console.log(`Search: ${term}`);
   };
 
@@ -427,65 +428,65 @@ export default function Home() {
   }, [searchTerm, selectedFilter]);
 
   return (
-    <main className="pt-20">
-      <header>
-        <link
-          rel="stylesheet"
-          href="https://fonts.googleapis.com/css2?family=ADLaM+Display&family=Montserrat:wght@400;700&display=swap"
-        />
-      </header>
-      <NavBar />
-      <div className="search-container">
-        <SearchBar onSearch={handleSearch} />
-      </div>
-      <motion.div
-        className="filterbar-container"
-        initial="hidden"
-        animate="visible"
-        variants={sectionVariants}
-        transition={{ duration: 0.5, delay: 0.2 }}
-      >
-        <FilterBar
-          filters={filters}
-          selectedFilter={selectedFilter}
-          onFilterSelect={handleFilterSelect}
-        />
-      </motion.div>
-      {selectedFilter === "All" && searchTerm === '' &&(
-        <div>
-          <Slideshow />
+      <main className="pt-20">
+        <header>
+          <link
+            rel="stylesheet"
+            href="https://fonts.googleapis.com/css2?family=ADLaM+Display&family=Montserrat:wght@400;700&display=swap"
+          />
+        </header>
+        <NavBar />
+        <div className="search-container">
+          <SearchBar onSearch={handleSearch} />
         </div>
-      )}
-      {selectedFilter === "All" && searchTerm === '' && (
-        <div className="title">
-          <h1> RECOMMENDED</h1>
-        </div>
-      )}
-      {selectedFilter === "All" && searchTerm === '' && (
-        <div className="recommeded-container">
-          {products
-            .filter((product) => product.isRecommended)
-            .map((product) => (
-              <Card
-                key={product.id}
-                id={product.id}
-                name={product.name}
-                description={product.description}
-                hotPrice={product.hotPrice}
-                coldPrice={product.coldPrice}
-                category={product.category}
-                TypeOfDrinks={product.TypeOfDrinks}
-                isRecommended={product.isRecommended}
-                image={product.image}
-              />
-            ))}
-        </div>
-      )}
+        <motion.div
+          className="filterbar-container"
+          initial="hidden"
+          animate="visible"
+          variants={sectionVariants}
+          transition={{ duration: 0.5, delay: 0.2 }}
+        >
+          <FilterBar
+            filters={filters}
+            selectedFilter={selectedFilter}
+            onFilterSelect={handleFilterSelect}
+          />
+        </motion.div>
+        {selectedFilter === "All" && searchTerm === "" && (
+          <div>
+            <Slideshow />
+          </div>
+        )}
+        {selectedFilter === "All" && searchTerm === "" && (
+          <div className="title">
+            <h1> RECOMMENDED</h1>
+          </div>
+        )}
+        {selectedFilter === "All" && searchTerm === "" && (
+          <div className="recommeded-container">
+            {products
+              .filter((product) => product.isRecommended)
+              .map((product) => (
+                <Card
+                  key={product.id}
+                  id={product.id}
+                  name={product.name}
+                  description={product.description}
+                  hotPrice={product.hotPrice}
+                  coldPrice={product.coldPrice}
+                  category={product.category}
+                  TypeOfDrinks={product.TypeOfDrinks}
+                  isRecommended={product.isRecommended}
+                  image={product.image}
+                />
+              ))}
+          </div>
+        )}
 
-      <div className="title">
-        <h1> EXPLORE OUR MENU </h1>
-      </div>
-      {/* <div className="card-container">
+        <div className="title">
+          <h1> EXPLORE OUR MENU </h1>
+        </div>
+        {/* <div className="card-container">
         {filteredProducts.map((product) => (
           <Card
             key={product.id}
@@ -501,18 +502,18 @@ export default function Home() {
           />
         ))}
       </div> */}
-      <motion.div
-        className="card-container"
-        initial="hidden"
-        animate="visible"
-        variants={sectionVariants}
-        transition={{ duration: 0.5, delay: 0.7 }}
-      >
-        {filteredProducts.map((product) => (
-          <Card key={product.id} {...product} />
-        ))}
-      </motion.div>
-      <PaginationButton />
-    </main>
+        <motion.div
+          className="card-container"
+          initial="hidden"
+          animate="visible"
+          variants={sectionVariants}
+          transition={{ duration: 0.5, delay: 0.7 }}
+        >
+          {filteredProducts.map((product) => (
+            <Card key={product.id} {...product} />
+          ))}
+        </motion.div>
+        <PaginationButton />
+      </main>
   );
 }
