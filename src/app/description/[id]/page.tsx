@@ -5,7 +5,7 @@ import Image from "next/image";
 import { useState, useEffect } from "react";
 import "./description.css";
 import ReturnButton from "@/app/components/ReturnButton/ReturnButton";
-import { CartProvider, useCart } from "@/context/CartContext";
+import { useCart } from "@/context/CartContext";
 
 interface Product {
   id: number;
@@ -331,6 +331,8 @@ const DescriptionPage = () => {
   const [sweetness, setSweetness] = useState("50%");
   const [quantity, setQuantity] = useState(1);
 
+  const [showModal, setShowModal] = useState(false);
+
   useEffect(() => {
     const foundProduct = products.find((p) => p.id === Number(id));
     setProduct(foundProduct || null);
@@ -360,6 +362,7 @@ const DescriptionPage = () => {
     };
 
     addToCart(newCartItem);
+    setShowModal(true);
   };
 
   const handleAddOnClick = (selectedAddOn: string) => {
@@ -502,6 +505,21 @@ const DescriptionPage = () => {
           </div>
         </div>
       </div>
+
+      {showModal && (
+        <div className="modal-overlay">
+          <div className="modal-content">
+            <p>Item added to cart successfully!</p>
+            <button
+              onClick={() => {
+                setShowModal(false);
+              }}
+            >
+              Close
+            </button>
+          </div>
+        </div>
+      )}
     </main>
   );
 };

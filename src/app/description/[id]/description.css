@@ -65,7 +65,9 @@ h1 {
   border-radius: 10px;
   padding: 10px 20px;
   cursor: pointer;
-  transition: background-color 0.2s, color 0.2s;
+  transition:
+    background-color 0.2s,
+    color 0.2s;
 }
 
 .option:hover {
@@ -75,7 +77,9 @@ h1 {
 .option.selected {
   background-color: #674636;
   color: white;
-  transition: background-color 0.2s, color 0.2s;
+  transition:
+    background-color 0.2s,
+    color 0.2s;
 }
 
 .price h3 {
@@ -102,11 +106,46 @@ h1 {
   background-color: #543428;
 }
 
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal-content {
+  background-color: #fff;
+  padding: 20px 30px;
+  border-radius: 8px;
+  text-align: center;
+}
+
+.modal-content p {
+  font-size: 18px;
+  color: #674636;
+  margin-bottom: 20px;
+}
+
+.modal-content button {
+  background-color: #543428;
+  color: #fff;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
 @media screen and (max-width: 600px) {
   .option-group {
     display: flex;
     flex-wrap: wrap;
-    gap: 8px; 
+    gap: 8px;
   }
 
   .price h3 {
@@ -114,7 +153,7 @@ h1 {
   }
 
   .add-to-cart {
-    width: 50%; 
+    width: 50%;
     padding: 10px;
   }
 
@@ -127,4 +166,4 @@ h1 {
     height: auto;
     z-index: 1;
   }
-  }
+}
