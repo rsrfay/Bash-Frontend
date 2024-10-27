@@ -45,7 +45,7 @@ const CartCardItem: React.FC<CartItemProps> = ({
       onClick={() => router.push(`/descriptionCart/${id}`)}
     >
       <div className={styles.imagePlaceholder}>
-        <img src={image} className="card-image" alt={itemName} />
+        <img src={image} alt={itemName} />
       </div>
       <div className={styles.itemInfo}>
         <h3 className={styles.itemName}>{itemName}</h3>
