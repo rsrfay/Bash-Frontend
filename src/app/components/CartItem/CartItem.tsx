@@ -6,7 +6,9 @@ import { useRouter } from "next/navigation";
 type CartItemProps = {
   id: number;
   itemName: string;
-  itemDetails: string;
+  type: string;
+  addOns: string[];
+  sweetness: string;
   quantity: number;
   price: number;
   image: string;
@@ -19,7 +21,9 @@ type CartItemProps = {
 const CartCardItem: React.FC<CartItemProps> = ({
   id,
   itemName,
-  itemDetails,
+  type,
+  addOns,
+  sweetness,
   quantity,
   price,
   image,
@@ -30,17 +34,22 @@ const CartCardItem: React.FC<CartItemProps> = ({
 }) => {
   const router = useRouter();
 
+  const description =
+    addOns.length > 0
+      ? `${type}, ${addOns.join(", ")}, ${sweetness}`
+      : `${type}, ${sweetness}`;
+
   return (
     <div
       className={styles.cartItemContainer}
       onClick={() => router.push(`/descriptionCart/${id}`)}
     >
       <div className={styles.imagePlaceholder}>
-        <img src={image} className="card-image" />
+        <img src={image} className="card-image" alt={itemName} />
       </div>
       <div className={styles.itemInfo}>
         <h3 className={styles.itemName}>{itemName}</h3>
-        <p className={styles.itemDetails}>{itemDetails}</p>
+        <p className={styles.description}>{description}</p>
         <div className={styles.quantityControl}>
           <button
             onClick={(e) => {

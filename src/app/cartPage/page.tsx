@@ -6,11 +6,14 @@ import CartItem from "../components/CartItem/CartItem";
 import NavBar from "../components/NavBar/Nav";
 import Link from "next/link";
 
-const data = [
+const menus = [
   {
     id: 1,
     itemName: "Americano",
     itemDetails: "Freshly brewed coffee 100%",
+    type: "Hot",
+    addOns: [],
+    sweetness: "50%",
     quantity: 1,
     price: 20,
     image: "/images/drinks/americano.png",
@@ -19,6 +22,9 @@ const data = [
     id: 4,
     itemName: "Es-Yen (Thai Style)",
     itemDetails: "Freshly cold 50%",
+    type: "Cold",
+    addOns: ["Brown Sugar Jelly", "Oat Milk"],
+    sweetness: "75%",
     quantity: 1,
     price: 20,
     image: "/images/drinks/Es-Yen Thai Style.png",
@@ -26,7 +32,7 @@ const data = [
 ];
 
 const CartPage: React.FC = () => {
-  const [cartItems, setCartItems] = useState(data);
+  const [cartItems, setCartItems] = useState(menus);
   const [isSelectMode, setIsSelectMode] = useState(false);
 
   const updateItemQuantity = (id: number, newQuantity: number) => {
@@ -76,7 +82,9 @@ const CartPage: React.FC = () => {
             key={item.id}
             id={item.id}
             itemName={item.itemName}
-            itemDetails={item.itemDetails}
+            type={item.type}
+            addOns={item.addOns}
+            sweetness={item.sweetness}
             quantity={item.quantity}
             price={item.price}
             image={item.image}

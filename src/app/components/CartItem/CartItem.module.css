@@ -1,7 +1,7 @@
 .cartItemContainer {
   display: flex;
   align-items: center;
-  padding: 15px 15px 15px 15px;
+  padding: 15px;
   width: 100%;
   background-color: #fafafa;
   border: 2px solid rgba(103, 70, 54, 0.3);
@@ -31,9 +31,10 @@
   margin-bottom: 4px;
 }
 
-.itemDetails {
-  font-size: 14px;
+.description {
+  font-size: 15px;
   color: #757575;
+  margin-bottom: 4px;
 }
 
 .quantityControl {
