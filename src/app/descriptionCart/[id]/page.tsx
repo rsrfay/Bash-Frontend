@@ -1,10 +1,11 @@
 "use client";
 
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import Image from "next/image";
 import { useState, useEffect } from "react";
 import "./descriptionCart.css";
 import ReturnButton from "@/app/components/ReturnButton/ReturnButton";
+import { useCart, CartItemType } from "@/context/CartContext";
 
 interface Product {
   id: number;
@@ -323,33 +324,72 @@ const products: Product[] = [
 
 const DescriptionPage = () => {
   const { id } = useParams();
+  const router = useRouter();
+  const { cartItems, updateCartItem } = useCart();
+  const [cartItem, setCartItem] = useState<CartItemType | null>(null);
   const [product, setProduct] = useState<Product | null>(null);
-  const [type, setType] = useState("Hot");
-  const [addOn, setAddOn] = useState<string[]>(["None"]);
-  const [sweetness, setSweetness] = useState("50%");
+
+  //item options
+  const [type, setType] = useState("");
+  const [addOn, setAddOn] = useState<string[]>([]);
+  const [sweetness, setSweetness] = useState("");
 
   useEffect(() => {
-    const foundProduct = products.find((p) => p.id === Number(id));
-    setProduct(foundProduct || null);
+    const foundCartItem =
+      cartItems && cartItems.find((item) => item.id === Number(id));
+
+    if (foundCartItem) {
+      setCartItem(foundCartItem);
+
+      setType(foundCartItem.type);
+      setAddOn(foundCartItem.addOns);
+      setSweetness(foundCartItem.sweetness);
+
+      const foundProduct = products.find(
+        (p) => p.id === foundCartItem.productId
+      );
+      setProduct(foundProduct || null);
+    }
   }, [id]);
 
-  // Add-on selection handler
   const handleAddOnClick = (selectedAddOn: string) => {
     if (selectedAddOn === "None") {
       setAddOn(["None"]);
     } else {
       setAddOn((prevAddOn) => {
         if (prevAddOn.includes("None")) {
-          return [selectedAddOn]; // Start fresh if "None" is currently selected
+          return [selectedAddOn];
         }
 
         if (prevAddOn.includes(selectedAddOn)) {
-          return prevAddOn.filter((item) => item !== selectedAddOn); // Deselect if already selected
+          return prevAddOn.filter((item) => item !== selectedAddOn);
         }
 
         return [...prevAddOn, selectedAddOn]; // Allow multiple selections
       });
     }
+  };
+
+  const handleUpdateMenu = () => {
+    if (!product || !cartItem) return;
+
+    const price =
+      type === "Hot" && product.hotPrice !== "-"
+        ? Number(product.hotPrice)
+        : type === "Cold" && product.coldPrice !== "-"
+          ? Number(product.coldPrice)
+          : 0;
+
+    const updatedCartItem = {
+      ...cartItem,
+      type,
+      addOns: addOn,
+      sweetness,
+      price,
+    };
+
+    updateCartItem(updatedCartItem);
+    router.push("/cartpage");
   };
 
   if (!product) {
@@ -468,7 +508,9 @@ const DescriptionPage = () => {
                 </span>
               </h3>
             </div>
-            <button className="add-to-cart">Update Menu</button>
+            <button className="add-to-cart" onClick={handleUpdateMenu}>
+              Update Menu
+            </button>
           </div>
         </div>
       </div>
