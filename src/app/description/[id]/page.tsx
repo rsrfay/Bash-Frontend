@@ -5,6 +5,7 @@ import Image from "next/image";
 import { useState, useEffect } from "react";
 import "./description.css";
 import ReturnButton from "@/app/components/ReturnButton/ReturnButton";
+import { CartProvider, useCart } from "@/context/CartContext";
 
 interface Product {
   id: number;
@@ -323,31 +324,58 @@ const products: Product[] = [
 
 const DescriptionPage = () => {
   const { id } = useParams();
+  const { addToCart } = useCart();
   const [product, setProduct] = useState<Product | null>(null);
   const [type, setType] = useState("Hot");
   const [addOn, setAddOn] = useState<string[]>(["None"]);
   const [sweetness, setSweetness] = useState("50%");
+  const [quantity, setQuantity] = useState(1);
 
   useEffect(() => {
     const foundProduct = products.find((p) => p.id === Number(id));
     setProduct(foundProduct || null);
   }, [id]);
 
-  // Add-on selection handler
+  const handleAddToCart = () => {
+    if (!product) return;
+
+    const price =
+      type === "Hot" && product.hotPrice !== "-"
+        ? Number(product.hotPrice)
+        : type === "Cold" && product.coldPrice !== "-"
+          ? Number(product.coldPrice)
+          : 0;
+
+    const newCartItem = {
+      id: Date.now(), // use timestamp as unique ID
+      productId: product.id,
+      itemName: product.name,
+      itemDetails: product.description,
+      type,
+      addOns: addOn,
+      sweetness,
+      quantity,
+      price,
+      image: product.image,
+    };
+
+    addToCart(newCartItem);
+  };
+
   const handleAddOnClick = (selectedAddOn: string) => {
     if (selectedAddOn === "None") {
       setAddOn(["None"]);
     } else {
       setAddOn((prevAddOn) => {
         if (prevAddOn.includes("None")) {
-          return [selectedAddOn]; // Start fresh if "None" is currently selected
+          return [selectedAddOn];
         }
 
         if (prevAddOn.includes(selectedAddOn)) {
-          return prevAddOn.filter((item) => item !== selectedAddOn); // Deselect if already selected
+          return prevAddOn.filter((item) => item !== selectedAddOn);
         }
 
-        return [...prevAddOn, selectedAddOn];  // Allow multiple selections
+        return [...prevAddOn, selectedAddOn];
       });
     }
   };
@@ -397,19 +425,27 @@ const DescriptionPage = () => {
                 <h2>Add on</h2>
                 <div className="option-group">
                   <button
-                    className={addOn.includes("None") ? "option selected" : "option"}
+                    className={
+                      addOn.includes("None") ? "option selected" : "option"
+                    }
                     onClick={() => handleAddOnClick("None")}
                   >
                     None
                   </button>
                   <button
-                    className={addOn.includes("Oat Milk") ? "option selected" : "option"}
+                    className={
+                      addOn.includes("Oat Milk") ? "option selected" : "option"
+                    }
                     onClick={() => handleAddOnClick("Oat Milk")}
                   >
                     Oat Milk
                   </button>
                   <button
-                    className={addOn.includes("Brown Sugar Jelly") ? "option selected" : "option"}
+                    className={
+                      addOn.includes("Brown Sugar Jelly")
+                        ? "option selected"
+                        : "option"
+                    }
                     onClick={() => handleAddOnClick("Brown Sugar Jelly")}
                   >
                     Brown Sugar Jelly
@@ -456,11 +492,13 @@ const DescriptionPage = () => {
               <h3>
                 <strong>Total Price:</strong>{" "}
                 <span>
-                  {type === "Hot" ? product.hotPrice : product.coldPrice}.- 
+                  {type === "Hot" ? product.hotPrice : product.coldPrice}.-
                 </span>
               </h3>
             </div>
-            <button className="add-to-cart">Add to Cart</button>
+            <button className="add-to-cart" onClick={handleAddToCart}>
+              Add to Cart
+            </button>
           </div>
         </div>
       </div>

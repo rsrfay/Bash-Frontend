@@ -8,7 +8,7 @@ import Card from "./components/ProductCard/Card";
 import SearchBar from "./components/SearchBar/SearchBar";
 import FilterBar from "./components/FilterBar/FilterBar";
 import Slideshow from "./components/Slideshow/Slideshow";
-import NavBar from "./components/Navbar/Nav";
+import NavBar from "./components/NavBar/Nav";
 import { FaCoffee, FaBreadSlice } from "react-icons/fa"; // Import icons
 import { CiCircleChevDown, CiCircleChevUp, CiLemon } from "react-icons/ci";
 import { RiDrinks2Fill, RiDrinksLine } from "react-icons/ri";
@@ -16,6 +16,10 @@ import { GiThermometerCold, GiThermometerHot } from "react-icons/gi";
 import PaginationButton from "./components/Pagination/Pagination";
 import { motion } from "framer-motion";
 import SortByDropdown from "./components/SortByDropdown/Sort";
+import { CartProvider, useCart } from "../context/CartContext";
+
+
+
 
 const sectionVariants = {
   hidden: { opacity: 0, y: 50 },
@@ -487,10 +491,10 @@ export default function Home() {
   </div>
 )}
 
-      <div className="title">
-        <h1> EXPLORE OUR MENU </h1>
-      </div>
-      {/* <div className="card-container">
+        <div className="title">
+          <h1> EXPLORE OUR MENU </h1>
+        </div>
+        {/* <div className="card-container">
         {filteredProducts.map((product) => (
           <Card
             key={product.id}
