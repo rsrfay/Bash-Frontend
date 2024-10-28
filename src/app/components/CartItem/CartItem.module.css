@@ -60,6 +60,10 @@
 .itemPrice {
   font-size: 18px;
   font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  min-width: 100px;
 }
 
 .deleteButton {
