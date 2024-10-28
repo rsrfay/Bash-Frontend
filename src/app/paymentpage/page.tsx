@@ -4,7 +4,7 @@ import React from "react";
 import styles from "./paymentpage.module.css";
 import PaymentItem from "../components/PaymentItem/PaymentItem";
 import ReturnButton from "../components/ReturnButton/ReturnButton";
-import NavBar from "../components/NavBar/Nav";
+import NavBar from "../components/Nav/Nav";
 
 const cartItems = [
   {

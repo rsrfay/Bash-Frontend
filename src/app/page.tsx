@@ -8,7 +8,7 @@ import Card from "./components/ProductCard/Card";
 import SearchBar from "./components/SearchBar/SearchBar";
 import FilterBar from "./components/FilterBar/FilterBar";
 import Slideshow from "./components/Slideshow/Slideshow";
-import NavBar from "./components/NavBar/Nav";
+import NavBar from "./components/Nav/Nav";
 import { FaCoffee, FaBreadSlice } from "react-icons/fa"; // Import icons
 import { CiCircleChevDown, CiCircleChevUp, CiLemon } from "react-icons/ci";
 import { RiDrinks2Fill, RiDrinksLine } from "react-icons/ri";
