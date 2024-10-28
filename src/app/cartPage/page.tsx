@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import styles from "./cartPage.module.css";
 import CartItem from "../components/CartItem/CartItem";
-import NavBar from "../components/NavBar/Nav";
+import NavBar from "../components/Nav/Nav";
 import Link from "next/link";
 import { CartProvider, useCart } from "@/context/CartContext";
 

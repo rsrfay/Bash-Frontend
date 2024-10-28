@@ -4,7 +4,7 @@ import Image from "next/image"; // Using Next.js Image component
 import { AiOutlineMenu } from "react-icons/ai"; // Hamburger icon
 import styles from "./Nav.module.css";
 
-const NavBar: React.FC = () => {
+const Nav: React.FC = () => {
   const [menuOpen, setMenuOpen] = useState(false);
 
   const toggleMenu = () => {
@@ -44,4 +44,4 @@ const NavBar: React.FC = () => {
   );
 };
 
-export default NavBar;
+export default Nav;
