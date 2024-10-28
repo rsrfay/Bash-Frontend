@@ -75,6 +75,8 @@
 
 .cardrcmd {
   flex: 0 0 18%;
+  flex-shrink: 0;
+  min-width: 250px;
 }
 
 @media screen and (max-width: 600px) {
@@ -84,32 +86,6 @@
 
   .cardrcmd {
     flex: 0 0 45%; /* Show ~2 cards per row on mobile */
-  }
-}
-
-/* iPhone 11 to 15 Portrait Mode */
-@media screen and (min-width: 414px) and (max-width: 430px) {
-  .recommended-container {
-    padding: 5% 2% 0% 5%; 
-  }
-
-  .cardrcmd {
-    flex: 0 0 47%;
-  }
-
-  .cardrcmd .card-title {
-    font-size: 1.1rem; /* Increase font size for readability */
-  }
-}
-
-
-@media screen and (min-width: 601px) and (max-width: 768px) { /* iPads */
-  .recommeded-container {
-    padding: 3% 2% 0% 5%; /* Adjust padding for iPad */
-  }
-
-  .cardrcmd {
-    flex: 0 0 30%; /* Show ~3 cards per row on iPad */
   }
 }
 
