@@ -8,6 +8,7 @@
   border-radius: 16px;
   margin-bottom: 15px;
   cursor: pointer;
+  justify-content: space-between;
 }
 
 .cartItemContainer:hover {
@@ -20,10 +21,12 @@
   background-color: rgba(224, 224, 224, 0.5);
   border-radius: 8px;
   margin-right: 40px;
+  flex-shrink: 0;
 }
 
 .itemInfo {
-  flex-grow: 0.9;
+  flex-grow: 1;
+  margin-right: 20px;
 }
 
 .itemName {
@@ -62,8 +65,8 @@
   font-weight: bold;
   display: flex;
   align-items: center;
-  justify-content: flex-end;
-  min-width: 100px;
+  text-align: right;
+  margin-right: 60px;
 }
 
 .deleteButton {
