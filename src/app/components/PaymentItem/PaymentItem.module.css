@@ -1,17 +1,25 @@
 .paymentItemContainer {
   display: flex;
   align-items: center;
-  padding: 15px 15px 15px 15px;
+  padding: 15px;
   width: 100%;
   background-color: #fafafa;
   border: 2px solid rgba(103, 70, 54, 0.3);
   border-radius: 16px;
   margin-bottom: 15px;
   cursor: pointer;
+  justify-content: space-between;
 }
 
 .paymentItemContainer:hover {
   background-color: #e2e0e0;
+}
+
+.quantityLabel {
+  padding: 2px 6px;
+  font-weight: bold;
+  font-size: 18px;
+  margin-right: 20px;
 }
 
 .imagePlaceholder {
@@ -20,10 +28,12 @@
   background-color: rgba(224, 224, 224, 0.5);
   border-radius: 8px;
   margin-right: 40px;
+  flex-shrink: 0;
 }
 
 .itemInfo {
-  flex-grow: 0.9;
+  flex-grow: 1;
+  margin-right: 20px;
 }
 
 .itemName {
@@ -31,34 +41,19 @@
   margin-bottom: 4px;
 }
 
-.itemDetails {
-  font-size: 14px;
+.description {
+  font-size: 15px;
   color: #757575;
-}
-
-.quantityControl {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  margin-top: 10px;
-}
-
-.decrementButton,
-.incrementButton {
-  width: 32px;
-  height: 32px;
-  border: 2px solid #674636;
-  cursor: pointer;
-  border-radius: 30px;
-}
-
-.quantity {
-  font-size: 16px;
+  margin-bottom: 4px;
 }
 
 .itemPrice {
   font-size: 18px;
   font-weight: bold;
+  display: flex;
+  align-items: center;
+  text-align: right;
+  margin-right: 60px;
 }
 
 .deleteButton {

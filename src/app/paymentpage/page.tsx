@@ -1,31 +1,19 @@
 "use client";
 
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styles from "./paymentpage.module.css";
 import PaymentItem from "../components/PaymentItem/PaymentItem";
 import ReturnButton from "../components/ReturnButton/ReturnButton";
 import NavBar from "../components/Nav/Nav";
-
-const cartItems = [
-  {
-    id: 1,
-    itemName: "Latte",
-    itemDetails: "Iced, Oat Milk, 0%",
-    quantity: 1,
-    price: 90,
-    image: "/images/drinks/latte.png",
-  },
-  {
-    id: 2,
-    itemName: "Americano",
-    itemDetails: "Iced, Oat Milk, 0%",
-    quantity: 1,
-    price: 55,
-    image: "/images/drinks/americano.png",
-  },
-];
+import { CartItemType, useCart } from "@/context/CartContext";
 
 const PaymentPage: React.FC = () => {
+  const { cartItems } = useCart();
+
+  useEffect(() => {
+    localStorage.setItem("cartItems", JSON.stringify(cartItems));
+  }, [cartItems]);
+
   return (
     <main className={styles.main}>
       <NavBar />
@@ -38,17 +26,24 @@ const PaymentPage: React.FC = () => {
       </div>
 
       <div className={styles.itemContainer}>
-        {cartItems.map((item) => (
-          <PaymentItem
-            key={item.id}
-            id={item.id}
-            itemName={item.itemName}
-            itemDetails={item.itemDetails}
-            quantity={item.quantity}
-            price={item.price}
-            image={item.image}
-          />
-        ))}
+        {cartItems &&
+          cartItems.map((item) => (
+            <PaymentItem
+              key={item.id}
+              id={item.id}
+              itemName={item.itemName}
+              itemDetails={
+                item.type +
+                ", " +
+                item.addOns.join(", ") +
+                ", " +
+                item.sweetness
+              }
+              quantity={item.quantity}
+              price={item.price}
+              image={item.image}
+            />
+          ))}
       </div>
 
       <div className={styles.miscContainer}>
@@ -75,9 +70,15 @@ const PaymentPage: React.FC = () => {
       <div className={styles.totalSummary}>
         <div className={styles.totalRow}>
           <p className={styles.totalLabel}>
-            Subtotal ({cartItems.length} items)
+            Subtotal ({cartItems && cartItems.length} items)
           </p>
-          <p className={styles.totalAmount}>145</p>
+          <p className={styles.totalAmount}>
+            {cartItems &&
+              cartItems.reduce(
+                (total, item) => total + item.price * item.quantity,
+                0
+              )}
+          </p>
         </div>
         <div className={styles.totalRow}>
           <p className={styles.totalDiscount}>Discount</p>
@@ -88,7 +89,14 @@ const PaymentPage: React.FC = () => {
       <div className={styles.footer}>
         <div className={styles.totalContainer}>
           <p>Total</p>
-          <p>145 Baht</p>
+          <p>
+            {cartItems &&
+              cartItems.reduce(
+                (total, item) => total + item.price * item.quantity,
+                0
+              )}{" "}
+            Baht
+          </p>
         </div>
         <button className={styles.nextButton}>Make a payment</button>
       </div>
