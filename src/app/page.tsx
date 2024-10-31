@@ -1,25 +1,22 @@
 "use client";
 
-// import "tailwindcss/tailwind.css";
-
 import "./homepage.css";
 import { useEffect, useState } from "react";
+import { motion } from "framer-motion";
+import { FaCoffee, FaBreadSlice } from "react-icons/fa"; // Import icons
+import { CiCircleChevDown, CiCircleChevUp, CiLemon } from "react-icons/ci";
+import { RiDrinks2Fill, RiDrinksLine } from "react-icons/ri";
+import { GiThermometerCold, GiThermometerHot } from "react-icons/gi";
 import Card from "./components/ProductCard/Card";
 import SearchBar from "./components/SearchBar/SearchBar";
 import FilterBar from "./components/FilterBar/FilterBar";
 import Slideshow from "./components/Slideshow/Slideshow";
 import NavBar from "./components/Nav/Nav";
-import { FaCoffee, FaBreadSlice } from "react-icons/fa"; // Import icons
-import { CiCircleChevDown, CiCircleChevUp, CiLemon } from "react-icons/ci";
-import { RiDrinks2Fill, RiDrinksLine } from "react-icons/ri";
-import { GiThermometerCold, GiThermometerHot } from "react-icons/gi";
 import PaginationButton from "./components/Pagination/Pagination";
-import { motion } from "framer-motion";
 import SortByDropdown from "./components/SortByDropdown/Sort";
 import { CartProvider, useCart } from "../context/CartContext";
 
-
-
+const ITEMS_PER_PAGE = 10; // number of items per page (not sure na just estimate)
 
 const sectionVariants = {
   hidden: { opacity: 0, y: 50 },
@@ -348,9 +345,8 @@ const filters = [
   { label: "Non-Coffee", icon: <RiDrinks2Fill /> },
   { label: "Bakery", icon: <FaBreadSlice /> },
   { label: "Refreshment", icon: <CiLemon /> },
-  { label: "Hot menu", icon: <GiThermometerHot /> }, 
+  { label: "Hot menu", icon: <GiThermometerHot /> },
   { label: "Cold menu", icon: <GiThermometerCold /> },
-  
 ];
 
 export default function Home() {
@@ -358,12 +354,27 @@ export default function Home() {
   const [filteredProducts, setFilteredProducts] = useState<Product[]>(products);
   const [searchTerm, setSearchTerm] = useState("");
   const [sortOrder, setSortOrder] = useState("");
+  const [currentPage, setCurrentPage] = useState(1); // Pagination
+
+  // Calculate the total number of pages based on items per page
+  const totalPages = Math.ceil(filteredProducts.length / ITEMS_PER_PAGE);
+
+  // Slice products to display only items for the current page
+  const paginatedProducts = filteredProducts.slice(
+    (currentPage - 1) * ITEMS_PER_PAGE,
+    currentPage * ITEMS_PER_PAGE
+  );
+
+  const handlePageChange = (page: number) => {
+    setCurrentPage(page);
+    console.log(currentPage);
+  };
 
   const handleSortChange = (sortValue: string) => {
     setSortOrder(sortValue);
     applyFilters(selectedFilter, sortValue);
   };
-  
+
   // Function to apply filters and sorting
   const applyFilters = (filter: string, sortOrder: string) => {
     let updatedProducts = [...products]; // Make a copy of products
@@ -374,33 +385,38 @@ export default function Home() {
         (product) => product.category === filter
       );
     }
- 
 
     // Handle "Hot menu" and "Cold menu" filters
     if (filter === "Hot menu") {
       updatedProducts = updatedProducts.filter(
-      (product) => product.TypeOfDrinks === "Hot" || product.TypeOfDrinks === "Hot/Cold"
+        (product) =>
+          product.TypeOfDrinks === "Hot" || product.TypeOfDrinks === "Hot/Cold"
       );
     } else if (filter === "Cold menu") {
       updatedProducts = updatedProducts.filter(
-      (product) => product.TypeOfDrinks === "Cold" || product.TypeOfDrinks === "Hot/Cold"
+        (product) =>
+          product.TypeOfDrinks === "Cold" || product.TypeOfDrinks === "Hot/Cold"
       );
     }
 
     // Apply sorting by price
-  if (sortOrder === "Price Low to High") {
-    updatedProducts.sort((a, b) => {
-      const priceA = a.coldPrice !== "-" ? Number(a.coldPrice) : Number(a.hotPrice);
-      const priceB = b.coldPrice !== "-" ? Number(b.coldPrice) : Number(b.hotPrice);
-      return priceA - priceB; // Sort from low to high
-    });
-  } else if (sortOrder === "Price High to Low") {
-    updatedProducts.sort((a, b) => {
-      const priceA = a.coldPrice !== "-" ? Number(a.coldPrice) : Number(a.hotPrice);
-      const priceB = b.coldPrice !== "-" ? Number(b.coldPrice) : Number(b.hotPrice);
-      return priceB - priceA; // Sort from high to low
-    });
-  }
+    if (sortOrder === "Price Low to High") {
+      updatedProducts.sort((a, b) => {
+        const priceA =
+          a.coldPrice !== "-" ? Number(a.coldPrice) : Number(a.hotPrice);
+        const priceB =
+          b.coldPrice !== "-" ? Number(b.coldPrice) : Number(b.hotPrice);
+        return priceA - priceB; // Sort from low to high
+      });
+    } else if (sortOrder === "Price High to Low") {
+      updatedProducts.sort((a, b) => {
+        const priceA =
+          a.coldPrice !== "-" ? Number(a.coldPrice) : Number(a.hotPrice);
+        const priceB =
+          b.coldPrice !== "-" ? Number(b.coldPrice) : Number(b.hotPrice);
+        return priceB - priceA; // Sort from high to low
+      });
+    }
 
     // Filter products based on search term
     if (searchTerm) {
@@ -411,6 +427,7 @@ export default function Home() {
 
     // Update the state with filtered/sorted products
     setFilteredProducts(updatedProducts);
+    setCurrentPage(1); // Reset to first page when filters are applied
   };
 
   const handleFilterSelect = (filter: string) => {
@@ -418,12 +435,11 @@ export default function Home() {
     setSortOrder("none");
     applyFilters(filter, "none");
     console.log(`Selected filter: ${filter}`);
-    
   };
 
   const handleSearch = (term: string) => {
-    setSearchTerm(term); 
-    applyFilters(selectedFilter, sortOrder); 
+    setSearchTerm(term);
+    applyFilters(selectedFilter, sortOrder);
     console.log(`Search: ${term}`);
   };
 
@@ -457,9 +473,7 @@ export default function Home() {
         />
       </motion.div>
 
-    
-
-      {selectedFilter === "All" && searchTerm === '' &&(
+      {selectedFilter === "All" && searchTerm === "" && (
         <div>
           <Slideshow />
         </div>
@@ -469,32 +483,34 @@ export default function Home() {
           <h1> RECOMMENDED</h1>
         </div>
       )}
-      {selectedFilter === "All" && searchTerm === '' && (
+      {selectedFilter === "All" && searchTerm === "" && (
         <div className="recommeded-container">
-        {products
-          .filter((product) => product.isRecommended)
-          .map((product) => (
-        <div className="cardrcmd" key={product.id}> {/* Moved cardrcmd inside the map */}
-          <Card
-            id={product.id}
-            name={product.name}
-            description={product.description}
-            hotPrice={product.hotPrice}
-            coldPrice={product.coldPrice}
-            category={product.category}
-            TypeOfDrinks={product.TypeOfDrinks}
-            isRecommended={product.isRecommended}
-            image={product.image}
-          />
+          {products
+            .filter((product) => product.isRecommended)
+            .map((product) => (
+              <div className="cardrcmd" key={product.id}>
+                {" "}
+                {/* Moved cardrcmd inside the map */}
+                <Card
+                  id={product.id}
+                  name={product.name}
+                  description={product.description}
+                  hotPrice={product.hotPrice}
+                  coldPrice={product.coldPrice}
+                  category={product.category}
+                  TypeOfDrinks={product.TypeOfDrinks}
+                  isRecommended={product.isRecommended}
+                  image={product.image}
+                />
+              </div>
+            ))}
         </div>
-          ))}
-  </div>
-)}
+      )}
 
-        <div className="title">
-          <h1> EXPLORE OUR MENU </h1>
-        </div>
-        {/* <div className="card-container">
+      <div className="title">
+        <h1> EXPLORE OUR MENU </h1>
+      </div>
+      {/* <div className="card-container">
         {filteredProducts.map((product) => (
           <Card
             key={product.id}
@@ -510,7 +526,7 @@ export default function Home() {
           />
         ))}
       </div> */}
-       {/* Global sorting for all products */}
+      {/* Global sorting for all products */}
       <SortByDropdown onSortChange={handleSortChange} sortValue={sortOrder} />
 
       <motion.div
@@ -520,11 +536,19 @@ export default function Home() {
         variants={sectionVariants}
         transition={{ duration: 0.5, delay: 0.7 }}
       >
-        {filteredProducts.map((product) => (
+        {/* {filteredProducts.map((product) => (
+          <Card key={product.id} {...product} />
+        ))} */}
+        {/* Apply slicing based on number of page it's on */}
+        {paginatedProducts.map((product) => (
           <Card key={product.id} {...product} />
         ))}
       </motion.div>
-      <PaginationButton />
+      <PaginationButton
+        totalPages={totalPages}
+        currentPage={currentPage}
+        onPageChange={handlePageChange}
+      />
     </main>
   );
 }
