@@ -30,7 +30,7 @@ const Nav: React.FC = () => {
         </div>
         <ul className={`${styles.navLinks} ${menuOpen ? styles.open : ""}`}>
           <li>
-            <Link href="/cartpage">CART</Link>
+            <Link href="/cart">CART</Link>
           </li>
           <li>
             <Link href="/">MENU</Link>
