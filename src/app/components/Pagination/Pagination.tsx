@@ -1,16 +1,17 @@
 import { useState } from "react";
 import { Pagination } from "@nextui-org/react";
 
-const PaginationButton: React.FC = () => {
-  // State to track the current page
-  const [currentPage, setCurrentPage] = useState(1);
+interface PaginationButtonProps {
+  totalPages: number;
+  currentPage: number;
+  onPageChange: (page: number) => void;
+}
 
-  // Function to handle page change
-  const handlePageChange = (page: number) => {
-    setCurrentPage(page);
-    console.log(`Current Page: ${page}`); // For testing, you can log or perform other actions
-  };
-
+const PaginationButton: React.FC<PaginationButtonProps> = ({
+  totalPages,
+  currentPage,
+  onPageChange,
+}) => {
   return (
     <div
       style={{
@@ -21,11 +22,11 @@ const PaginationButton: React.FC = () => {
       }}
     >
       <Pagination
-        total={5} // Total number of pages
+        total={totalPages} // Use calculated total pages
         showControls
         initialPage={1} // Initial page on component mount
         page={currentPage} // Controlled page state
-        onChange={handlePageChange} // Handle page change event
+        onChange={onPageChange} // Handle page change
         classNames={{
           item: "w-10 h-10 text-medium rounded-full bg-transparent font-adlam shadow-inner text-[#674636]",
           cursor:
