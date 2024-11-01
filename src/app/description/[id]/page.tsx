@@ -1,6 +1,6 @@
 "use client";
 
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import Image from "next/image";
 import { useState, useEffect } from "react";
 import "./description.css";
@@ -324,6 +324,7 @@ const products: Product[] = [
 
 const DescriptionPage = () => {
   const { id } = useParams();
+  const router = useRouter(); 
   const { addToCart } = useCart();
   const [product, setProduct] = useState<Product | null>(null);
   const [type, setType] = useState("Hot");
@@ -332,6 +333,7 @@ const DescriptionPage = () => {
   const [quantity, setQuantity] = useState(1);
 
   const [showModal, setShowModal] = useState(false);
+  const [isSuccess, setIsSuccess] = useState(true);
 
   useEffect(() => {
     const foundProduct = products.find((p) => p.id === Number(id));
@@ -339,7 +341,11 @@ const DescriptionPage = () => {
   }, [id]);
 
   const handleAddToCart = () => {
-    if (!product) return;
+    if (!product) {
+      setIsSuccess(false); // Set to failure
+      setShowModal(true);
+      return;
+    }
 
     const price =
       type === "Hot" && product.hotPrice !== "-"
@@ -348,6 +354,12 @@ const DescriptionPage = () => {
           ? Number(product.coldPrice)
           : 0;
 
+          if (price === 0) {
+            setIsSuccess(false);
+            setShowModal(true);
+            return;
+          }
+        
     const newCartItem = {
       id: Date.now(), // use timestamp as unique ID
       productId: product.id,
@@ -362,7 +374,15 @@ const DescriptionPage = () => {
     };
 
     addToCart(newCartItem);
+    setIsSuccess(true);
     setShowModal(true);
+  };
+
+  const handleCloseModal = () => {
+    setShowModal(false);
+    if (isSuccess) {
+      router.push("/"); // Redirect to homepage if successful
+    }
   };
 
   const handleAddOnClick = (selectedAddOn: string) => {
@@ -505,17 +525,17 @@ const DescriptionPage = () => {
           </div>
         </div>
       </div>
-
+      
       {showModal && (
         <div className="modal-overlay">
-          <div className="modal-content">
-            <p>Item added to cart successfully!</p>
-            <button
-              onClick={() => {
-                setShowModal(false);
-              }}
-            >
-              Close
+          <div className={`modal-content ${isSuccess ? "success" : "failure"}`}>
+            <p>
+              {isSuccess
+                ? "Item added to cart successfully!"
+                : "Failed to add item to cart."}
+            </p>
+            <button onClick={handleCloseModal}>
+              {isSuccess ? "Close" : "Try Again"}
             </button>
           </div>
         </div>
