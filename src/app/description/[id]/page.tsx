@@ -43,6 +43,8 @@ const DescriptionPage = () => {
   const [showModal, setShowModal] = useState(false);
   const [isSuccess, setIsSuccess] = useState(true);
 
+  const baseURL = "http://localhost:3030";
+  
   useEffect(() => {
     const fetchProduct = async () => {
       try {
@@ -58,7 +60,12 @@ const DescriptionPage = () => {
             DrinkType: data.DrinkType,
             Tag: data.Tag,
             isRecommended: data.isRecommended,
-            img_src: data.img_src,
+            // img_src: data.img_src,
+            img_src: data.img_src
+            ? `${baseURL}/image/${data.img_src}` // Beverage images
+            : data.image_src
+            ? `${baseURL}/image/bakery/${data.image_src}` // Bakery images
+            : `${baseURL}/image/default-image.png`, // Default image
             category: data.category || (data.Drink_Name ? "Beverage" : "Bakery"),
             AddOns: data.AddOns || [], // Add-ons if available
           };
