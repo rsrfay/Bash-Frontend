@@ -5,11 +5,11 @@ import Link from "next/link";
 import { motion } from "framer-motion"; 
 
 interface CardProps {
-  id: number;
+  id: number | string;
   name: string;
   description: string;
-  hotPrice: string;
-  coldPrice: string;
+  hotPrice: string | number;
+  coldPrice: string | number;
   category: string;
   TypeOfDrinks: string;
   isRecommended: boolean;
@@ -22,13 +22,14 @@ const Card: React.FC<CardProps> = ({
   description,
   hotPrice,
   coldPrice,
+  category,
+  TypeOfDrinks,
   isRecommended,
   image,
 }) => {
-  const truncatedDescription =
-    description.length > 50
-      ? description.substring(0, 50) + "..."
-      : description;
+  const truncatedDescription = (description || "").length > 50
+  ? description.substring(0, 50) + "..."
+  : description || "";
 
       const displayPrice = () => {
         if (hotPrice !== "-" && coldPrice !== "-") {
