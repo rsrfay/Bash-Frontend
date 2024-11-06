@@ -117,6 +117,8 @@ export default function Home() {
     applyFilters(selectedFilter, sortValue);
   };
 
+  const [matchingCount, setMatchingCount] = useState(0);
+
   // Function to apply filters and sorting
   const applyFilters = (filter: string, sortOrder: string) => {
     let updatedProducts = [...products]; // Make a copy of products
@@ -133,21 +135,20 @@ export default function Home() {
         updatedProducts = updatedProducts.filter(
           (product) => product.Tag && product.Tag.includes(filter)
         );
+      } else if (filter === "Hot menu") {
+        updatedProducts = updatedProducts.filter(
+          (product) =>
+            product.TypeOfDrinks === "Hot" || product.TypeOfDrinks === "Hot/Cold"
+        );
+      } else if (filter === "Cold menu") {
+        updatedProducts = updatedProducts.filter(
+          (product) =>
+            product.TypeOfDrinks === "Cold" || product.TypeOfDrinks === "Hot/Cold"
+        );
       }
     }  
 
-    // Handle "Hot menu" and "Cold menu" filters
-    if (filter === "Hot menu") {
-      updatedProducts = updatedProducts.filter(
-        (product) =>
-          product.TypeOfDrinks === "Hot" || product.TypeOfDrinks === "Hot/Cold"
-      );
-    } else if (filter === "Cold menu") {
-      updatedProducts = updatedProducts.filter(
-        (product) =>
-          product.TypeOfDrinks === "Cold" || product.TypeOfDrinks === "Hot/Cold"
-      );
-    }
+    setMatchingCount(updatedProducts.length);
 
     // Apply sorting by price
     if (sortOrder === "Price Low to High") {
@@ -262,13 +263,17 @@ export default function Home() {
       </div>
       {/* Global sorting for all products */}
       <SortByDropdown onSortChange={handleSortChange} sortValue={sortOrder} />
+      {/* Display matching count */}
+      <div className="matching-count">
+        <p>{matchingCount} products match your filter</p>
+      </div>
       <motion.div
         className="card-container"
         initial="hidden"
         animate="visible"
         variants={sectionVariants}
         transition={{ duration: 0.5, delay: 0.7 }}
-      >
+      > 
         {paginatedProducts.map((product) => (
           <Card key={product.id} {...product} />
         ))}
