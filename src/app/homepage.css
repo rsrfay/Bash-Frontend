@@ -157,3 +157,10 @@
   }
 }
 
+.matching-count {
+  color: #674636;
+  text-align: right;
+  margin-right: 6.5%;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
