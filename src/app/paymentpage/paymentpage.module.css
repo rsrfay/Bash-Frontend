@@ -130,6 +130,22 @@
   margin-left: 10px;
 }
 
+.membershipInvalid {
+  color: red;
+  display: block;
+  margin-top: 5px;
+}
+
+.checkMembershipButton {
+  padding: 10px;
+  border: none;
+  border-radius: 10px;
+  background-color: #674636;
+  color: white;
+  font-size: 14px;
+  cursor: pointer;
+}
+
 .promotions {
   display: flex;
   justify-content: space-between;
