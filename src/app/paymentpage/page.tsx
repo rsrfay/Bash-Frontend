@@ -7,12 +7,76 @@ import ReturnButton from "../components/ReturnButton/ReturnButton";
 import NavBar from "../components/Nav/Nav";
 import { CartItemType, useCart } from "@/context/CartContext";
 
+const baseURL = "http://localhost:3030";
+
 const PaymentPage: React.FC = () => {
   const { cartItems } = useCart();
+  const [tel, setTel] = useState("");
+  const [memberInfo, setMemberInfo] = useState<MemberInfo | null>(null);
+  const [telChecked, setTelChecked] = useState(false);
+  const [membershipPoints, setMembershipPoints] = useState<number | null>(null);
+
+  interface MemberInfo {
+    MID: string;
+    Mname: string;
+    Tel: string;
+    Points: number;
+    Alumni: boolean;
+  }
 
   useEffect(() => {
     localStorage.setItem("cartItems", JSON.stringify(cartItems));
   }, [cartItems]);
+
+  const handleMembershipCheck = async () => {
+    setTelChecked(false);
+    try {
+      const response = await fetch(`${baseURL}/member/${tel}`);
+      if (response.ok) {
+        const data = await response.json();
+        setMemberInfo(data);
+        setMembershipPoints(data.Points);
+      } else {
+        throw new Error("Failed to fetch membership info");
+      }
+    } catch (error) {
+      console.error("Error fetching membership info:", error);
+      setMemberInfo(null);
+      setMembershipPoints(null);
+      setTelChecked(true);
+      setTel("");
+    }
+  };
+
+  const handleMakePayment = async () => {
+    if (memberInfo) {
+      try {
+        const response = await fetch(`${baseURL}/member/add-points`, {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            MID: memberInfo.MID,
+            points: memberInfo.Points + 1,
+          }),
+        });
+        if (response.ok) {
+          setMembershipPoints((prevPoints) =>
+            prevPoints !== null ? prevPoints + 1 : null
+          );
+          alert("Payment successful! Membership points updated.");
+        } else {
+          throw new Error("Failed to update membership points");
+        }
+      } catch (error) {
+        console.error("Error adding points to member:", error);
+        alert("Payment successful! Failed to update membership points.");
+      }
+    } else {
+      alert("Payment successful!");
+    }
+  };
 
   return (
     <main className={styles.main}>
@@ -57,9 +121,41 @@ const PaymentPage: React.FC = () => {
             className={styles.membershipInput}
             type="text"
             placeholder="091-XXX-XXXX"
+            value={tel}
+            onChange={(e) => {
+              setTel(e.target.value);
+              setTelChecked(false);
+              setMembershipPoints(null);
+              if (e.target.value === "") {
+                setMemberInfo(null);
+              }
+            }}
           />
-          <span className={styles.membershipScore}>7/10</span>
+          {tel && !membershipPoints ? (
+            <button
+              className={styles.checkMembershipButton}
+              onClick={() => {
+                handleMembershipCheck();
+                setTelChecked(true);
+              }}
+            >
+              Check
+            </button>
+          ) : null}
+          {membershipPoints !== null && telChecked ? (
+            <span className={styles.membershipScore}>
+              Points: {membershipPoints}
+            </span>
+          ) : (
+            memberInfo === null &&
+            telChecked && (
+              <span className={styles.membershipInvalid}>
+                Membership not valid
+              </span>
+            )
+          )}
         </div>
+
         <div className={styles.promotions}>
           <button className={styles.promotionButton}>Promotion A</button>
           <button className={styles.promotionButton}>Promotion B</button>
