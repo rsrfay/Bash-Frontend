@@ -12,6 +12,7 @@ const baseURL = "http://localhost:3030";
 const PaymentPage: React.FC = () => {
   const { cartItems } = useCart();
   const [tel, setTel] = useState("");
+  const [unformattedTel, setUnformattedTel] = useState("");
   const [memberInfo, setMemberInfo] = useState<MemberInfo | null>(null);
   const [telChecked, setTelChecked] = useState(false);
   const [membershipPoints, setMembershipPoints] = useState<number | null>(null);
@@ -29,9 +30,8 @@ const PaymentPage: React.FC = () => {
   }, [cartItems]);
 
   const handleMembershipCheck = async () => {
-    setTelChecked(false);
     try {
-      const response = await fetch(`${baseURL}/member/${tel}`);
+      const response = await fetch(`${baseURL}/member/${unformattedTel}`);
       if (response.ok) {
         const data = await response.json();
         setMemberInfo(data);
@@ -43,7 +43,6 @@ const PaymentPage: React.FC = () => {
       console.error("Error fetching membership info:", error);
       setMemberInfo(null);
       setMembershipPoints(null);
-      setTelChecked(true);
       setTel("");
     }
   };
@@ -58,23 +57,21 @@ const PaymentPage: React.FC = () => {
           },
           body: JSON.stringify({
             MID: memberInfo.MID,
-            points: memberInfo.Points + 1,
+            points: 1,
           }),
         });
         if (response.ok) {
           setMembershipPoints((prevPoints) =>
             prevPoints !== null ? prevPoints + 1 : null
           );
-          alert("Payment successful! Membership points updated.");
         } else {
           throw new Error("Failed to update membership points");
         }
       } catch (error) {
         console.error("Error adding points to member:", error);
-        alert("Payment successful! Failed to update membership points.");
       }
     } else {
-      alert("Payment successful!");
+      console.error("Payment successful!");
     }
   };
 
@@ -120,13 +117,21 @@ const PaymentPage: React.FC = () => {
           <input
             className={styles.membershipInput}
             type="text"
-            placeholder="091-XXX-XXXX"
+            placeholder="08X-XXX-XXXX"
             value={tel}
             onChange={(e) => {
-              setTel(e.target.value);
+              let value = e.target.value.replace(/\D/g, "");
+              setUnformattedTel(value);
+
+              if (value.length > 3 && value.length <= 6) {
+                value = value.replace(/(\d{3})(\d+)/, "$1-$2");
+              } else if (value.length > 6) {
+                value = value.replace(/(\d{3})(\d{3})(\d+)/, "$1-$2-$3");
+              }
               setTelChecked(false);
+              setTel(value);
               setMembershipPoints(null);
-              if (e.target.value === "") {
+              if (value === "") {
                 setMemberInfo(null);
               }
             }}
@@ -150,7 +155,7 @@ const PaymentPage: React.FC = () => {
             memberInfo === null &&
             telChecked && (
               <span className={styles.membershipInvalid}>
-                Membership not valid
+                Membership invalid
               </span>
             )
           )}
@@ -194,7 +199,9 @@ const PaymentPage: React.FC = () => {
             Baht
           </p>
         </div>
-        <button className={styles.nextButton}>Make a payment</button>
+        <button className={styles.nextButton} onClick={handleMakePayment}>
+          Make a payment
+        </button>
       </div>
     </main>
   );
