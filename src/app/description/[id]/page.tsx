@@ -3,7 +3,7 @@
 import { useParams, useRouter } from "next/navigation";
 import Image from "next/image";
 import { useState, useEffect } from "react";
-import "./description.css";
+import styles from "./description.module.css";
 import ReturnButton from "@/app/components/ReturnButton/ReturnButton";
 import { useCart } from "@/context/CartContext";
 
@@ -29,7 +29,7 @@ interface Product {
   category?: string; // Optional, could be used for custom categorization if needed
   AddOns?: AddOn[]; // List of available add-ons for this product
 }
-
+const baseURL = "http://localhost:3030";
 const DescriptionPage = () => {
   const { id } = useParams();
   const router = useRouter();
@@ -43,8 +43,6 @@ const DescriptionPage = () => {
   const [showModal, setShowModal] = useState(false);
   const [isSuccess, setIsSuccess] = useState(true);
 
-  const baseURL = "http://localhost:3030";
-  
   useEffect(() => {
     const fetchProduct = async () => {
       try {
@@ -62,11 +60,12 @@ const DescriptionPage = () => {
             isRecommended: data.isRecommended,
             // img_src: data.img_src,
             img_src: data.img_src
-            ? `${baseURL}/image/${data.img_src}` // Beverage images
-            : data.image_src
-            ? `${baseURL}/image/bakery/${data.image_src}` // Bakery images
-            : `${baseURL}/image/default-image.png`, // Default image
-            category: data.category || (data.Drink_Name ? "Beverage" : "Bakery"),
+              ? `${baseURL}/image/${data.img_src}` // Beverage images
+              : data.image_src
+              ? `${baseURL}/image/bakery/${data.image_src}` // Bakery images
+              : `${baseURL}/image/default-image.png`, // Default image
+            category:
+              data.category || (data.Drink_Name ? "Beverage" : "Bakery"),
             AddOns: data.AddOns || [], // Add-ons if available
           };
           setProduct(product);
@@ -128,40 +127,53 @@ const DescriptionPage = () => {
 
   // Calculate base price with add-ons for display
   const basePrice =
-    type === "Hot" && product.Price.hotPrice !== null && product.Price.hotPrice !== undefined
+    type === "Hot" &&
+    product.Price.hotPrice !== null &&
+    product.Price.hotPrice !== undefined
       ? product.Price.hotPrice
-      : type === "Cold" && product.Price.coldPrice !== null && product.Price.coldPrice !== undefined
-        ? product.Price.coldPrice
-        : product.Price.singlePrice !== null && product.Price.singlePrice !== undefined
-          ? product.Price.singlePrice
-          : 0; // Default to 0 if all price fields are null or undefined
+      : type === "Cold" &&
+        product.Price.coldPrice !== null &&
+        product.Price.coldPrice !== undefined
+      ? product.Price.coldPrice
+      : product.Price.singlePrice !== null &&
+        product.Price.singlePrice !== undefined
+      ? product.Price.singlePrice
+      : 0; // Default to 0 if all price fields are null or undefined
 
-  const addOnTotal = selectedAddOns.reduce((total, addOn) => total + addOn.price, 0);
+  const addOnTotal = selectedAddOns.reduce(
+    (total, addOn) => total + addOn.price,
+    0
+  );
   const displayTotalPrice = basePrice + addOnTotal;
-
   return (
     <main>
       <ReturnButton />
 
-      <div className="description-page">
-        <div className="product-details">
+      <div className={styles["description-page"]}>
+        <div className={styles["product-details"]}>
           <Image
             src={product.img_src}
             alt={product.Drink_Name || product.Bakery_Name || "Product Image"}
             width={500}
             height={500}
-            className="product-image"
+            className={styles["product-image"]}
           />
-          <h1>{product.Drink_Name || product.Bakery_Name}</h1>
-          <p className="product-description">{product.Description}</p>
+          <h1 className="text-xl font-adlam text-[#674636] mb-5 text-left mt-7 font-extrabold">
+            {product.Drink_Name || product.Bakery_Name}
+          </h1>
+          <p className={styles["product-description"]}>{product.Description}</p>
 
-          <div className="options">
+          <div className={styles["options"]}>
             {product.DrinkType && (
               <>
                 <h2>Type</h2>
-                <div className="option-group">
+                <div className={styles["option-group"]}>
                   <button
-                    className={type === "Hot" ? "option selected" : "option"}
+                    className={
+                      type === "Hot"
+                        ? `${styles["option"]} ${styles["selected"]}`
+                        : styles["option"]
+                    }
                     onClick={() => setType("Hot")}
                     disabled={!product.DrinkType.includes("Hot")}
                   >
@@ -169,7 +181,11 @@ const DescriptionPage = () => {
                   </button>
                   {product.DrinkType.includes("Cold") && (
                     <button
-                      className={type === "Cold" ? "option selected" : "option"}
+                      className={
+                        type === "Cold"
+                          ? `${styles["option"]} ${styles["selected"]}`
+                          : styles["option"]
+                      }
                       onClick={() => setType("Cold")}
                     >
                       Cold
@@ -182,11 +198,17 @@ const DescriptionPage = () => {
             {product.AddOns && product.AddOns.length > 0 && (
               <>
                 <h2>Add on</h2>
-                <div className="option-group">
+                <div className={styles["option-group"]}>
                   {product.AddOns.map((addOn) => (
                     <button
                       key={addOn.name}
-                      className={selectedAddOns.some((selected) => selected.name === addOn.name) ? "option selected" : "option"}
+                      className={
+                        selectedAddOns.some(
+                          (selected) => selected.name === addOn.name
+                        )
+                          ? `${styles["option"]} ${styles["selected"]}`
+                          : styles["option"]
+                      }
                       onClick={() => handleAddOnClick(addOn)}
                     >
                       {addOn.name} (+{addOn.price}.-)
@@ -196,37 +218,56 @@ const DescriptionPage = () => {
               </>
             )}
 
-            {/* Show "Choice of Sweetness" only if the product is a beverage */}
             {product.category === "Beverage" && (
               <>
                 <h2>Choice of Sweetness</h2>
-                <div className="option-group">
+                <div className={styles["option-group"]}>
                   <button
-                    className={sweetness === "0%" ? "option selected" : "option"}
+                    className={
+                      sweetness === "0%"
+                        ? `${styles["option"]} ${styles["selected"]}`
+                        : styles["option"]
+                    }
                     onClick={() => setSweetness("0%")}
                   >
                     0%
                   </button>
                   <button
-                    className={sweetness === "30%" ? "option selected" : "option"}
+                    className={
+                      sweetness === "30%"
+                        ? `${styles["option"]} ${styles["selected"]}`
+                        : styles["option"]
+                    }
                     onClick={() => setSweetness("30%")}
                   >
                     30%
                   </button>
                   <button
-                    className={sweetness === "50%" ? "option selected" : "option"}
+                    className={
+                      sweetness === "50%"
+                        ? `${styles["option"]} ${styles["selected"]}`
+                        : styles["option"]
+                    }
                     onClick={() => setSweetness("50%")}
                   >
                     50%
                   </button>
                   <button
-                    className={sweetness === "75%" ? "option selected" : "option"}
+                    className={
+                      sweetness === "75%"
+                        ? `${styles["option"]} ${styles["selected"]}`
+                        : styles["option"]
+                    }
                     onClick={() => setSweetness("75%")}
                   >
                     75%
                   </button>
                   <button
-                    className={sweetness === "100%" ? "option selected" : "option"}
+                    className={
+                      sweetness === "100%"
+                        ? `${styles["option"]} ${styles["selected"]}`
+                        : styles["option"]
+                    }
                     onClick={() => setSweetness("100%")}
                   >
                     100%
@@ -235,13 +276,13 @@ const DescriptionPage = () => {
               </>
             )}
 
-            <div className="price">
+            <div className={styles["price"]}>
               <h3>
                 <strong>Total Price:</strong>{" "}
                 <span>{displayTotalPrice} .-</span>
               </h3>
             </div>
-            <button className="add-to-cart" onClick={handleAddToCart}>
+            <button className={styles["add-to-cart"]} onClick={handleAddToCart}>
               Add to Cart
             </button>
           </div>
@@ -249,8 +290,12 @@ const DescriptionPage = () => {
       </div>
 
       {showModal && (
-        <div className="modal-overlay">
-          <div className={`modal-content ${isSuccess ? "success" : "failure"}`}>
+        <div className={styles["modal-overlay"]}>
+          <div
+            className={`${styles["modal-content"]} ${
+              isSuccess ? styles["success"] : styles["failure"]
+            }`}
+          >
             <p>
               {isSuccess
                 ? "Item added to cart successfully!"
@@ -267,7 +312,3 @@ const DescriptionPage = () => {
 };
 
 export default DescriptionPage;
-
-
-
-
