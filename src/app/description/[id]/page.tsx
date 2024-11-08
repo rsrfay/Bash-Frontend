@@ -91,7 +91,7 @@ export default function DescriptionPage() {
     const newCartItem = {
       id: Date.now(),
       productId: product.id,
-      itemName: product.Drink_Name || product.Bakery_Name,
+      itemName: product.Drink_Name || product.Bakery_Name || "Unknown Product",
       itemDetails: product.Description,
       type,
       addOns: selectedAddOns.map((addOn) => addOn.name),
@@ -101,7 +101,7 @@ export default function DescriptionPage() {
       image: product.img_src,
     };
 
-    // addToCart(newCartItem);
+    addToCart(newCartItem);
     setIsSuccess(true);
     setShowModal(true);
   };
@@ -169,18 +169,22 @@ export default function DescriptionPage() {
               <>
                 <h2>Type</h2>
                 <div className={styles["option-group"]}>
-                  <button
-                    className={
-                      type === "Hot"
-                        ? `${styles["option"]} ${styles["selected"]}`
-                        : styles["option"]
-                    }
-                    onClick={() => setType("Hot")}
-                    disabled={!product.DrinkType.includes("Hot")}
-                  >
-                    Hot
-                  </button>
-                  {product.DrinkType.includes("Cold") && (
+                  {(product.DrinkType === "Hot" ||
+                    product.DrinkType === "Hot/Cold") && (
+                    <button
+                      className={
+                        type === "Hot"
+                          ? `${styles["option"]} ${styles["selected"]}`
+                          : styles["option"]
+                      }
+                      onClick={() => setType("Hot")}
+                    >
+                      Hot
+                    </button>
+                  )}
+
+                  {(product.DrinkType === "Cold" ||
+                    product.DrinkType === "Hot/Cold") && (
                     <button
                       className={
                         type === "Cold"
