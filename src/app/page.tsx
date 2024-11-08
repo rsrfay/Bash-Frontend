@@ -74,7 +74,7 @@ export default function Home() {
             Drink_Name: any;
             Bakery_Name: any;
             Description: any;
-            Price: { hotPrice: any; coldPrice: any };
+            Price: { hotPrice: any; coldPrice: any; singlePrice: any };
             Tag: string | string[];
             DrinkType: any;
             isRecommended: any;
@@ -84,7 +84,7 @@ export default function Home() {
             id: item.Drink_ID || item.Bakery_ID,
             name: item.Drink_Name || item.Bakery_Name,
             description: item.Description || "",
-            hotPrice: item.Price?.hotPrice || "-",
+            hotPrice: item.Price?.hotPrice || item.Price?.singlePrice || "-",
             coldPrice: item.Price?.coldPrice || "-",
             category: item.Tag?.includes("bakery") ? "Bakery" : "Drink",
             TypeOfDrinks: item.DrinkType || "-",
