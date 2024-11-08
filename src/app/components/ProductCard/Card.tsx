@@ -1,6 +1,6 @@
 "use client";
 import React, { useState } from "react";
-import "./Card.css";
+import styles from "./Card.module.css";
 import Link from "next/link";
 import { motion } from "framer-motion"; 
 
@@ -53,10 +53,10 @@ const Card: React.FC<CardProps> = ({
         rel="stylesheet"
         href="https://fonts.googleapis.com/css2?family=ADLaM+Display&family=Montserrat:wght@400;700&display=swap"
       />
-    <div className="card">
+    <div className={styles.card}>
       <Link href={`/description/${id}`}>
-        <img src={image} alt={name} className="card-image" />
-        <h3 className="card-title">
+        <img src={image} alt={name} className={styles.cardImage} />
+        <h3 className={styles.cardTitle}>
           {name}
           {isRecommended && (
             <span role="img" aria-label="thumbs up">
@@ -65,9 +65,9 @@ const Card: React.FC<CardProps> = ({
             </span>
           )}
         </h3>
-        <p className="card-description">{truncatedDescription}</p>
-        <div className="card-price">{displayPrice()}</div>
-        <div className="card-add-to-cart">
+        <p className={styles.cardDescription}>{truncatedDescription}</p>
+        <div className={styles.cardPrice}>{displayPrice()}</div>
+        <div className={styles.cardAddToCart}>
           <button>+</button>
         </div>
       </Link>
