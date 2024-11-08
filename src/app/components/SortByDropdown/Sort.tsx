@@ -1,4 +1,7 @@
 import React from 'react';
+import styles from "../../homepage.module.css";
+
+
 
 interface SortByDropdownProps {
   onSortChange: (value: string) => void; 
@@ -11,7 +14,7 @@ const SortByDropdown: React.FC<SortByDropdownProps> = ({ onSortChange, sortValue
   };
 
   return (
-    <div className="sort-dropdown">
+    <div className={styles.sortDropdown} >
       <label>Sort by: </label>
       <select value={sortValue || 'none'} onChange={handleChange}>
         <option value="none">Select</option>

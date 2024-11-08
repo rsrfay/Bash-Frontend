@@ -1,6 +1,6 @@
 "use client";
 
-import "./homepage.css";
+import styles from "./homepage.module.css";
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { FaCoffee, FaBreadSlice } from "react-icons/fa"; // Import icons
@@ -221,11 +221,11 @@ export default function Home() {
         />
       </header>
       <NavBar />
-      <div className="search-container">
+      <div className={styles.searchContainer}>
         <SearchBar onSearch={handleSearch} />
       </div>
       <motion.div
-        className="filterbar-container"
+        className={styles.filterbarContainer}
         initial="hidden"
         animate="visible"
         variants={sectionVariants}
@@ -244,16 +244,16 @@ export default function Home() {
         </div>
       )}
       {selectedFilter === "All" && (
-        <div className="title">
+        <div className={styles.title}>
           <h1> RECOMMENDED</h1>
         </div>
       )}
       {selectedFilter === "All" && searchTerm === "" && (
-        <div className="recommeded-container">
+        <div className={styles.recommendedContainer}>
           {products
             .filter((product) => product.isRecommended)
             .map((product) => (
-              <div className="cardrcmd" key={product.id}>
+              <div className={styles.cardRcmd} key={product.id}>
                 {" "}
                 {/* Moved cardrcmd inside the map */}
                 <Card
@@ -272,7 +272,7 @@ export default function Home() {
         </div>
       )}
 
-      <div className="title">
+      <div className={styles.title}>
         <h1> EXPLORE OUR MENU </h1>
       </div>
       {/* Global sorting for all products */}
@@ -296,7 +296,7 @@ export default function Home() {
       </motion.div> */}
       {paginatedProducts.length > 0 ? (
         <motion.div
-          className="card-container"
+        className={styles.cardContainer}
           initial="hidden"
           animate="visible"
           variants={sectionVariants}
