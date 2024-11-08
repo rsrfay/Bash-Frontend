@@ -2,7 +2,7 @@
     background-color: #674636;
     height: 50px;
   }
-  .search-container {
+  .searchContainer {
     display: flex;
     justify-content: flex-end;
     align-items: center;
@@ -24,13 +24,13 @@
   }
   
   @media screen and (max-width: 600px) {
-    .card-container {
+    .cardContainer {
       grid-template-columns: 1fr; /* Make the grid take one column */
       justify-items: center; /* Center the cards within the grid */
     }
   }
   
-  .card-container {
+  .cardContainer {
     padding: 9%;
     padding-top: 3%;
     padding-bottom: 3%;
@@ -63,7 +63,7 @@
     margin-bottom: 15px;
   }
   
-  .recommeded-container {
+  .recommendedContainer {
     padding: 3% 5% 0% 5% ; /* top, right, bottom, left */
     display: flex;
     flex-direction: row;
@@ -73,27 +73,27 @@
     scroll-snap-type: x mandatory;
   }
   
-  .cardrcmd {
+  .cardRcmd {
     flex: 0 0 18%;
     flex-shrink: 0;
     min-width: 250px;
   }
   
   @media screen and (max-width: 600px) {
-    .recommeded-container {
+    .recommendedContainer {
       padding: 3% 1% 0% 3%; /* Adjust padding for mobile */
     }
   
-    .cardrcmd {
+    .cardRcmd {
       flex: 0 0 45%; /* Show ~2 cards per row on mobile */
     }
   }
   
-  .recommeded-container::-webkit-scrollbar {
+  .recommendedContainer::-webkit-scrollbar {
     display: none;
   }
   
-  .filterbar-container {
+  .filterbarContainer {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -102,7 +102,7 @@
   }
   
   /* Sort dropdown container */
-  .sort-dropdown {
+  .sortDropdown {
     display: flex;
     justify-content: flex-end; /* Align dropdown to the right */
     align-items: center;
@@ -110,15 +110,15 @@
     margin-bottom: 20px;
   }
   
-  .sort-dropdown label {
+  .sortDropdown label {
     font-weight: 600;
     font-size: 16px;
     margin-right: 10px;
     font-family: 'Montserrat', sans-serif;
-    color: #333; /* Label text color */
+    color: #674636; 
   }
   
-  .sort-dropdown select {
+  .sortDropdown select {
     padding: 10px;
     font-size: 14px;
     border: 1px solid #ddd;
@@ -132,25 +132,25 @@
     color: #674636; /* Dropdown text color */
   }
   
-  .sort-dropdown select:hover {
+  .sortDropdown select:hover {
     border-color: #674636; /* Border color on hover */
   }
   
-  .sort-dropdown select:focus {
+  .sortDropdown select:focus {
     border-color: #674636; /* Focused border color */
     box-shadow: 0 0 5px rgba(103, 70, 54, 0.3);
   }
   
   /* Media Queries to ensure responsiveness on smaller screens */
   @media screen and (max-width: 600px) {
-    .sort-dropdown {
+    .sortDropdown {
       justify-content: flex-end; 
       margin-top: 10px;
       margin-right: 20px;
       margin-bottom: 10px; 
     }
   
-    .sort-dropdown select {
+    .sortDropdown select {
       width: auto;
       min-width: 30%;
       text-align: center; 
