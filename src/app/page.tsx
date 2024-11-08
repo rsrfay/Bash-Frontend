@@ -15,6 +15,7 @@ import NavBar from "./components/Nav/Nav";
 import PaginationButton from "./components/Pagination/Pagination";
 import SortByDropdown from "./components/SortByDropdown/Sort";
 import { CartProvider, useCart } from "../context/CartContext";
+import NoResult from "./components/NoResult/NoResult";
 
 const ITEMS_PER_PAGE = 10; // number of items per page (not sure na just estimate)
 const baseURL = "http://localhost:3030";
@@ -36,7 +37,6 @@ interface Product {
   image: string;
   Tag: string[]; // Add this line for tags
 }
-
 
 const filters = [
   { label: "All" },
@@ -65,29 +65,42 @@ export default function Home() {
         const response = await fetch(`${baseURL}/menu`);
         console.log("res data: ", response);
         const data = await response.json();
-  
+
         // Map data to match Product interface, dynamically building the image URL
-        const mappedData = data.map((item: { Drink_ID: any; Bakery_ID: any; Drink_Name: any; Bakery_Name: any; Description: any; Price: { hotPrice: any; coldPrice: any; }; Tag: string | string[]; DrinkType: any; isRecommended: any; img_src: any; image_src: any; }) => ({
-          id: item.Drink_ID || item.Bakery_ID,
-          name: item.Drink_Name || item.Bakery_Name,
-          description: item.Description || "",
-          hotPrice: item.Price?.hotPrice || "-",
-          coldPrice: item.Price?.coldPrice || "-",
-          category: item.Tag?.includes("bakery") ? "Bakery" : "Drink",
-          TypeOfDrinks: item.DrinkType || "-",
-          isRecommended: item.isRecommended || false,
-          image: item.img_src
-            ? `${baseURL}/image/${item.img_src}`
-            : item.image_src
-            ? `${baseURL}/image/bakery/${item.image_src}`
-            : `${baseURL}/image/default-image.png`,
-          Tag: Array.isArray(item.Tag) ? item.Tag : [item.Tag] // Ensure Tag is an array
-        }));
-        
-  
+        const mappedData = data.map(
+          (item: {
+            Drink_ID: any;
+            Bakery_ID: any;
+            Drink_Name: any;
+            Bakery_Name: any;
+            Description: any;
+            Price: { hotPrice: any; coldPrice: any };
+            Tag: string | string[];
+            DrinkType: any;
+            isRecommended: any;
+            img_src: any;
+            image_src: any;
+          }) => ({
+            id: item.Drink_ID || item.Bakery_ID,
+            name: item.Drink_Name || item.Bakery_Name,
+            description: item.Description || "",
+            hotPrice: item.Price?.hotPrice || "-",
+            coldPrice: item.Price?.coldPrice || "-",
+            category: item.Tag?.includes("bakery") ? "Bakery" : "Drink",
+            TypeOfDrinks: item.DrinkType || "-",
+            isRecommended: item.isRecommended || false,
+            image: item.img_src
+              ? `${baseURL}/image/${item.img_src}`
+              : item.image_src
+              ? `${baseURL}/image/bakery/${item.image_src}`
+              : `${baseURL}/image/default-image.png`,
+            Tag: Array.isArray(item.Tag) ? item.Tag : [item.Tag], // Ensure Tag is an array
+          })
+        );
+
         setProducts(mappedData);
         setFilteredProducts(mappedData);
-  
+
         console.log("menu: ", mappedData);
       } catch (error) {
         console.error("Error fetching menu items:", error);
@@ -95,8 +108,6 @@ export default function Home() {
     };
     fetchData();
   }, []);
-  
-  
 
   // Calculate the total number of pages based on items per page
   const totalPages = Math.ceil(filteredProducts.length / ITEMS_PER_PAGE);
@@ -138,15 +149,17 @@ export default function Home() {
       } else if (filter === "Hot menu") {
         updatedProducts = updatedProducts.filter(
           (product) =>
-            product.TypeOfDrinks === "Hot" || product.TypeOfDrinks === "Hot/Cold"
+            product.TypeOfDrinks === "Hot" ||
+            product.TypeOfDrinks === "Hot/Cold"
         );
       } else if (filter === "Cold menu") {
         updatedProducts = updatedProducts.filter(
           (product) =>
-            product.TypeOfDrinks === "Cold" || product.TypeOfDrinks === "Hot/Cold"
+            product.TypeOfDrinks === "Cold" ||
+            product.TypeOfDrinks === "Hot/Cold"
         );
       }
-    }  
+    }
 
     setMatchingCount(updatedProducts.length);
 
@@ -264,10 +277,12 @@ export default function Home() {
       {/* Global sorting for all products */}
       <SortByDropdown onSortChange={handleSortChange} sortValue={sortOrder} />
       {/* Display matching count */}
-      <div className="matching-count">
-        <p>{matchingCount} products match your filter</p>
+      <div className="text-[#674636] mr-[6.5%] my-4 flex justify-end space-x-1 text-nowrap">
+        <p className="font-bold">{matchingCount}</p>
+        <p>products match your filter</p>
       </div>
-      <motion.div
+
+      {/* <motion.div
         className="card-container"
         initial="hidden"
         animate="visible"
@@ -277,12 +292,29 @@ export default function Home() {
         {paginatedProducts.map((product) => (
           <Card key={product.id} {...product} />
         ))}
-      </motion.div>
-      <PaginationButton
-        totalPages={totalPages}
-        currentPage={currentPage}
-        onPageChange={handlePageChange}
-      />
+      </motion.div> */}
+      {paginatedProducts.length > 0 ? (
+        <motion.div
+          className="card-container"
+          initial="hidden"
+          animate="visible"
+          variants={sectionVariants}
+          transition={{ duration: 0.5, delay: 0.7 }}
+        >
+          {paginatedProducts.map((product) => (
+            <Card key={product.id} {...product} />
+          ))}
+        </motion.div>
+      ) : (
+        <NoResult textHeader="No Result" />
+      )}
+      {paginatedProducts.length > 0 && (
+        <PaginationButton
+          totalPages={totalPages}
+          currentPage={currentPage}
+          onPageChange={handlePageChange}
+        />
+      )}
     </main>
   );
 }
