@@ -100,6 +100,7 @@ export default function Home() {
 
         setProducts(mappedData);
         setFilteredProducts(mappedData);
+        setMatchingCount(mappedData.length);
 
         console.log("menu: ", mappedData);
       } catch (error) {

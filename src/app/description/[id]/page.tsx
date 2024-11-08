@@ -30,7 +30,8 @@ interface Product {
   AddOns?: AddOn[]; // List of available add-ons for this product
 }
 const baseURL = "http://localhost:3030";
-const DescriptionPage = () => {
+
+export default function DescriptionPage() {
   const { id } = useParams();
   const router = useRouter();
   const { addToCart } = useCart();
@@ -309,6 +310,4 @@ const DescriptionPage = () => {
       )}
     </main>
   );
-};
-
-export default DescriptionPage;
+}
