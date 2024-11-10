@@ -34,10 +34,12 @@ const CartCardItem: React.FC<CartItemProps> = ({
 }) => {
   const router = useRouter();
 
-  const description =
-    addOns.length > 0
-      ? `${type}, ${addOns.join(", ")}, ${sweetness}`
-      : `${type}, ${sweetness}`;
+  const descriptionParts = [];
+  if (type) descriptionParts.push(type);
+  if (sweetness) descriptionParts.push(sweetness);
+  if (addOns.length > 0) descriptionParts.push(addOns.join(", "));
+
+  const description = descriptionParts.join(", ");
 
   return (
     <div

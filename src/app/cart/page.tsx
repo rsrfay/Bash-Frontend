@@ -60,9 +60,9 @@ const CartPage: React.FC = () => {
               key={item.id}
               id={item.id}
               itemName={item.itemName}
-              type={item.type}
-              addOns={item.addOns}
-              sweetness={item.sweetness}
+              type={item.type || ""}
+              addOns={item.addOns || []}
+              sweetness={item.sweetness || ""}
               quantity={item.quantity}
               price={item.price}
               image={item.image}
