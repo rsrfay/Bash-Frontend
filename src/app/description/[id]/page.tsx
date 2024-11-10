@@ -40,6 +40,7 @@ export default function DescriptionPage() {
   const [selectedAddOns, setSelectedAddOns] = useState<AddOn[]>([]); // Store selected add-ons
   const [sweetness, setSweetness] = useState("50%");
   const [quantity, setQuantity] = useState(1);
+  const [category, setCategory] = useState("Baverage");
 
   const [showModal, setShowModal] = useState(false);
   const [isSuccess, setIsSuccess] = useState(true);
@@ -71,6 +72,7 @@ export default function DescriptionPage() {
           };
           setProduct(product);
           setType(data.DrinkType?.includes("Hot") ? "Hot" : "Cold"); // Set default type
+          setCategory(category);
         } else {
           console.error("Failed to fetch product data.");
         }
@@ -88,17 +90,19 @@ export default function DescriptionPage() {
       return;
     }
 
+    const isBakery = !!product.Bakery_Name;
+
     const newCartItem = {
       id: Date.now(),
       productId: product.id,
       itemName: product.Drink_Name || product.Bakery_Name || "Unknown Product",
       itemDetails: product.Description,
-      type,
+      category: product.category || "Unknown Category",
       addOns: selectedAddOns.map((addOn) => addOn.name),
-      sweetness,
       quantity,
       price: displayTotalPrice,
       image: product.img_src,
+      ...(isBakery ? {} : { sweetness, type }),
     };
 
     addToCart(newCartItem);
@@ -110,7 +114,7 @@ export default function DescriptionPage() {
     setShowModal(false);
     if (isSuccess) {
       router.push("/"); // Redirect to homepage if successful
-    }
+    } 
   };
 
   const handleAddOnClick = (selectedAddOn: AddOn) => {
@@ -133,13 +137,13 @@ export default function DescriptionPage() {
     product.Price.hotPrice !== undefined
       ? product.Price.hotPrice
       : type === "Cold" &&
-        product.Price.coldPrice !== null &&
-        product.Price.coldPrice !== undefined
-      ? product.Price.coldPrice
-      : product.Price.singlePrice !== null &&
-        product.Price.singlePrice !== undefined
-      ? product.Price.singlePrice
-      : 0; // Default to 0 if all price fields are null or undefined
+          product.Price.coldPrice !== null &&
+          product.Price.coldPrice !== undefined
+        ? product.Price.coldPrice
+        : product.Price.singlePrice !== null &&
+            product.Price.singlePrice !== undefined
+          ? product.Price.singlePrice
+          : 0; // Default to 0 if all price fields are null or undefined
 
   const addOnTotal = selectedAddOns.reduce(
     (total, addOn) => total + addOn.price,
