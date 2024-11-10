@@ -6,7 +6,9 @@ import { useRouter } from "next/navigation";
 type PaymentItemProps = {
   id: number;
   itemName: string;
-  itemDetails: string;
+  type: string;
+  addOns: string[];
+  sweetness: string;
   quantity: number;
   price: number;
   image: string;
@@ -15,12 +17,21 @@ type PaymentItemProps = {
 const PaymentCardItem: React.FC<PaymentItemProps> = ({
   id,
   itemName,
-  itemDetails,
+  type,
+  addOns,
+  sweetness,
   quantity,
   price,
   image,
 }) => {
   const router = useRouter();
+
+  const descriptionParts = [];
+  if (type) descriptionParts.push(type);
+  if (sweetness) descriptionParts.push(sweetness);
+  if (addOns.length > 0) descriptionParts.push(addOns.join(", "));
+
+  const description = descriptionParts.join(", ");
 
   return (
     <div className={styles.paymentItemContainer}>
@@ -30,7 +41,7 @@ const PaymentCardItem: React.FC<PaymentItemProps> = ({
       </div>
       <div className={styles.itemInfo}>
         <h3 className={styles.itemName}>{itemName}</h3>
-        <p className={styles.description}>{itemDetails}</p>
+        <p className={styles.description}>{description}</p>
       </div>
       <div className={styles.itemPrice}>
         <span>{price * quantity} Baht</span>

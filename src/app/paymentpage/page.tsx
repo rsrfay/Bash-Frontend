@@ -93,13 +93,9 @@ const PaymentPage: React.FC = () => {
               key={item.id}
               id={item.id}
               itemName={item.itemName}
-              itemDetails={
-                item.type +
-                ", " +
-                item.addOns.join(", ") +
-                ", " +
-                item.sweetness
-              }
+              type={item.type || ""}
+              addOns={item.addOns || []}
+              sweetness={item.sweetness || ""}
               quantity={item.quantity}
               price={item.price}
               image={item.image}
