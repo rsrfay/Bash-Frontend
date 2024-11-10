@@ -53,9 +53,9 @@ const DescriptionPage = () => {
 
     if (foundCartItem) {
       setCartItem(foundCartItem);
-      setType(foundCartItem.type);
-      setAddOn(foundCartItem.addOns);
-      setSweetness(foundCartItem.sweetness);
+      setType(foundCartItem.type || "");
+      setAddOn(foundCartItem.addOns || []);
+      setSweetness(foundCartItem.sweetness || "");
 
       // Fetch product details from the backend to get the image, add-ons, and prices
       const fetchProduct = async () => {

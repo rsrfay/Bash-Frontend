@@ -7,9 +7,10 @@ export type CartItemType = {
   productId: number;
   itemName: string;
   itemDetails?: string;
-  type: string;
-  addOns: string[];
-  sweetness: string;
+  category:string;
+  type?: string;
+  addOns?: string[];
+  sweetness?: string;
   quantity: number;
   price: number;
   image: string;
