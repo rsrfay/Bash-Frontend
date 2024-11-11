@@ -40,7 +40,7 @@ export default function DescriptionPage() {
   const [selectedAddOns, setSelectedAddOns] = useState<AddOn[]>([]); // Store selected add-ons
   const [sweetness, setSweetness] = useState("50%");
   const [quantity, setQuantity] = useState(1);
-  const [category, setCategory] = useState("Baverage");
+  const [category, setCategory] = useState("Beverage");
 
   const [showModal, setShowModal] = useState(false);
   const [isSuccess, setIsSuccess] = useState(true);
