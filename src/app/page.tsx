@@ -164,6 +164,7 @@ export default function Home() {
 
     setMatchingCount(updatedProducts.length);
 
+    // Refactor to another function
     // Apply sorting by price
     if (sortOrder === "Price Low to High") {
       updatedProducts.sort((a, b) => {
