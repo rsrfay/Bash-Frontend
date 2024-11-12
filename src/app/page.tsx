@@ -1,5 +1,5 @@
 "use client";
-
+import React, { Suspense } from "react";
 import styles from "./homepage.module.css";
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
@@ -164,6 +164,7 @@ export default function Home() {
 
     setMatchingCount(updatedProducts.length);
 
+    // Refactor to another function
     // Apply sorting by price
     if (sortOrder === "Price Low to High") {
       updatedProducts.sort((a, b) => {
@@ -222,7 +223,10 @@ export default function Home() {
       </header>
       <NavBar />
       <div className={styles.searchContainer}>
-        <SearchBar onSearch={handleSearch} />
+        {/* <SearchBar onSearch={handleSearch} /> */}
+        <Suspense fallback={<div>Loading...</div>}>
+          <SearchBar onSearch={handleSearch} />
+        </Suspense>
       </div>
       <motion.div
         className={styles.filterbarContainer}
@@ -243,7 +247,7 @@ export default function Home() {
           <Slideshow />
         </div>
       )}
-      {selectedFilter === "All" && (
+      {selectedFilter === "All" && searchTerm === "" &&(
         <div className={styles.title}>
           <h1> RECOMMENDED</h1>
         </div>
@@ -296,7 +300,7 @@ export default function Home() {
       </motion.div> */}
       {paginatedProducts.length > 0 ? (
         <motion.div
-        className={styles.cardContainer}
+          className={styles.cardContainer}
           initial="hidden"
           animate="visible"
           variants={sectionVariants}
