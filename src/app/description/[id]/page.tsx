@@ -83,11 +83,12 @@ export default function DescriptionPage() {
     fetchProduct();
   }, [id]);
 
+  // Use this to test
   const handleAddToCart = () => {
     if (!product) {
       setIsSuccess(false);
       setShowModal(true);
-      return;
+      return; // return something
     }
 
     const isBakery = !!product.Bakery_Name;
@@ -108,6 +109,7 @@ export default function DescriptionPage() {
     addToCart(newCartItem);
     setIsSuccess(true);
     setShowModal(true);
+    // return length of current cart
   };
 
   const handleCloseModal = () => {
@@ -117,12 +119,13 @@ export default function DescriptionPage() {
     } 
   };
 
+  // use this to test
   const handleAddOnClick = (selectedAddOn: AddOn) => {
     setSelectedAddOns((prevAddOns) => {
       if (prevAddOns.some((addOn) => addOn.name === selectedAddOn.name)) {
         return prevAddOns.filter((addOn) => addOn.name !== selectedAddOn.name);
       }
-      return [...prevAddOns, selectedAddOn];
+      return [...prevAddOns, selectedAddOn]; 
     });
   };
 
