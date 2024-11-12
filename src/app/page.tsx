@@ -164,6 +164,7 @@ export default function Home() {
 
     setMatchingCount(updatedProducts.length);
 
+    // Refactor to another function
     // Apply sorting by price
     if (sortOrder === "Price Low to High") {
       updatedProducts.sort((a, b) => {
@@ -246,7 +247,7 @@ export default function Home() {
           <Slideshow />
         </div>
       )}
-      {selectedFilter === "All" && (
+      {selectedFilter === "All" && searchTerm === "" &&(
         <div className={styles.title}>
           <h1> RECOMMENDED</h1>
         </div>
