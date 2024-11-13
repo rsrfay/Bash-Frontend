@@ -6,6 +6,7 @@ import { useState, useEffect } from "react";
 import styles from "./description.module.css";
 import ReturnButton from "@/app/components/ReturnButton/ReturnButton";
 import { useCart } from "@/context/CartContext";
+import { handleAddToCart as addToCartUtility } from "@/lib/utils";
 
 interface AddOn {
   name: string;
@@ -84,39 +85,79 @@ export default function DescriptionPage() {
   }, [id]);
 
   // Use this to test
-  const handleAddToCart = () => {
+  // const handleAddToCart = () => {
+  //   if (!product) {
+  //     setIsSuccess(false);
+  //     setShowModal(true);
+  //     return;
+  //   }
+
+  //   const isBakery = !!product.Bakery_Name;
+
+  //   const newCartItem = {
+  //     id: Date.now(),
+  //     productId: product.id,
+  //     itemName: product.Drink_Name || product.Bakery_Name || "Unknown Product",
+  //     itemDetails: product.Description,
+  //     category: product.category || "Unknown Category",
+  //     addOns: selectedAddOns.map((addOn) => addOn.name),
+  //     quantity,
+  //     price: displayTotalPrice,
+  //     image: product.img_src,
+  //     ...(isBakery ? {} : { sweetness, type }),
+  //   };
+
+  //   addToCart(newCartItem);
+  //   setIsSuccess(true);
+  //   setShowModal(true);
+  //   // // Return the cart item and current cart length for verification in tests
+  //   // return { success: true, cartItem: newCartItem, cartLength: addToCart.length };
+  // };
+
+  // New add to cart ro call func in utils
+  const handleAddToCartClick = () => {
+    // Ensure product, quantity, and other required values are set before calling the utility
     if (!product) {
+      console.error("Product is undefined or null.");
       setIsSuccess(false);
       setShowModal(true);
-      return; // return something
+      return;
     }
-
-    const isBakery = !!product.Bakery_Name;
-
-    const newCartItem = {
-      id: Date.now(),
-      productId: product.id,
-      itemName: product.Drink_Name || product.Bakery_Name || "Unknown Product",
-      itemDetails: product.Description,
-      category: product.category || "Unknown Category",
-      addOns: selectedAddOns.map((addOn) => addOn.name),
-      quantity,
-      price: displayTotalPrice,
-      image: product.img_src,
-      ...(isBakery ? {} : { sweetness, type }),
-    };
-
-    addToCart(newCartItem);
-    setIsSuccess(true);
+    if (!quantity || quantity < 1) {
+      console.error("Quantity is invalid.");
+      setIsSuccess(false);
+      setShowModal(true);
+      return;
+    }
+  
+    // Call the utility function with validated parameters
+    const result = addToCartUtility(
+      product,               // Product object
+      selectedAddOns,        // Add-ons
+      quantity,              // Quantity
+      displayTotalPrice,     // Calculated total price
+      addToCart,             // addToCart function from context
+      product.category || "Unknown Category", // Default category
+      sweetness || "50%",    // Default sweetness
+      type || "Hot"          // Default type
+    );
+  
+    console.log(result);
+    // Handle the result to display success or error
+    if (result.success) {
+      setIsSuccess(true);
+    } else {
+      setIsSuccess(false);
+    }
     setShowModal(true);
-    // return length of current cart
-  };
+  };  
+  
 
   const handleCloseModal = () => {
     setShowModal(false);
     if (isSuccess) {
       router.push("/"); // Redirect to homepage if successful
-    } 
+    }
   };
 
   // use this to test
@@ -125,7 +166,7 @@ export default function DescriptionPage() {
       if (prevAddOns.some((addOn) => addOn.name === selectedAddOn.name)) {
         return prevAddOns.filter((addOn) => addOn.name !== selectedAddOn.name);
       }
-      return [...prevAddOns, selectedAddOn]; 
+      return [...prevAddOns, selectedAddOn];
     });
   };
 
@@ -140,13 +181,13 @@ export default function DescriptionPage() {
     product.Price.hotPrice !== undefined
       ? product.Price.hotPrice
       : type === "Cold" &&
-          product.Price.coldPrice !== null &&
-          product.Price.coldPrice !== undefined
-        ? product.Price.coldPrice
-        : product.Price.singlePrice !== null &&
-            product.Price.singlePrice !== undefined
-          ? product.Price.singlePrice
-          : 0; // Default to 0 if all price fields are null or undefined
+        product.Price.coldPrice !== null &&
+        product.Price.coldPrice !== undefined
+      ? product.Price.coldPrice
+      : product.Price.singlePrice !== null &&
+        product.Price.singlePrice !== undefined
+      ? product.Price.singlePrice
+      : 0; // Default to 0 if all price fields are null or undefined
 
   const addOnTotal = selectedAddOns.reduce(
     (total, addOn) => total + addOn.price,
@@ -294,7 +335,8 @@ export default function DescriptionPage() {
                 <span>{displayTotalPrice} .-</span>
               </h3>
             </div>
-            <button className={styles["add-to-cart"]} onClick={handleAddToCart}>
+            {/* <button className={styles["add-to-cart"]} onClick={handleAddToCart}> */}
+            <button className={styles["add-to-cart"]} onClick={handleAddToCartClick}>
               Add to Cart
             </button>
           </div>

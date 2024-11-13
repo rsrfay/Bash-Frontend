@@ -18,7 +18,8 @@ export type CartItemType = {
 
 type CartContextType = {
   cartItems: CartItemType[] | null;
-  addToCart: (item: CartItemType) => void;
+  // addToCart: (item: CartItemType) => void;
+  addToCart: (item: CartItemType) => number;
   updateCartItem: (updatedItem: CartItemType) => void;
   removeFromCart: (id: number) => void;
 };
@@ -55,10 +56,22 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({
     }
   }, [cartItems]);
 
+  // const addToCart = (item: CartItemType) => {
+  //   setCartItems((prevItems) => (prevItems ? [...prevItems, item] : [item]));
+  // };
+
+  // Add return to test
   const addToCart = (item: CartItemType) => {
-    setCartItems((prevItems) => (prevItems ? [...prevItems, item] : [item]));
+    setCartItems((prevItems) => {
+      const updatedCart = prevItems ? [...prevItems, item] : [item];
+      return updatedCart;
+    });
+    
+    // Return the new cart length
+    return cartItems ? cartItems.length + 1 : 1;
   };
 
+  
   const updateCartItem = (updatedItem: CartItemType) => {
     if (cartItems) {
       setCartItems(
