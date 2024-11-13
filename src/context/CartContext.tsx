@@ -7,7 +7,7 @@ export type CartItemType = {
   productId: number;
   itemName: string;
   itemDetails?: string;
-  category:string;
+  category: string;
   type?: string;
   addOns?: string[];
   sweetness?: string;
@@ -22,6 +22,7 @@ type CartContextType = {
   addToCart: (item: CartItemType) => number;
   updateCartItem: (updatedItem: CartItemType) => void;
   removeFromCart: (id: number) => void;
+  setCartItems: React.Dispatch<React.SetStateAction<CartItemType[] | null>>;
 };
 
 const CartContext = createContext<CartContextType | undefined>(undefined);
@@ -66,12 +67,11 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({
       const updatedCart = prevItems ? [...prevItems, item] : [item];
       return updatedCart;
     });
-    
+
     // Return the new cart length
     return cartItems ? cartItems.length + 1 : 1;
   };
 
-  
   const updateCartItem = (updatedItem: CartItemType) => {
     if (cartItems) {
       setCartItems(
@@ -90,7 +90,13 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({
 
   return (
     <CartContext.Provider
-      value={{ cartItems, addToCart, updateCartItem, removeFromCart }}
+      value={{
+        cartItems,
+        addToCart,
+        updateCartItem,
+        removeFromCart,
+        setCartItems,
+      }}
     >
       {children}
     </CartContext.Provider>

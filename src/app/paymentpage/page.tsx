@@ -10,7 +10,9 @@ import QRCodeModal from "../components/QRCodeModal/QRCodeModal";
 import { CartItemType, useCart } from "@/context/CartContext";
 
 const baseURL = "http://localhost:3030";
-const PROMPTPAY_NUMBER = "0000000000"; // Replace with your actual PromptPay number
+// const PROMPTPAY_NUMBER = memberInfo ? memberInfo.Tel : "0000000000"; for make propmtpay_number dynamic
+
+const PROMPTPAY_NUMBER = "0866001234";
 
 interface MemberInfo {
   MID: string;
@@ -35,7 +37,9 @@ const PaymentPage: React.FC = () => {
   const [telChecked, setTelChecked] = useState(false);
   const [membershipPoints, setMembershipPoints] = useState<number | null>(null);
   const [promotions, setPromotions] = useState<Promotion[]>([]);
-  const [selectedPromotion, setSelectedPromotion] = useState<Promotion | null>(null);
+  const [selectedPromotion, setSelectedPromotion] = useState<Promotion | null>(
+    null
+  );
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [pointsRedeemed, setPointsRedeemed] = useState(false);
@@ -91,19 +95,21 @@ const PaymentPage: React.FC = () => {
   const handlePromotionSelect = async (promotion: Promotion) => {
     if (!memberInfo) return;
 
-    // If selecting the same promotion, deselect it and restore points if necessary
-    if (selectedPromotion?.Pro_ID === promotion.Pro_ID) {
-      if (promotion.Pro_ID === "001" && pointsRedeemed) {
+    // If the user is selecting a new promotion different from the current one
+    if (selectedPromotion && selectedPromotion.Pro_ID !== promotion.Pro_ID) {
+      // If the previously selected promotion was "001" (Promotion 1) and points were redeemed
+      if (selectedPromotion.Pro_ID === "001" && pointsRedeemed) {
         try {
+          // Restore the points
           const response = await fetch(`${baseURL}/member/add-points`, {
-            method: 'PUT',
+            method: "PUT",
             headers: {
-              'Content-Type': 'application/json',
+              "Content-Type": "application/json",
             },
             body: JSON.stringify({
               MID: memberInfo.MID,
-              points: 10
-            })
+              points: 10,
+            }),
           });
 
           if (response.ok) {
@@ -118,42 +124,83 @@ const PaymentPage: React.FC = () => {
           return;
         }
       }
+    }
+
+    // If the user is deselecting the currently selected promotion
+    if (selectedPromotion?.Pro_ID === promotion.Pro_ID) {
+      // If it's Promotion 1 and points were redeemed, restore points
+      if (promotion.Pro_ID === "001" && pointsRedeemed) {
+        try {
+          const response = await fetch(`${baseURL}/member/add-points`, {
+            method: "PUT",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              MID: memberInfo.MID,
+              points: 10,
+            }),
+          });
+
+          if (response.ok) {
+            const data = await response.json();
+            setMembershipPoints(data.member.Points);
+            setPointsRedeemed(false);
+          } else {
+            throw new Error("Failed to restore points");
+          }
+        } catch (error) {
+          console.error("Error restoring points:", error);
+          return;
+        }
+      }
+      // Deselect the promotion
       setSelectedPromotion(null);
       return;
     }
 
-    // Handle new promotion selection
+    // Handle selection of the new promotion
     if (promotion.Pro_ID === "001") {
-      if (membershipPoints && membershipPoints >= 10) {
+      // Promotion 1 requires 10 membership points
+      if (membershipPoints && membershipPoints >= 10 && !pointsRedeemed) {
         try {
+          // Deduct 10 points
           const response = await fetch(`${baseURL}/member/redeem-points`, {
-            method: 'PUT',
+            method: "PUT",
             headers: {
-              'Content-Type': 'application/json',
+              "Content-Type": "application/json",
             },
             body: JSON.stringify({
               MID: memberInfo.MID,
-              points: 10
-            })
+              points: 10,
+            }),
           });
 
           if (response.ok) {
             const data = await response.json();
             setMembershipPoints(data.member.Points);
             setPointsRedeemed(true);
-            setSelectedPromotion(promotion);
           } else {
             throw new Error("Failed to redeem points");
+            return;
           }
         } catch (error) {
           console.error("Error redeeming points:", error);
+          return;
         }
+      } else if (pointsRedeemed) {
+        // Points already redeemed, no action needed
+      } else {
+        // Not enough points to redeem
+        console.error("Not enough points to redeem Promotion 1");
+        return;
       }
-    } else {
-      setSelectedPromotion(promotion);
     }
+
+    // Set the new selected promotion
+    setSelectedPromotion(promotion);
   };
-  
+
   const isPromotionValid = (promotion: Promotion): boolean => {
     if (promotion.Pro_ID === "001") {
       return membershipPoints !== null && membershipPoints >= 10;
@@ -175,7 +222,7 @@ const PaymentPage: React.FC = () => {
       case "001": {
         if (membershipPoints !== null && pointsRedeemed) {
           const lowestDrinkPrice = Math.min(
-            ...cartItems.map(item => item.price)
+            ...cartItems.map((item) => item.price)
           );
           return lowestDrinkPrice;
         }
@@ -199,10 +246,9 @@ const PaymentPage: React.FC = () => {
     }
   };
 
-  const subtotal = cartItems?.reduce(
-    (total, item) => total + item.price * item.quantity,
-    0
-  ) ?? 0;
+  const subtotal =
+    cartItems?.reduce((total, item) => total + item.price * item.quantity, 0) ??
+    0;
 
   const discount = calculateDiscount();
   const total = subtotal - discount;
@@ -285,7 +331,7 @@ const PaymentPage: React.FC = () => {
               className={styles.checkMembershipButton}
               onClick={handleMembershipCheck}
             >
-              Check
+              Apply
             </button>
           ) : null}
           {membershipPoints !== null && telChecked ? (
@@ -327,7 +373,9 @@ const PaymentPage: React.FC = () => {
                       {promotion.Promo_Description}
                       {promotion.Pro_ID === "001" && (
                         <span className={styles.pointsIndicator}>
-                          {membershipPoints !== null ? ` (${membershipPoints} points)` : ""}
+                          {membershipPoints !== null
+                            ? ` (${membershipPoints} points)`
+                            : ""}
                         </span>
                       )}
                     </span>
@@ -360,7 +408,9 @@ const PaymentPage: React.FC = () => {
         <QRCodeModal
           amount={total}
           phoneNumber={PROMPTPAY_NUMBER}
-          // onPaymentSuccess={handlePaymentSuccess}
+          memberInfo={memberInfo}
+          cartItems={cartItems}
+          promotion={selectedPromotion?.Promo_Description}
         />
       </div>
     </main>
