@@ -331,7 +331,7 @@ const PaymentPage: React.FC = () => {
               className={styles.checkMembershipButton}
               onClick={handleMembershipCheck}
             >
-              Check
+              Apply
             </button>
           ) : null}
           {membershipPoints !== null && telChecked ? (
@@ -408,7 +408,9 @@ const PaymentPage: React.FC = () => {
         <QRCodeModal
           amount={total}
           phoneNumber={PROMPTPAY_NUMBER}
-          // onPaymentSuccess={handlePaymentSuccess}
+          memberInfo={memberInfo}
+          cartItems={cartItems}
+          promotion={selectedPromotion?.Promo_Description}
         />
       </div>
     </main>
