@@ -81,7 +81,7 @@
   
   @media screen and (max-width: 600px) {
     .recommendedContainer {
-      padding: 3% 1% 0% 3%; /* Adjust padding for mobile */
+      padding: 10% 1% 0% 3%; /* Adjust padding for mobile */
     }
   
     .cardRcmd {
