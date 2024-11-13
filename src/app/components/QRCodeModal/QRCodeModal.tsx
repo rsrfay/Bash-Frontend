@@ -5,33 +5,16 @@ import styles from './QRCodeModal.module.css';
 interface QRCodeModalProps {
   amount: number;
   phoneNumber?: string;
-  nationalId?: string;
   onClose?: () => void;
 }
 
 const QRCodeModal: React.FC<QRCodeModalProps> = ({ 
   amount, 
-  phoneNumber, 
-  nationalId,
-  onClose 
+  phoneNumber,
+  onClose
 }) => {
   const [showModal, setShowModal] = useState(false);
   const [copied, setCopied] = useState(false);
-
-  // Generate PromptPay ID - prefer phone number over national ID
-  const promptpayId = phoneNumber || nationalId || "0000000000";
-  
-  // Format phone number to remove any non-digit characters
-  const formattedId = promptpayId.replace(/\D/g, "");
-  
-  // Generate QR code URL from promptpay.io
-  const qrCodeUrl = `https://promptpay.io/${formattedId}/${amount}`;
-
-  const handleCopyAmount = () => {
-    navigator.clipboard.writeText(amount.toString());
-    setCopied(true);
-    setTimeout(() => setCopied(false), 2000);
-  };
 
   const handleModalOpen = () => {
     setShowModal(true);
@@ -44,6 +27,24 @@ const QRCodeModal: React.FC<QRCodeModalProps> = ({
     onClose?.();
   };
 
+  const handleOverlayClick = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (e.target === e.currentTarget) {
+      handleModalClose();
+    }
+  };
+
+  const handleCopyAmount = () => {
+    navigator.clipboard.writeText(amount.toString());
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
+  };
+
+  // Format PromptPay ID
+  const formattedPhoneNumber = phoneNumber?.replace(/\D/g, "") || "";
+  
+  // Generate QR code URL
+  const qrCodeUrl = `https://promptpay.io/${formattedPhoneNumber}/${amount.toFixed(2)}`;
+
   return (
     <>
       <button 
@@ -54,7 +55,7 @@ const QRCodeModal: React.FC<QRCodeModalProps> = ({
       </button>
 
       {showModal && (
-        <div className={styles.modalOverlay}>
+        <div className={styles.modalOverlay} onClick={handleOverlayClick}>
           <div className={styles.modalContent}>
             <div className={styles.modalHeader}>
               <h3 className={styles.modalTitle}>PromptPay QR Code</h3>
@@ -67,7 +68,6 @@ const QRCodeModal: React.FC<QRCodeModalProps> = ({
             </div>
 
             <div className={styles.contentWrapper}>
-              {/* QR Code Image */}
               <div className={styles.qrCodeContainer}>
                 <img
                   src={qrCodeUrl}
@@ -76,7 +76,6 @@ const QRCodeModal: React.FC<QRCodeModalProps> = ({
                 />
               </div>
               
-              {/* Amount Display */}
               <div className={styles.amountContainer}>
                 <div className={styles.amountInfo}>
                   <span className={styles.label}>Amount</span>
@@ -85,6 +84,7 @@ const QRCodeModal: React.FC<QRCodeModalProps> = ({
                 <button
                   onClick={handleCopyAmount}
                   className={styles.copyButton}
+                  aria-label="Copy amount"
                 >
                   {copied ? (
                     <span className={styles.copiedText}>Copied!</span>
@@ -94,13 +94,11 @@ const QRCodeModal: React.FC<QRCodeModalProps> = ({
                 </button>
               </div>
 
-              {/* Recipient ID Display */}
               <div className={styles.recipientContainer}>
-                <span className={styles.label}>Recipient ID</span>
-                <p className={styles.recipientId}>{promptpayId}</p>
+                <span className={styles.label}>Recipient</span>
+                <p className={styles.recipientId}>{phoneNumber}</p>
               </div>
 
-              {/* Instructions */}
               <div className={styles.instructions}>
                 <p>1. Open your banking app</p>
                 <p>2. Scan this QR code</p>
