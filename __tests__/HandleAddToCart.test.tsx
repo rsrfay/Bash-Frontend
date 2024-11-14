@@ -2,7 +2,7 @@ import { handleAddToCart } from "@/lib/utilsCart";
 import { CartItemType } from "@/context/CartContext";
 
 describe("handleAddToCart Function", () => {
-  const mockAddToCart = jest.fn().mockImplementation((item: CartItemType) => 1); // Mock addToCart to return cart length
+  const mockAddToCart = jest.fn().mockImplementation((item: CartItemType) => 1); // Mock addToCart to return cart length of 1
 
   // T1 (C1b1, C2b1, C3b1, C4b1, C5b1, C6b1, C7b1)
   // Test null product, invalid quantity and displayTotalPrice, empty sweetness and type
@@ -19,6 +19,7 @@ describe("handleAddToCart Function", () => {
       mockAddToCart
     );
 
+    // Assertions
     expect(result.success).toBe(false);
     expect(result.message).toBe("Product not found");
     expect(mockAddToCart).not.toHaveBeenCalled(); // addToCart should not be called when product is null
