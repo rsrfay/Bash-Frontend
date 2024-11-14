@@ -1,3 +1,5 @@
+![Build Status](https://github.com/rsrfay/Bash-Frontend/actions/workflows/webpack.yml/badge.svg) ![Coverage](.github/badges/jacoco.svg) ![Branches](.github/badges/branches.svg)
+
 # ❗ TODO Git ❗ 
 1. เวลาเริ่มทำงาน = pull เอา main เข้า branch ของตัวเอง
 2. เวลาทำงานเสร็จ (ไม่มี error อะไรแล้วนะ) -> Save ทุกไฟล์ก่อน commit เข้า branch ตัวเอง -> เอาของ branch ตัวเองลง main
