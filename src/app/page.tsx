@@ -197,6 +197,7 @@ export default function Home() {
     // Update the state with filtered/sorted products
     setFilteredProducts(updatedProducts);
     setCurrentPage(1); // Reset to first page when filters are applied
+    setMatchingCount(updatedProducts.length);
   };
 
   const handleFilterSelect = (filter: string) => {
@@ -291,8 +292,8 @@ export default function Home() {
       <SortByDropdown onSortChange={handleSortOrderChange} sortValue={sortOrder} />
       {/* Display matching count */}
       <div className="text-[#674636] mr-[6.5%] my-4 flex justify-end space-x-1 text-nowrap">
-        <p className="font-bold">{matchingCount}</p>
-        <p>products match your filter</p>
+        <p className="font-bold" id="matchedNumber">{matchingCount}</p>
+        <p >products match your filter</p>
       </div>
 
       {paginatedProducts.length > 0 ? (
