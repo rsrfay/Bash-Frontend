@@ -36,11 +36,11 @@ export function handleAddToCart(
   if (!product) {
     return { success: false, message: "Product not found" };
   }
-  if (quantity < 1) {
+  if (quantity < 1 || Number.isNaN(quantity) ) {
     console.error("Quantity is invalid.");
     return { success: false, message: "Product quantity is invalid" };
   }
-  if (displayTotalPrice <= 0) {
+  if (displayTotalPrice <= 0 || Number.isNaN(displayTotalPrice)) {
     console.error("Total Price is invalid.");
     return { success: false, message: "Product total price is invalid" };
   }

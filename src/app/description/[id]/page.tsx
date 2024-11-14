@@ -6,7 +6,7 @@ import { useState, useEffect } from "react";
 import styles from "./description.module.css";
 import ReturnButton from "@/app/components/ReturnButton/ReturnButton";
 import { useCart } from "@/context/CartContext";
-import { handleAddToCart as addToCartUtility } from "@/lib/utils";
+import { handleAddToCart as addToCartUtility } from "@/lib/utilsCart";
 
 interface AddOn {
   name: string;
