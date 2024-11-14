@@ -6,9 +6,6 @@
   padding-bottom: 230px;
 }
 
-.backButtonContainer {
-  padding: 70px 100px 0 100px;
-}
 .miscContainer {
   padding: 120px 100px 0 100px;
 }
@@ -81,4 +78,56 @@
   color: white;
   font-size: 25px;
   font-weight: bold;
+}
+
+@media (max-width: 780px) {
+  .main {
+    padding-bottom: 180px;
+  }
+
+  .miscContainer {
+    padding: 120px 50px 0 50px;
+  }
+
+  .miscContainer button.cancelButton,
+  .miscContainer button.cancelButtonActive {
+    font-size: 15px;
+    font-weight: bold;
+    color: #674636;
+    background: none;
+    border-color: #674636;
+    border-width: 3px;
+    border-radius: 20px;
+  }
+
+  .itemContainer {
+    padding: 20px 50px 0 50px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .footer {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    border-top-left-radius: 30px;
+    border-top-right-radius: 30px;
+    background-color: white;
+    text-align: center;
+    padding: 20px;
+    box-shadow: 0 -3px 15px rgba(0, 0, 0, 0.1);
+  }
+
+  .totalContainer {
+    display: flex;
+    justify-content: space-between;
+    width: 90%;
+    margin: 10px auto;
+  }
+
+  .totalContainer p {
+    font-size: 18px;
+    font-weight: bold;
+  }
 }
