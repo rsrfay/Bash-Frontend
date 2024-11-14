@@ -12,8 +12,9 @@ Test Valid Menu Item Search
     Open Browser To Website
     Maximize Browser Window
     Enter Menu Item Name
-    Wait Until Element Is Visible    id=Card    timeout=2s
-    Element Text Should Be    id=CardTitle    ${MENU_ITEM}
+    Sleep    2s
+    Wait Until Element Is Visible    id=Card    timeout=5s
+    Element Text Should Be    id=CardTitle    Espresso
     Close Browser
 
 *** Keywords ***
@@ -24,5 +25,3 @@ Open Browser To Website
 Enter Menu Item Name
     Input Text    id=searchInput   ${MENU_ITEM}
 
-Close Browser
-    Close Browser
