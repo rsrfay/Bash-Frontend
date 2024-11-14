@@ -68,8 +68,8 @@ export default function DescriptionPage() {
             img_src: data.img_src
               ? `${baseURL}/image/${data.img_src}` // Beverage images
               : data.image_src
-              ? `${baseURL}/image/bakery/${data.image_src}` // Bakery images
-              : `${baseURL}/image/default-image.png`, // Default image
+                ? `${baseURL}/image/bakery/${data.image_src}` // Bakery images
+                : `${baseURL}/image/default-image.png`, // Default image
             category:
               data.category || (data.Drink_Name ? "Beverage" : "Bakery"),
             AddOns: data.AddOns || [], // Add-ons if available
@@ -139,17 +139,17 @@ export default function DescriptionPage() {
   // Calculate base price with add-ons for display
   const basePrice =
     type === "Hot" &&
-    product.Price.hotPrice !== null &&
-    product.Price.hotPrice !== undefined
+      product.Price.hotPrice !== null &&
+      product.Price.hotPrice !== undefined
       ? product.Price.hotPrice
       : type === "Cold" &&
         product.Price.coldPrice !== null &&
         product.Price.coldPrice !== undefined
-      ? product.Price.coldPrice
-      : product.Price.singlePrice !== null &&
-        product.Price.singlePrice !== undefined
-      ? product.Price.singlePrice
-      : 0; // Default to 0 if all price fields are null or undefined
+        ? product.Price.coldPrice
+        : product.Price.singlePrice !== null &&
+          product.Price.singlePrice !== undefined
+          ? product.Price.singlePrice
+          : 0; // Default to 0 if all price fields are null or undefined
 
   const addOnTotal = selectedAddOns.reduce(
     (total, addOn) => total + addOn.price,
@@ -160,7 +160,7 @@ export default function DescriptionPage() {
     <main>
       <ReturnButton />
 
-      <div className={styles["description-page"]}>
+      <div className={styles["description-page"]} id="description-page">
         <div className={styles["product-details"]}>
           <Image
             src={product.img_src}
@@ -181,132 +181,123 @@ export default function DescriptionPage() {
                 <div className={styles["option-group"]}>
                   {(product.DrinkType === "Hot" ||
                     product.DrinkType === "Hot/Cold") && (
-                    <button
-                      className={
-                        type === "Hot"
-                          ? `${styles["option"]} ${styles["selected"]}`
-                          : styles["option"]
-                      }
-                      onClick={() => setType("Hot")}
-                    >
-                      Hot
-                    </button>
-                  )}
+                      <button
+                        className={
+                          type === "Hot"
+                            ? `${styles["option"]} ${styles["selected"]}`
+                            : styles["option"]
+                        }
+                        onClick={() => setType("Hot")}
+                      >
+                        Hot
+                      </button>
+                    )}
 
                   {(product.DrinkType === "Cold" ||
                     product.DrinkType === "Hot/Cold") && (
-                    <button
-                      className={
-                        type === "Cold"
-                          ? `${styles["option"]} ${styles["selected"]}`
-                          : styles["option"]
-                      }
-                      onClick={() => setType("Cold")}
-                    >
-                      Cold
-                    </button>
-                  )}
+                      <button
+                        className={
+                          type === "Cold"
+                            ? `${styles["option"]} ${styles["selected"]}`
+                            : styles["option"]
+                        }
+                        onClick={() => setType("Cold")}
+                      >
+                        Cold
+                      </button>
+                    )}
                 </div>
               </>
             )}
 
-            {product.AddOns && product.AddOns.length > 0 && (
+            {product.AddOns && product.AddOns.filter(addOn => Object.keys(addOn).length > 0).length > 0 && (
               <>
                 <h2>Add on</h2>
-                <div className={styles["option-group"]}>
+                <div className={styles["option-group"]} id="Options">
                   {product.AddOns.map((addOn) => (
-                    // <button
-                    //   key={addOn.name}
-                    //   className={
-                    //     selectedAddOns.some(
-                    //       (selected) => selected.name === addOn.name
-                    //     )
-                    //       ? `${styles["option"]} ${styles["selected"]}`
-                    //       : styles["option"]
-                    //   }
-                    //   onClick={() => handleAddOnClick(addOn)}
-                    // >
-                    //   {addOn.name} (+{addOn.price}.-)
-                    // </button>
-                    <button
-                      key={addOn.name}
-                      className={
-                        selectedAddOns.some(
-                          (selected) => selected.name === addOn.name
-                        )
-                          ? `${styles["option"]} ${styles["selected"]}`
-                          : styles["option"]
-                      }
-                      onClick={() =>
-                        setSelectedAddOns((prevAddOns) =>
-                          handleAddOnClick(addOn, prevAddOns)
-                        )
-                      }
-                    >
-                      {addOn.name} (+{addOn.price}.-)
-                    </button>
+                    Object.keys(addOn).length > 0 && ( // Only render if the addOn is not empty
+                      <button
+                        key={addOn.name}
+                        className={
+                          selectedAddOns.some(
+                            (selected) => selected.name === addOn.name
+                          )
+                            ? `${styles["option"]} ${styles["selected"]}`
+                            : styles["option"]
+                        }
+                        onClick={() =>
+                          setSelectedAddOns((prevAddOns) =>
+                            handleAddOnClick(addOn, prevAddOns)
+                          )
+                        }
+                      >
+                        {addOn.name} (+{addOn.price}.-)
+                      </button>
+                    )
                   ))}
                 </div>
               </>
             )}
 
-            {product.category === "Beverage" && (
-              <>
-                <h2>Choice of Sweetness</h2>
-                <div className={styles["option-group"]}>
-                  <button
-                    className={
-                      sweetness === "0%"
-                        ? `${styles["option"]} ${styles["selected"]}`
-                        : styles["option"]
-                    }
-                    onClick={() => setSweetness("0%")}
-                  >
-                    0%
-                  </button>
-                  <button
-                    className={
-                      sweetness === "30%"
-                        ? `${styles["option"]} ${styles["selected"]}`
-                        : styles["option"]
-                    }
-                    onClick={() => setSweetness("30%")}
-                  >
-                    30%
-                  </button>
-                  <button
-                    className={
-                      sweetness === "50%"
-                        ? `${styles["option"]} ${styles["selected"]}`
-                        : styles["option"]
-                    }
-                    onClick={() => setSweetness("50%")}
-                  >
-                    50%
-                  </button>
-                  <button
-                    className={
-                      sweetness === "75%"
-                        ? `${styles["option"]} ${styles["selected"]}`
-                        : styles["option"]
-                    }
-                    onClick={() => setSweetness("75%")}
-                  >
-                    75%
-                  </button>
-                  <button
-                    className={
-                      sweetness === "100%"
-                        ? `${styles["option"]} ${styles["selected"]}`
-                        : styles["option"]
-                    }
-                    onClick={() => setSweetness("100%")}
-                  >
-                    100%
-                  </button>
-                </div>
-              </>
-            )}
+            {product.category === "Beverage" &&
+              product.Drink_Name &&
+              !["Craft Cola", "Water", "Coke"].includes(product.Drink_Name) && (
+                <>
+                  <h2>Choice of Sweetness</h2>
+                  <div className={styles["option-group"]}>
+                    <button
+                      className={
+                        sweetness === "0%"
+                          ? `${styles["option"]} ${styles["selected"]}`
+                          : styles["option"]
+                      }
+                      onClick={() => setSweetness("0%")}
+                    >
+                      0%
+                    </button>
+                    <button
+                      className={
+                        sweetness === "30%"
+                          ? `${styles["option"]} ${styles["selected"]}`
+                          : styles["option"]
+                      }
+                      onClick={() => setSweetness("30%")}
+                    >
+                      30%
+                    </button>
+                    <button
+                      className={
+                        sweetness === "50%"
+                          ? `${styles["option"]} ${styles["selected"]}`
+                          : styles["option"]
+                      }
+                      onClick={() => setSweetness("50%")}
+                    >
+                      50%
+                    </button>
+                    <button
+                      className={
+                        sweetness === "75%"
+                          ? `${styles["option"]} ${styles["selected"]}`
+                          : styles["option"]
+                      }
+                      onClick={() => setSweetness("75%")}
+                    >
+                      75%
+                    </button>
+                    <button
+                      className={
+                        sweetness === "100%"
+                          ? `${styles["option"]} ${styles["selected"]}`
+                          : styles["option"]
+                      }
+                      onClick={() => setSweetness("100%")}
+                    >
+                      100%
+                    </button>
+                  </div>
+                </>
+              )}
 
             <div className={styles["price"]}>
               <h3>
@@ -328,9 +319,8 @@ export default function DescriptionPage() {
       {showModal && (
         <div className={styles["modal-overlay"]}>
           <div
-            className={`${styles["modal-content"]} ${
-              isSuccess ? styles["success"] : styles["failure"]
-            }`}
+            className={`${styles["modal-content"]} ${isSuccess ? styles["success"] : styles["failure"]
+              }`}
           >
             <p>
               {isSuccess

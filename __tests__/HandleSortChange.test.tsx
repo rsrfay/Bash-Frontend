@@ -1,7 +1,7 @@
 import { handleSortChange } from "@/lib/utilsSort";
 
 interface Product {
-  id: number | string; // Use string if the Bakery_ID is alphanumeric
+  id: number | string;
   name: string;
   description: string;
   hotPrice: string | number;
@@ -10,229 +10,75 @@ interface Product {
   TypeOfDrinks: string;
   isRecommended: boolean;
   image: string;
-  Tag: string[]; // Add this line for tags
+  Tag: string[];
 }
 
 describe("handleSortChange Function", () => {
-  test("sorts empty products by price in ascending order", () => {
-    const products: Product[] = [];
-    const sortedProducts = handleSortChange(products, "Price Low to High");
-    expect(sortedProducts).toEqual([]); 
-  });
-
-  test("sorts empty products by price in decending order", () => {
-    const products: Product[] = [];
-    const sortedProducts = handleSortChange(products, "Price High to Low");
-    expect(sortedProducts).toEqual([]); 
-  });
-
-  test("sorts empty products by price in invalid order", () => {
-    const products: Product[] = [];
-    const sortedProducts = handleSortChange(products, "Invalid value");
-    expect(sortedProducts).toEqual([]); 
-  });
-
-  test("sorts products by price in ascending order", () => {
+  test("T1: sorts multiple products by price in ascending order when both hot and cold prices are valid", () => {
     const products: Product[] = [
-      {
-        id: 1,
-        name: "Dirty",
-        description:
-          "A rich espresso shot served over cold milk, resulting in a bold flavor contrast.",
-        hotPrice: "85",
-        coldPrice: "90",
-        category: "Drink",
-        TypeOfDrinks: "Hot/Cold",
-        isRecommended: true,
-        image: "latte.png",
-        Tag: ["Coffee", "Recommend"],
-      }
-    ];
-    const sortedProducts = handleSortChange(products, "Price Low to High");
-    expect(sortedProducts).toEqual(products); 
-  });
-
-  test("sorts single products by price in decending order", () => {
-    const products: Product[] = [
-      {
-        id: 1,
-        name: "Dirty",
-        description:
-          "A rich espresso shot served over cold milk, resulting in a bold flavor contrast.",
-        hotPrice: "85",
-        coldPrice: "90",
-        category: "Drink",
-        TypeOfDrinks: "Hot/Cold",
-        isRecommended: true,
-        image: "latte.png",
-        Tag: ["Coffee", "Recommend"],
-      }
-    ];
-    const sortedProducts = handleSortChange(products, "Price High to Low");
-    expect(sortedProducts).toEqual(products); 
-  });
-
-  test("sorts products by price in invalid order", () => {
-    const products: Product[] = [
-      {
-        id: 1,
-        name: "Dirty",
-        description:
-          "A rich espresso shot served over cold milk, resulting in a bold flavor contrast.",
-        hotPrice: "85",
-        coldPrice: "90",
-        category: "Drink",
-        TypeOfDrinks: "Hot/Cold",
-        isRecommended: true,
-        image: "latte.png",
-        Tag: ["Coffee", "Recommend"],
-      }
-    ];
-    const sortedProducts = handleSortChange(products, "Invalid value");
-    expect(sortedProducts).toEqual(products); 
-  });
-
-  test("sorts multiple products by price in ascending order", () => {
-    const products: Product[] = [
-      {
-        id: 1,
-        name: "Dirty",
-        description:
-          "A rich espresso shot served over cold milk, resulting in a bold flavor contrast.",
-        hotPrice: "85",
-        coldPrice: "90",
-        category: "Drink",
-        TypeOfDrinks: "Hot/Cold",
-        isRecommended: true,
-        image: "latte.png",
-        Tag: ["Coffee", "Recommend"],
-      },
-      {
-        id: 2,
-        name: "Americano",
-        description:
-          "An Americano is made by diluting an espresso shot with hot water for a smooth, robust coffee.",
-        hotPrice: "55",
-        coldPrice: "60",
-        category: "Drink",
-        TypeOfDrinks: "Hot/Cold",
-        isRecommended: false,
-        image: "americano.png",
-        Tag: ["Coffee"],
-      },
-      {
-        id: 3,
-        name: "Latte",
-        description:
-          "A smooth blend of espresso and steamed milk with a creamy finish.",
-        hotPrice: "60",
-        coldPrice: "65",
-        category: "Drink",
-        TypeOfDrinks: "Hot/Cold",
-        isRecommended: false,
-        image: "latte.png",
-        Tag: ["Coffee", "Milk"],
-      },
+      { id: 1, name: "Dirty", hotPrice: "85", coldPrice: "90", category: "Drink", TypeOfDrinks: "Hot/Cold", isRecommended: true, image: "latte.png", description: "", Tag: ["Coffee", "Recommend"] },
+      { id: 2, name: "Americano", hotPrice: "55", coldPrice: "60", category: "Drink", TypeOfDrinks: "Hot/Cold", isRecommended: false, image: "americano.png", description: "", Tag: ["Coffee"] },
+      { id: 3, name: "Latte", hotPrice: "60", coldPrice: "65", category: "Drink", TypeOfDrinks: "Hot/Cold", isRecommended: false, image: "latte.png", description: "", Tag: ["Coffee", "Milk"] },
     ];
     handleSortChange(products, "Price Low to High");
-    console.log(products);
-    expect(products[0].id).toBe(2); // Expected to be the cheapest (Americano)
-    expect(products[1].id).toBe(3); // Expected to be the next cheapest (Latte)
-    expect(products[2].id).toBe(1); // Expected to be the most expensive (Dirty)
+    expect(products[0].id).toBe(2);
+    expect(products[1].id).toBe(3);
+    expect(products[2].id).toBe(1);
   });
 
-  test("sorts products by price in decending order", () => {
+  test("T2: sorts multiple products by price in ascending order when only hot prices are valid", () => {
     const products: Product[] = [
-      {
-        id: 1,
-        name: "Dirty",
-        description:
-          "A rich espresso shot served over cold milk, resulting in a bold flavor contrast.",
-        hotPrice: "85",
-        coldPrice: "90",
-        category: "Drink",
-        TypeOfDrinks: "Hot/Cold",
-        isRecommended: true,
-        image: "latte.png",
-        Tag: ["Coffee", "Recommend"],
-      },
-      {
-        id: 2,
-        name: "Americano",
-        description:
-          "An Americano is made by diluting an espresso shot with hot water for a smooth, robust coffee.",
-        hotPrice: "55",
-        coldPrice: "60",
-        category: "Drink",
-        TypeOfDrinks: "Hot/Cold",
-        isRecommended: false,
-        image: "americano.png",
-        Tag: ["Coffee"],
-      },
-      {
-        id: 3,
-        name: "Latte",
-        description:
-          "A smooth blend of espresso and steamed milk with a creamy finish.",
-        hotPrice: "60",
-        coldPrice: "65",
-        category: "Drink",
-        TypeOfDrinks: "Hot/Cold",
-        isRecommended: false,
-        image: "latte.png",
-        Tag: ["Coffee", "Milk"],
-      },
+      { id: 1, name: "Dirty", hotPrice: "85", coldPrice: "-", category: "Drink", TypeOfDrinks: "Hot/Cold", isRecommended: true, image: "latte.png", description: "", Tag: ["Coffee", "Recommend"] },
+      { id: 2, name: "Americano", hotPrice: "55", coldPrice: "-", category: "Drink", TypeOfDrinks: "Hot/Cold", isRecommended: false, image: "americano.png", description: "", Tag: ["Coffee"] },
+      { id: 3, name: "Latte", hotPrice: "60", coldPrice: "-", category: "Drink", TypeOfDrinks: "Hot/Cold", isRecommended: false, image: "latte.png", description: "", Tag: ["Coffee", "Milk"] },
+    ];
+    handleSortChange(products, "Price Low to High");
+    expect(products[0].id).toBe(2);
+    expect(products[1].id).toBe(3);
+    expect(products[2].id).toBe(1);
+  });
+
+  test("T3: sorts multiple products by price in ascending order when only cold prices are valid", () => {
+    const products: Product[] = [
+      { id: 1, name: "Dirty", hotPrice: "-", coldPrice: "90", category: "Drink", TypeOfDrinks: "Hot/Cold", isRecommended: true, image: "latte.png", description: "", Tag: ["Coffee", "Recommend"] },
+      { id: 2, name: "Americano", hotPrice: "-", coldPrice: "60", category: "Drink", TypeOfDrinks: "Hot/Cold", isRecommended: false, image: "americano.png", description: "", Tag: ["Coffee"] },
+      { id: 3, name: "Latte", hotPrice: "-", coldPrice: "65", category: "Drink", TypeOfDrinks: "Hot/Cold", isRecommended: false, image: "latte.png", description: "", Tag: ["Coffee", "Milk"] },
+    ];
+    handleSortChange(products, "Price Low to High");
+    expect(products[0].id).toBe(2);
+    expect(products[1].id).toBe(3);
+    expect(products[2].id).toBe(1);
+  });
+
+  test("T4: sorts multiple products by price in descending order when both hot and cold prices are valid", () => {
+    const products: Product[] = [
+      { id: 1, name: "Dirty", hotPrice: "85", coldPrice: "90", category: "Drink", TypeOfDrinks: "Hot/Cold", isRecommended: true, image: "latte.png", description: "", Tag: ["Coffee", "Recommend"] },
+      { id: 2, name: "Americano", hotPrice: "55", coldPrice: "60", category: "Drink", TypeOfDrinks: "Hot/Cold", isRecommended: false, image: "americano.png", description: "", Tag: ["Coffee"] },
+      { id: 3, name: "Latte", hotPrice: "60", coldPrice: "65", category: "Drink", TypeOfDrinks: "Hot/Cold", isRecommended: false, image: "latte.png", description: "", Tag: ["Coffee", "Milk"] },
     ];
     handleSortChange(products, "Price High to Low");
-    expect(products[0].id).toBe(1); // Expected to be the cheapest (Americano)
-    expect(products[1].id).toBe(3); // Expected to be the next cheapest (Latte)
-    expect(products[2].id).toBe(2); // Expected to be the most expensive (Dirty)
+    expect(products[0].id).toBe(1);
+    expect(products[1].id).toBe(3);
+    expect(products[2].id).toBe(2);
   });
 
-  test("sorts products by price in invalid order", () => {
+  test("T5: retains original order when sort order is invalid", () => {
     const products: Product[] = [
-      {
-        id: 1,
-        name: "Dirty",
-        description:
-          "A rich espresso shot served over cold milk, resulting in a bold flavor contrast.",
-        hotPrice: "85",
-        coldPrice: "90",
-        category: "Drink",
-        TypeOfDrinks: "Hot/Cold",
-        isRecommended: true,
-        image: "latte.png",
-        Tag: ["Coffee", "Recommend"],
-      },
-      {
-        id: 2,
-        name: "Americano",
-        description:
-          "An Americano is made by diluting an espresso shot with hot water for a smooth, robust coffee.",
-        hotPrice: "55",
-        coldPrice: "60",
-        category: "Drink",
-        TypeOfDrinks: "Hot/Cold",
-        isRecommended: false,
-        image: "americano.png",
-        Tag: ["Coffee"],
-      },
-      {
-        id: 3,
-        name: "Latte",
-        description:
-          "A smooth blend of espresso and steamed milk with a creamy finish.",
-        hotPrice: "60",
-        coldPrice: "65",
-        category: "Drink",
-        TypeOfDrinks: "Hot/Cold",
-        isRecommended: false,
-        image: "latte.png",
-        Tag: ["Coffee", "Milk"],
-      },
+      { id: 1, name: "Dirty", hotPrice: "85", coldPrice: "90", category: "Drink", TypeOfDrinks: "Hot/Cold", isRecommended: true, image: "latte.png", description: "", Tag: ["Coffee", "Recommend"] },
+      { id: 2, name: "Americano", hotPrice: "55", coldPrice: "60", category: "Drink", TypeOfDrinks: "Hot/Cold", isRecommended: false, image: "americano.png", description: "", Tag: ["Coffee"] },
+      { id: 3, name: "Latte", hotPrice: "60", coldPrice: "65", category: "Drink", TypeOfDrinks: "Hot/Cold", isRecommended: false, image: "latte.png", description: "", Tag: ["Coffee", "Milk"] },
+    ];
+    handleSortChange(products, "Invalid value");
+    expect(products[0].id).toBe(1);
+    expect(products[1].id).toBe(2);
+    expect(products[2].id).toBe(3);
+  });
+
+  test("T6: sorts single product by price in ascending order", () => {
+    const products: Product[] = [
+      { id: 1, name: "Dirty", hotPrice: "50", coldPrice: "60", category: "Drink", TypeOfDrinks: "Hot/Cold", isRecommended: true, image: "latte.png", description: "", Tag: ["Coffee", "Recommend"] },
     ];
     handleSortChange(products, "Price Low to High");
-    console.log(products);
-    expect(products).toEqual(products); 
+    expect(products[0].id).toBe(1);
   });
 });
