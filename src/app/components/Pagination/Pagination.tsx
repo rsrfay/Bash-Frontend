@@ -20,6 +20,7 @@ const PaginationButton: React.FC<PaginationButtonProps> = ({
         marginTop: "20px",
         marginBottom: "20px",
       }}
+      id="Pagination"
     >
       <Pagination
         total={totalPages} // Use calculated total pages

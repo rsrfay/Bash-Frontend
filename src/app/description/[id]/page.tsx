@@ -237,8 +237,6 @@ export default function DescriptionPage() {
                           ? `${styles["option"]} ${styles["selected"]}`
                           : styles["option"]
                       }
-
-                      id={`addon-${addOn.name.replace(/\s+/g, '-')}`}
                       onClick={() =>
                         setSelectedAddOns((prevAddOns) =>
                           handleAddOnClick(addOn, prevAddOns)
