@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<robot generator="Robot 7.1.1 (Python 3.12.2 on win32)" generated="2024-11-14T20:45:11.749841" rpa="false" schemaversion="5">
+<suite id="s1" name="searchTest" source="c:\Users\User\Desktop\Y4\Practical SE\Bash-Frontend\automated_test_cases\searchTest.robot">
+<test id="s1-t1" name="Test Valid Menu Item Search" line="10">
+<kw name="Open Browser To Website">
+<kw name="Open Browser" owner="SeleniumLibrary">
+<msg time="2024-11-14T20:45:12.032970" level="INFO">Opening browser 'Chrome' to base url 'http://localhost:3000/'.</msg>
+<arg>${URL}</arg>
+<arg>Chrome</arg>
+<doc>Opens a new browser instance to the optional ``url``.</doc>
+<status status="PASS" start="2024-11-14T20:45:12.032970" elapsed="4.107278"/>
+</kw>
+<kw name="Maximize Browser Window" owner="SeleniumLibrary">
+<doc>Maximizes current browser window.</doc>
+<status status="PASS" start="2024-11-14T20:45:16.140248" elapsed="0.043225"/>
+</kw>
+<status status="PASS" start="2024-11-14T20:45:12.031968" elapsed="4.153015"/>
+</kw>
+<kw name="Maximize Browser Window" owner="SeleniumLibrary">
+<doc>Maximizes current browser window.</doc>
+<status status="PASS" start="2024-11-14T20:45:16.185566" elapsed="0.068589"/>
+</kw>
+<kw name="Enter Menu Item Name">
+<kw name="Input Text" owner="SeleniumLibrary">
+<msg time="2024-11-14T20:45:16.256165" level="INFO">Typing text 'Espresso' into text field 'id=searchInput'.</msg>
+<arg>id=searchInput</arg>
+<arg>${MENU_ITEM}</arg>
+<doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
+<status status="PASS" start="2024-11-14T20:45:16.255146" elapsed="0.183037"/>
+</kw>
+<status status="PASS" start="2024-11-14T20:45:16.254155" elapsed="0.184028"/>
+</kw>
+<kw name="Wait Until Element Is Visible" owner="SeleniumLibrary">
+<arg>id=Card</arg>
+<arg>timeout=2s</arg>
+<doc>Waits until the element ``locator`` is visible.</doc>
+<status status="PASS" start="2024-11-14T20:45:16.438183" elapsed="0.048675"/>
+</kw>
+<kw name="Element Text Should Be" owner="SeleniumLibrary">
+<msg time="2024-11-14T20:45:16.487859" level="INFO">Verifying element 'id=CardTitle' contains exact text 'Espresso'.</msg>
+<msg time="2024-11-14T20:45:16.734806" level="INFO" html="true">&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td colspan="3"&gt;&lt;a href="selenium-screenshot-3.png"&gt;&lt;img src="selenium-screenshot-3.png" width="800px"&gt;&lt;/a&gt;</msg>
+<msg time="2024-11-14T20:45:16.735752" level="FAIL">The text of element 'id=CardTitle' should have been 'Espresso' but it was 'Dirty 👍'.</msg>
+<arg>id=CardTitle</arg>
+<arg>${MENU_ITEM}</arg>
+<doc>Verifies that element ``locator`` contains exact the text ``expected``.</doc>
+<status status="FAIL" start="2024-11-14T20:45:16.487859" elapsed="0.306943">The text of element 'id=CardTitle' should have been 'Espresso' but it was 'Dirty 👍'.</status>
+</kw>
+<kw name="Close Browser">
+<status status="NOT RUN" start="2024-11-14T20:45:16.796312" elapsed="0.000000"/>
+</kw>
+<doc>Verify that the website accepts a valid menu item name.</doc>
+<status status="FAIL" start="2024-11-14T20:45:12.030968" elapsed="4.765344">The text of element 'id=CardTitle' should have been 'Espresso' but it was 'Dirty 👍'.</status>
+</test>
+<status status="FAIL" start="2024-11-14T20:45:11.753819" elapsed="5.044500"/>
+</suite>
+<statistics>
+<total>
+<stat pass="0" fail="1" skip="0">All Tests</stat>
+</total>
+<tag>
+</tag>
+<suite>
+<stat pass="0" fail="1" skip="0" id="s1" name="searchTest">searchTest</stat>
+</suite>
+</statistics>
+<errors>
+</errors>
+</robot>
