@@ -16,6 +16,7 @@ import PaginationButton from "./components/Pagination/Pagination";
 import SortByDropdown from "./components/SortByDropdown/Sort";
 import { CartProvider, useCart } from "../context/CartContext";
 import NoResult from "./components/NoResult/NoResult";
+import { handleSortChange as sortChangeUtility } from "@/lib/utilsSort";
 
 const ITEMS_PER_PAGE = 10; // number of items per page (not sure na just estimate)
 const baseURL = "http://localhost:3030";
@@ -55,7 +56,6 @@ export default function Home() {
   const [searchTerm, setSearchTerm] = useState("");
   const [sortOrder, setSortOrder] = useState("");
   const [currentPage, setCurrentPage] = useState(1); // Pagination
-
   const [filteredProducts, setFilteredProducts] = useState<Product[]>([]);
   const [products, setProducts] = useState<Product[]>([]); // Fetched data state
 
@@ -124,10 +124,10 @@ export default function Home() {
     console.log(currentPage);
   };
 
-  const handleSortChange = (sortValue: string) => {
-    setSortOrder(sortValue);
-    applyFilters(selectedFilter, sortValue);
-  };
+  // const handleSortChange = (sortValue: string) => {
+  //   setSortOrder(sortValue);
+  //   applyFilters(selectedFilter, sortValue);
+  // };
 
   const [matchingCount, setMatchingCount] = useState(0);
 
@@ -166,23 +166,26 @@ export default function Home() {
 
     // Refactor to another function
     // Apply sorting by price
-    if (sortOrder === "Price Low to High") {
-      updatedProducts.sort((a, b) => {
-        const priceA =
-          a.coldPrice !== "-" ? Number(a.coldPrice) : Number(a.hotPrice);
-        const priceB =
-          b.coldPrice !== "-" ? Number(b.coldPrice) : Number(b.hotPrice);
-        return priceA - priceB; // Sort from low to high
-      });
-    } else if (sortOrder === "Price High to Low") {
-      updatedProducts.sort((a, b) => {
-        const priceA =
-          a.coldPrice !== "-" ? Number(a.coldPrice) : Number(a.hotPrice);
-        const priceB =
-          b.coldPrice !== "-" ? Number(b.coldPrice) : Number(b.hotPrice);
-        return priceB - priceA; // Sort from high to low
-      });
-    }
+    // if (sortOrder === "Price Low to High") {
+    //   updatedProducts.sort((a, b) => {
+    //     const priceA =
+    //       a.coldPrice !== "-" ? Number(a.coldPrice) : Number(a.hotPrice);
+    //     const priceB =
+    //       b.coldPrice !== "-" ? Number(b.coldPrice) : Number(b.hotPrice);
+    //     return priceA - priceB; // Sort from low to high
+    //   });
+    // } else if (sortOrder === "Price High to Low") {
+    //   updatedProducts.sort((a, b) => {
+    //     const priceA =
+    //       a.coldPrice !== "-" ? Number(a.coldPrice) : Number(a.hotPrice);
+    //     const priceB =
+    //       b.coldPrice !== "-" ? Number(b.coldPrice) : Number(b.hotPrice);
+    //     return priceB - priceA; // Sort from high to low
+    //   });
+    // }
+    
+    const sortedProducts = sortChangeUtility(updatedProducts, sortOrder);
+    setFilteredProducts(sortedProducts);
 
     // Filter products based on search term
     if (searchTerm) {
@@ -213,13 +216,11 @@ export default function Home() {
     applyFilters(selectedFilter, sortOrder); // Apply filters when the search term or filter changes
   }, [searchTerm, selectedFilter, sortOrder]);
 
-  useEffect(() => {
-    console.log(
-      "Filtered products updated:",
-      filteredProducts.map((p) => p.name)
-    );
-  }, [filteredProducts]);
-
+  const handleSortOrderChange = (sortValue: string) => {
+    setSortOrder(sortValue);
+    applyFilters(selectedFilter, sortValue);
+  };
+  
   return (
     <main className="pt-20">
       <header>
@@ -287,7 +288,7 @@ export default function Home() {
         <h1> EXPLORE OUR MENU </h1>
       </div>
       {/* Global sorting for all products */}
-      <SortByDropdown onSortChange={handleSortChange} sortValue={sortOrder} />
+      <SortByDropdown onSortChange={handleSortOrderChange} sortValue={sortOrder} />
       {/* Display matching count */}
       <div className="text-[#674636] mr-[6.5%] my-4 flex justify-end space-x-1 text-nowrap">
         <p className="font-bold">{matchingCount}</p>
