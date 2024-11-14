@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { render, fireEvent } from "@testing-library/react";
-import '@testing-library/jest-dom';
+import "@testing-library/jest-dom";
 
 // Mock component for testing handleAddOnClick
 interface AddOn {
@@ -70,10 +70,10 @@ describe("handleAddOnClick - ISP Functionality-based ACoC Test Suite", () => {
     fireEvent.click(getByTestId("oat-milk"));
 
     // Click to add "Brown Sugar Jelly" as well
-    fireEvent.click(getByTestId("oat-milk"));
+    fireEvent.click(getByTestId("brown-sugar-jelly"));
 
     // Check if both add-ons are now in the list
-    expect(getByTestId("selected-addons")).toHaveTextContent("Oat Milk");
+    expect(getByTestId("selected-addons")).toHaveTextContent("Oat Milk, Brown Sugar Jelly");
   });
 
   it("T4 (C1b2, C2b1, C3b2): adds another add-on to a list that already has multiple add-ons", () => {
