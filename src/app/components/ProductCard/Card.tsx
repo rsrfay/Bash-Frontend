@@ -53,10 +53,10 @@ const Card: React.FC<CardProps> = ({
         rel="stylesheet"
         href="https://fonts.googleapis.com/css2?family=ADLaM+Display&family=Montserrat:wght@400;700&display=swap"
       />
-    <div className={styles.card}>
+    <div className={styles.card} id="Card">
       <Link href={`/description/${id}`}>
         <img src={image} alt={name} className={styles.cardImage} />
-        <h3 className={styles.cardTitle}>
+        <h3 className={styles.cardTitle} id="CardTitle">
           {name}
           {isRecommended && (
             <span role="img" aria-label="thumbs up">
