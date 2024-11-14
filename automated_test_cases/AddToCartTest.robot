@@ -4,9 +4,12 @@ Library    SeleniumLibrary
 *** Variables ***
 ${URL}         http://localhost:3000/
 ${MENU_ITEM}   Latte
+${MENU_ITEM_NEXTPAGE}   Pinky Milk
 ${EXPECTED_COUNT_ALL}  47
 ${POPUP_MESSAGE}  Item added to cart successfully!
 ${DELAY}    1s
+${MAX_PAGES}      3
+${TIMEOUT}        5s
 
 *** Keywords ***
 Open Browser To Website
@@ -30,6 +33,11 @@ Click Plus Button
     [Documentation]  Finds the card with the specified menu item title and clicks the + button.
     Wait Until Element Is Visible    xpath=//div[@id="Card" and .//h3[@id="CardTitle" and text()="${MENU_ITEM}"]]    timeout=5s
     Click Element    xpath=//div[@id="Card" and .//h3[@id="CardTitle" and text()="${MENU_ITEM}"]]//button[@id="Addbtn"]
+
+Click Plus Button NEXT PAGE
+    [Documentation]  Finds the card with the specified menu item title and clicks the + button.
+    Wait Until Element Is Visible    xpath=//div[@id="Card" and .//h3[@id="CardTitle" and text()="${MENU_ITEM_NEXTPAGE}"]]    timeout=5s
+    Click Element    xpath=//div[@id="Card" and .//h3[@id="CardTitle" and text()="${MENU_ITEM_NEXTPAGE}"]]//button[@id="Addbtn"]
 
 Select Multiple Add-Ons
     [Documentation]  Selects multiple add-ons: Oat milk and Brown Sugar Jelly.
@@ -64,6 +72,27 @@ Check Popup Success
     Should Be Equal    ${popup_text}    ${POPUP_MESSAGE}
     Sleep    ${DELAY}
     Click Element    xpath=//button[text()='Close']
+    Sleep    ${DELAY}
+
+Scroll To Pagination And Click Next
+    [Documentation]  Scrolls to the pagination section and clicks the next page button.
+    Sleep    ${DELAY}
+    Execute JavaScript    document.getElementById('Pagination').scrollIntoView();
+    Sleep    ${DELAY}
+    Wait Until Element Is Visible    id=Pagination    timeout=${TIMEOUT}
+    Sleep    ${DELAY}
+    Wait Until Element Is Visible    xpath=//li[@aria-label="next page button"]    timeout=${TIMEOUT}
+    Sleep    ${DELAY}
+    Click Element    xpath=//li[@aria-label="next page button"]
+    Sleep    ${DELAY}
+
+Select Add-Ons
+    [Documentation]  Selects only temperature and sugar level options without any additional add-ons.
+    Wait Until Element Is Visible    id=description-page    timeout=3s
+    Click Element    xpath=//button[text()='Cold']
+    Sleep    ${DELAY}
+    Click Element    xpath=//button[text()='100%']
+    Sleep    ${DELAY}
 
 *** Test Cases ***
 Test Valid Menu Item Search And Add To Cart
@@ -77,13 +106,29 @@ Test Valid Menu Item Search And Add To Cart
     Check Popup Success
     Close Browser
 
-Test Non Select Adding Add Ons For Drinks 
+# Test Non Select Adding Add Ons For Drinks 
+#     Open Browser To Website
+#     Maximize Browser Window
+#     Verify All Items Show    ${EXPECTED_COUNT_ALL}
+#     Scroll Down
+#     Click Plus Button
+#     Not Select Add-Ons
+#     Add To Cart
+#     Check Popup Success
+#     Close Browser
+
+Test Non Select Adding Add Ons For Drinks IN NEXT PAGE
     Open Browser To Website
     Maximize Browser Window
     Verify All Items Show    ${EXPECTED_COUNT_ALL}
-    Scroll Down
-    Click Plus Button
-    Not Select Add-Ons
+    ${current_page}=    Set Variable    1
+    FOR    ${i}    IN RANGE    1    ${MAX_PAGES}  # Corrected loop declaration
+        Scroll Down        
+        ${item_found}=    Run Keyword And Return Status    Wait Until Element Is Visible    xpath=//h3[@id="CardTitle" and text()="${MENU_ITEM_NEXTPAGE}"]    timeout=${TIMEOUT}
+        Run Keyword If    ${item_found}    Click Plus Button NEXT PAGE
+        Run Keyword If    not ${item_found}    Scroll To Pagination And Click Next
+    END
+    Select Add-Ons
     Add To Cart
     Check Popup Success
     Close Browser

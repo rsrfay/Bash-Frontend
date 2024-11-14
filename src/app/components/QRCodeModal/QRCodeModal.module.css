@@ -20,6 +20,7 @@
   max-height: 90vh;
   overflow-y: auto;
   position: relative;
+  margin-top: 5rem;
 }
 
 .modalHeader {
@@ -178,10 +179,10 @@
 }
 
 /* Responsive adjustments */
-@media (max-width: 640px) {
+@media (max-width: 780px) {
   .modalContent {
-    padding: 1rem;
     width: 95%;
+    margin-top: 10rem;
   }
 
   .qrCode {
