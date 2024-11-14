@@ -30,30 +30,31 @@ jobs:
 
       - name: Run Unit Tests
         run: npm test
-
-      - name: Generate JaCoCo Badge
-        uses: cicirello/jacoco-badge-generator@v2
+      
+      - name: Jest Coverage Comment
+        id: coverageComment
+        uses: MishaKav/jest-coverage-comment@main
         with:
-              badges-directory: .github/badges
-              generate-coverage-badge: true
-              coverage-badge-filename: jacoco.svg
-              generate-branches-badge: true
-              branches-badge-filename: branches.svg
-              jacoco-csv-file: build/reports/jacoco/test/jacocoTestReport.csv
+          hide-comment: true
+          coverage-summary-path: ./coverage/coverage-summary.json
 
-      - name: Check badge creation
-        run: ls -l .github/badges
+      - name: Check the output coverage
+        run: |
+          echo "Coverage Percentage - ${{ steps.coverageComment.outputs.coverage }}"
+          echo "Coverage Color - ${{ steps.coverageComment.outputs.color }}"
+          echo "Summary HTML - ${{ steps.coverageComment.outputs.summaryHtml }}"
 
-      - name: Commit changes
-        uses: EndBug/add-and-commit@v9
+      - name: Create the badge
+        if: github.ref == 'refs/heads/main'
+        uses: schneegans/dynamic-badges-action@v1.6.0
         with:
-          default_author: github_actions
-          message: 'Updated JaCoCo badges'
-          add: '.github/badges/*.svg'
-
-      - name: Show test results
-        run: cat build/reports/jacoco/test/jacocoTestReport.csv
-
+          auth: ${{ secrets.JEST_COVERAGE_COMMENT }}
+          gistID: 5e90d640f8c212ab7bbac38f72323f80
+          filename: jest-coverage-comment__main.json
+          label: Coverage
+          message: ${{ steps.coverageComment.outputs.coverage }}%
+          color: ${{ steps.coverageComment.outputs.color }}
+          namedLogo: javascript
       
 
 
