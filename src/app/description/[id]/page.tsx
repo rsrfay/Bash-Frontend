@@ -87,36 +87,6 @@ export default function DescriptionPage() {
     fetchProduct();
   }, [id]);
 
-  // Use this to test
-  // const handleAddToCart = () => {
-  //   if (!product) {
-  //     setIsSuccess(false);
-  //     setShowModal(true);
-  //     return;
-  //   }
-
-  //   const isBakery = !!product.Bakery_Name;
-
-  //   const newCartItem = {
-  //     id: Date.now(),
-  //     productId: product.id,
-  //     itemName: product.Drink_Name || product.Bakery_Name || "Unknown Product",
-  //     itemDetails: product.Description,
-  //     category: product.category || "Unknown Category",
-  //     addOns: selectedAddOns.map((addOn) => addOn.name),
-  //     quantity,
-  //     price: displayTotalPrice,
-  //     image: product.img_src,
-  //     ...(isBakery ? {} : { sweetness, type }),
-  //   };
-
-  //   addToCart(newCartItem);
-  //   setIsSuccess(true);
-  //   setShowModal(true);
-  //   // // Return the cart item and current cart length for verification in tests
-  //   // return { success: true, cartItem: newCartItem, cartLength: addToCart.length };
-  // };
-
   // New add to cart ro call func in utils
   const handleAddToCartClick = () => {
     // Ensure product, quantity, and other required values are set before calling the utility
@@ -161,16 +131,6 @@ export default function DescriptionPage() {
       router.push("/"); // Redirect to homepage if successful
     }
   };
-
-  // use this to test
-  // const handleAddOnClick = (selectedAddOn: AddOn) => {
-  //   setSelectedAddOns((prevAddOns) => {
-  //     if (prevAddOns.some((addOn) => addOn.name === selectedAddOn.name)) {
-  //       return prevAddOns.filter((addOn) => addOn.name !== selectedAddOn.name);
-  //     }
-  //     return [...prevAddOns, selectedAddOn];
-  //   });
-  // };
 
   if (!product) {
     return <div>Product not found!</div>;
