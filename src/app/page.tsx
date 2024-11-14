@@ -255,7 +255,7 @@ export default function Home() {
           <Slideshow />
         </div>
       )}
-      {selectedFilter === "All" && searchTerm === "" &&(
+      {selectedFilter === "All" && searchTerm === "" && (
         <div className={styles.title}>
           <h1> RECOMMENDED</h1>
         </div>
@@ -295,17 +295,6 @@ export default function Home() {
         <p>products match your filter</p>
       </div>
 
-      {/* <motion.div
-        className="card-container"
-        initial="hidden"
-        animate="visible"
-        variants={sectionVariants}
-        transition={{ duration: 0.5, delay: 0.7 }}
-      > 
-        {paginatedProducts.map((product) => (
-          <Card key={product.id} {...product} />
-        ))}
-      </motion.div> */}
       {paginatedProducts.length > 0 ? (
         <motion.div
           className={styles.cardContainer}
@@ -314,9 +303,10 @@ export default function Home() {
           variants={sectionVariants}
           transition={{ duration: 0.5, delay: 0.7 }}
         >
-          {paginatedProducts.map((product) => (
-            <Card key={product.id} {...product} />
-          ))}
+          {paginatedProducts.map((product) => {
+            console.log("Rendering product:", product.name); // Debugging line
+            return <Card key={product.id} {...product} />;
+          })}
         </motion.div>
       ) : (
         <NoResult textHeader="No Result" />
