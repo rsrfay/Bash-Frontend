@@ -219,12 +219,12 @@
 
 .totalDiscount {
   font-size: 16px;
-  color: rgba(0, 0, 0, 0.50);
+  color: rgba(0, 0, 0, 0.5);
 }
 
 .totalAmountDiscount {
   font-size: 18px;
-  color: rgba(0, 0, 0, 0.50);
+  color: rgba(0, 0, 0, 0.5);
 }
 
 .footer {
@@ -270,4 +270,192 @@
 .nextButton:disabled {
   opacity: 0.5;
   cursor: not-allowed;
+}
+
+@media (max-width: 780px) {
+  .main {
+    padding-bottom: 180px;
+  }
+
+  .backButtonContainer {
+    display: flex;
+    justify-content: flex-start;
+    margin-bottom: 5px;
+    width: 100%;
+    padding-left: 10px;
+  }
+
+  .miscContainer {
+    padding: 10px 50px 0 50px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .myCart {
+    font-size: 24px;
+    margin-bottom: 10px;
+  }
+
+  .itemContainer {
+    padding: 20px 50px 0 50px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .useOffers {
+    font-size: 16px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+    margin-bottom: 10px;
+    text-align: center;
+  }
+
+  .offerIcon {
+    font-size: 20px;
+  }
+
+  .promotionsContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 20px;
+    width: 100%;
+    padding: 0 20px;
+  }
+
+  .membershipInputContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    margin-bottom: 15px;
+  }
+
+  .membershipLabel {
+    font-size: 16px;
+    margin-bottom: 5px;
+  }
+
+  .membershipInput {
+    width: 100%;
+    padding: 8px;
+    font-size: 14px;
+    margin-bottom: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+  }
+
+  .checkMembershipButton {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    background-color: #674636;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+
+  .checkMembershipButton:hover {
+    background-color: #5a3d2e;
+  }
+
+  .membershipScore,
+  .membershipInvalid {
+    font-size: 14px;
+    margin-top: 5px;
+  }
+
+  .promotions {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    gap: 10px;
+  }
+
+  .promotionButton {
+    width: 100%;
+    padding: 10px;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+  }
+
+  .promotionContent {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    text-align: center;
+  }
+
+  .promotionIcon {
+    font-size: 18px;
+  }
+
+  .pointsIndicator {
+    font-size: 12px;
+    margin-left: 5px;
+  }
+
+  .totalSummary {
+    width: 100%;
+    padding: 10px;
+    box-sizing: border-box;
+    margin-bottom: 20px;
+  }
+
+  .totalRow {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+  }
+
+  .totalLabel,
+  .totalDiscount {
+    font-size: 16px;
+  }
+
+  .totalAmount,
+  .totalAmountDiscount {
+    font-size: 16px;
+    font-weight: bold;
+  }
+
+  .footer {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    border-top-left-radius: 30px;
+    border-top-right-radius: 30px;
+    background-color: white;
+    text-align: center;
+    padding: 20px;
+    box-shadow: 0 -3px 15px rgba(0, 0, 0, 0.1);
+  }
+
+  .totalContainer {
+    display: flex;
+    justify-content: space-between;
+    width: 90%;
+    margin: 10px auto;
+  }
+
+  .totalContainer p {
+    font-size: 18px;
+    font-weight: bold;
+  }
+
+  .QRCodeModal {
+    width: 100%;
+    padding: 10px;
+  }
 }
