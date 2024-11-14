@@ -1,7 +1,7 @@
 import { handleAddToCart } from "@/lib/utilsCart";
 import { CartItemType } from "@/context/CartContext";
 
-describe("handleAddToCart Function", () => {
+describe("Test handleAddToCart Function", () => {
   const mockAddToCart = jest.fn().mockImplementation((item: CartItemType) => 1); // Mock addToCart to return cart length of 1
 
   // T1 (C1b1, C2b1, C3b1, C4b1, C5b1, C6b1, C7b1)
