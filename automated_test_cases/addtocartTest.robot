@@ -20,7 +20,7 @@ Verify All Items Show
     ${count}=    Get Text    id=matchedNumber
     Should Be Equal As Numbers    ${count}    ${expected_count}
 
-Scroll To Latte Product
+Scroll Down
     Wait Until Element Is Visible    id=Card    timeout=5s
     Execute JavaScript    document.getElementById('CardTitle').scrollIntoView();
 
@@ -39,10 +39,15 @@ Select Multiple Add-Ons
     Click Element    xpath=//button[contains(text(), 'Brown Sugar Jelly')]
     Click Element    xpath=//button[text()='100%']
 
+Not Select Add-Ons
+    Wait Until Element Is Visible    id=description-page    timeout=3s
+    Click Element    xpath=//button[text()='Cold']
+    Click Element    xpath=//button[text()='100%']
+
 Add To Cart
     Click Element    xpath=//button[text()='Add to Cart']
 
-Check Popup
+Check Popup Success
     [Documentation]  Verifies that the pop-up message appears and matches the expected text.
     Wait Until Element Is Visible    xpath=//p[contains(text(), '${POPUP_MESSAGE}')]    timeout=5s
     ${popup_text}=    Get Text    xpath=//p[contains(text(), '${POPUP_MESSAGE}')]
@@ -54,11 +59,22 @@ Test Valid Menu Item Search And Add To Cart
     Open Browser To Website
     Maximize Browser Window
     Verify All Items Show    ${EXPECTED_COUNT_ALL}
-    Scroll To Latte Product
+    Scroll Down
     Click Plus Button
     Select Multiple Add-Ons
     Add To Cart
-    Check Popup
+    Check Popup Success
+    Close Browser
+
+Test Non Select Adding Add Ons For Drinks 
+    Open Browser To Website
+    Maximize Browser Window
+    Verify All Items Show    ${EXPECTED_COUNT_ALL}
+    Scroll Down
+    Click Plus Button
+    Not Select Add-Ons
+    Add To Cart
+    Check Popup Success
     Close Browser
 
 
