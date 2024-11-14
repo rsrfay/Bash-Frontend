@@ -36,7 +36,7 @@ export function handleAddToCart(
   if (!product) {
     return { success: false, message: "Product not found" };
   }
-  if (quantity < 1 || Number.isNaN(quantity) ) {
+  if (quantity < 1 || Number.isNaN(quantity)) {
     console.error("Quantity is invalid.");
     return { success: false, message: "Product quantity is invalid" };
   }
@@ -62,4 +62,17 @@ export function handleAddToCart(
 
   const cartLength = addToCart(newCartItem);
   return { success: true, cartLength };
+}
+
+export function handleAddOnClick(
+  selectedAddOn: AddOn, // new add-on
+  selectedAddOns: AddOn[] // array of current selected add-ons
+): AddOn[] {
+  // check if Add-On already exists in selectedAddOns
+  if (selectedAddOns.some((addOn) => addOn.name === selectedAddOn.name)) {
+    // remove the Add-On if it already exists (double click)
+    return selectedAddOns.filter((addOn) => addOn.name !== selectedAddOn.name);
+  }
+  console.log([...selectedAddOns, selectedAddOn]);
+  return [...selectedAddOns, selectedAddOn]; // append new add on with current list
 }

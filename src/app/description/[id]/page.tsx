@@ -6,7 +6,10 @@ import { useState, useEffect } from "react";
 import styles from "./description.module.css";
 import ReturnButton from "@/app/components/ReturnButton/ReturnButton";
 import { useCart } from "@/context/CartContext";
-import { handleAddToCart as addToCartUtility } from "@/lib/utilsCart";
+import {
+  handleAddToCart as addToCartUtility,
+  handleAddOnClick,
+} from "@/lib/utilsCart";
 
 interface AddOn {
   name: string;
@@ -84,36 +87,6 @@ export default function DescriptionPage() {
     fetchProduct();
   }, [id]);
 
-  // Use this to test
-  // const handleAddToCart = () => {
-  //   if (!product) {
-  //     setIsSuccess(false);
-  //     setShowModal(true);
-  //     return;
-  //   }
-
-  //   const isBakery = !!product.Bakery_Name;
-
-  //   const newCartItem = {
-  //     id: Date.now(),
-  //     productId: product.id,
-  //     itemName: product.Drink_Name || product.Bakery_Name || "Unknown Product",
-  //     itemDetails: product.Description,
-  //     category: product.category || "Unknown Category",
-  //     addOns: selectedAddOns.map((addOn) => addOn.name),
-  //     quantity,
-  //     price: displayTotalPrice,
-  //     image: product.img_src,
-  //     ...(isBakery ? {} : { sweetness, type }),
-  //   };
-
-  //   addToCart(newCartItem);
-  //   setIsSuccess(true);
-  //   setShowModal(true);
-  //   // // Return the cart item and current cart length for verification in tests
-  //   // return { success: true, cartItem: newCartItem, cartLength: addToCart.length };
-  // };
-
   // New add to cart ro call func in utils
   const handleAddToCartClick = () => {
     // Ensure product, quantity, and other required values are set before calling the utility
@@ -129,19 +102,19 @@ export default function DescriptionPage() {
       setShowModal(true);
       return;
     }
-  
+
     // Call the utility function with validated parameters
     const result = addToCartUtility(
-      product,               // Product object
-      selectedAddOns,        // Add-ons
-      quantity,              // Quantity
-      displayTotalPrice,     // Calculated total price
-      addToCart,             // addToCart function from context
+      product, // Product object
+      selectedAddOns, // Add-ons
+      quantity, // Quantity
+      displayTotalPrice, // Calculated total price
+      addToCart, // addToCart function from context
       product.category || "Unknown Category", // Default category
-      sweetness || "50%",    // Default sweetness
-      type || "Hot"          // Default type
+      sweetness || "50%", // Default sweetness
+      type || "Hot" // Default type
     );
-  
+
     console.log(result);
     // Handle the result to display success or error
     if (result.success) {
@@ -150,24 +123,13 @@ export default function DescriptionPage() {
       setIsSuccess(false);
     }
     setShowModal(true);
-  };  
-  
+  };
 
   const handleCloseModal = () => {
     setShowModal(false);
     if (isSuccess) {
       router.push("/"); // Redirect to homepage if successful
     }
-  };
-
-  // use this to test
-  const handleAddOnClick = (selectedAddOn: AddOn) => {
-    setSelectedAddOns((prevAddOns) => {
-      if (prevAddOns.some((addOn) => addOn.name === selectedAddOn.name)) {
-        return prevAddOns.filter((addOn) => addOn.name !== selectedAddOn.name);
-      }
-      return [...prevAddOns, selectedAddOn];
-    });
   };
 
   if (!product) {
@@ -253,6 +215,19 @@ export default function DescriptionPage() {
                 <h2>Add on</h2>
                 <div className={styles["option-group"]}>
                   {product.AddOns.map((addOn) => (
+                    // <button
+                    //   key={addOn.name}
+                    //   className={
+                    //     selectedAddOns.some(
+                    //       (selected) => selected.name === addOn.name
+                    //     )
+                    //       ? `${styles["option"]} ${styles["selected"]}`
+                    //       : styles["option"]
+                    //   }
+                    //   onClick={() => handleAddOnClick(addOn)}
+                    // >
+                    //   {addOn.name} (+{addOn.price}.-)
+                    // </button>
                     <button
                       key={addOn.name}
                       className={
@@ -262,7 +237,11 @@ export default function DescriptionPage() {
                           ? `${styles["option"]} ${styles["selected"]}`
                           : styles["option"]
                       }
-                      onClick={() => handleAddOnClick(addOn)}
+                      onClick={() =>
+                        setSelectedAddOns((prevAddOns) =>
+                          handleAddOnClick(addOn, prevAddOns)
+                        )
+                      }
                     >
                       {addOn.name} (+{addOn.price}.-)
                     </button>
@@ -336,7 +315,10 @@ export default function DescriptionPage() {
               </h3>
             </div>
             {/* <button className={styles["add-to-cart"]} onClick={handleAddToCart}> */}
-            <button className={styles["add-to-cart"]} onClick={handleAddToCartClick}>
+            <button
+              className={styles["add-to-cart"]}
+              onClick={handleAddToCartClick}
+            >
               Add to Cart
             </button>
           </div>
