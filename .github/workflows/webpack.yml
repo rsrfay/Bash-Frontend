@@ -2,9 +2,9 @@ name: NodeJS with Webpack
 
 on:
   push:
-    branches: [ "SUN" ]
+    branches: [ "main" ]
   pull_request:
-    branches: [ "SUN" ]
+    branches: [ "main" ]
 
 jobs:
   build:
