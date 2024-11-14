@@ -83,3 +83,80 @@
   width: 150%;
   height: 100%;
 }
+
+/* Mobile Styles */
+@media (max-width: 767px) {
+  .cartItemContainer {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 20px;
+    max-width: 250px;
+    margin: 10px auto;
+    box-shadow: 0px 4px 6px #acacac;
+    text-align: left;
+    color: #674636;
+  }
+
+  .imagePlaceholder {
+    width: 175px;
+    height: auto;
+    position: absolute;
+    top: -60px;
+    left: 50%;
+    transform: translateX(-50%);
+    margin-right: 0;
+  }
+
+  .itemInfo {
+    margin-top: 90px;
+    margin-right: 0;
+    flex-grow: none;
+  }
+
+  .itemName {
+    font-size: 18px;
+    margin-bottom: 8px;
+    font-family: "ADLaM Display", sans-serif;
+  }
+
+  .description {
+    font-size: 14px;
+    margin-bottom: 15px;
+    max-height: 50px;
+    overflow: hidden;
+  }
+
+  .quantityControl {
+    gap: 5px;
+    margin-top: 10px;
+  }
+
+  .decrementButton,
+  .incrementButton {
+    width: 24px;
+    height: 24px;
+  }
+
+  .quantity {
+    font-size: 14px;
+  }
+
+  .itemPrice {
+    font-size: 16px;
+    margin-right: 0;
+    text-align: left;
+  }
+
+  .deleteButton {
+    font-size: 18px;
+    margin-left: 0;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+  }
+
+  .trashIcon {
+    width: 100%;
+    height: auto;
+  }
+}
