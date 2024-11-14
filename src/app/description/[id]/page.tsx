@@ -160,7 +160,7 @@ export default function DescriptionPage() {
     <main>
       <ReturnButton />
 
-      <div className={styles["description-page"]}>
+      <div className={styles["description-page"]} id="description-page">
         <div className={styles["product-details"]}>
           <Image
             src={product.img_src}
@@ -213,7 +213,7 @@ export default function DescriptionPage() {
             {product.AddOns && product.AddOns.length > 0 && (
               <>
                 <h2>Add on</h2>
-                <div className={styles["option-group"]}>
+                <div className={styles["option-group"]} id="Options">
                   {product.AddOns.map((addOn) => (
                     // <button
                     //   key={addOn.name}
@@ -237,6 +237,8 @@ export default function DescriptionPage() {
                           ? `${styles["option"]} ${styles["selected"]}`
                           : styles["option"]
                       }
+
+                      id={`addon-${addOn.name.replace(/\s+/g, '-')}`}
                       onClick={() =>
                         setSelectedAddOns((prevAddOns) =>
                           handleAddOnClick(addOn, prevAddOns)

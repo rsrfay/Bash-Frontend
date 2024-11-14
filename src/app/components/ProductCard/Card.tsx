@@ -67,7 +67,7 @@ const Card: React.FC<CardProps> = ({
         <p className={styles.cardDescription}>{truncatedDescription}</p>
         <div className={styles.cardPrice}>{displayPrice()}</div>
         <div className={styles.cardAddToCart}>
-          <button>+</button>
+          <button id="Addbtn">+</button>
         </div>
       </Link>
     </div>
