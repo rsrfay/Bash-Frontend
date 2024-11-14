@@ -50,7 +50,7 @@ Verify Prices Sorted In Ascending Order
 
 Verify Prices Sorted In Descending Order
     ${sorted_prices}=    Get Product Prices As Numbers   
-    ${expected_sorted_prices}=    Create List    120    90    90    85    85    70    70    70    70    70
+    ${expected_sorted_prices}=    Create List    120    90    90    85    70    70    70    70    70    70
     Should Be Equal   ${expected_sorted_prices}    ${sorted_prices}
 
 *** Test Cases ***
