@@ -20,13 +20,16 @@ Test Valid Menu Item Search
 
 *** Keywords ***
 Open Browser To Website
+    [Documentation]  Opens the website URL in Chrome and maximizes the window.
     Open Browser    ${URL}    Chrome
     Maximize Browser Window
 
 Enter Menu Item Name
+    [Documentation]  Enters the search term in the search input field.
     Input Text    id=searchInput   ${MENU_ITEM}
 
 Verify Matching Count
+    [Documentation]  Checks that the displayed matching count equals the expected value.
     Wait Until Element Is Visible    id=matchedNumber    timeout=5s
     ${count}=    Get Text    id=matchedNumber
     Should Be Equal As Numbers    ${count}    ${EXPECTED_COUNT}
