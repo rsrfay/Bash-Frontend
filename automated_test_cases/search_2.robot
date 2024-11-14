@@ -3,7 +3,7 @@ Library    SeleniumLibrary
 
 *** Variables ***
 ${URL}        http://localhost:3000/
-${MENU_ITEM}  Espresso
+${MENU_ITEM}  zzz
 
 
 *** Test Cases ***
@@ -12,8 +12,8 @@ Test Valid Menu Item Search
     Open Browser To Website
     Maximize Browser Window
     Enter Menu Item Name
-    Wait Until Element Is Visible    id=Card    timeout=2s
-    Element Text Should Be    id=CardTitle    ${MENU_ITEM}
+    Sleep    2s
+    Verify No Results Message
     Close Browser
 
 *** Keywords ***
@@ -24,5 +24,6 @@ Open Browser To Website
 Enter Menu Item Name
     Input Text    id=searchInput   ${MENU_ITEM}
 
-Close Browser
-    Close Browser
+Verify No Results Message
+    Wait Until Element Is Visible    id=Notfound    timeout=5s
+    Element Text Should Be    id=Notfound    No Result  # Verify the text header
