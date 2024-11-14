@@ -34,8 +34,9 @@ export default function SearchBar({
   }, 300);
 
   return (
-    <div className={styles.searchContainer}>
+    <div className={styles.searchContainer} >
       <input
+        id="searchInput"
         type="text"
         className={styles.searchInput}
         placeholder={placeholder} // Use the placeholder prop
