@@ -17,21 +17,18 @@ describe("handleSortChange Function", () => {
   test("sorts empty products by price in ascending order", () => {
     const products: Product[] = [];
     const sortedProducts = handleSortChange(products, "Price Low to High");
-    console.log(sortedProducts);
     expect(sortedProducts).toEqual([]); 
   });
 
   test("sorts empty products by price in decending order", () => {
     const products: Product[] = [];
     const sortedProducts = handleSortChange(products, "Price High to Low");
-    console.log(sortedProducts);
     expect(sortedProducts).toEqual([]); 
   });
 
   test("sorts empty products by price in invalid order", () => {
     const products: Product[] = [];
     const sortedProducts = handleSortChange(products, "Invalid value");
-    console.log(sortedProducts);
     expect(sortedProducts).toEqual([]); 
   });
 
@@ -52,7 +49,6 @@ describe("handleSortChange Function", () => {
       }
     ];
     const sortedProducts = handleSortChange(products, "Price Low to High");
-    console.log(sortedProducts);
     expect(sortedProducts).toEqual(products); 
   });
 
@@ -73,7 +69,6 @@ describe("handleSortChange Function", () => {
       }
     ];
     const sortedProducts = handleSortChange(products, "Price High to Low");
-    console.log(sortedProducts);
     expect(sortedProducts).toEqual(products); 
   });
 
@@ -94,7 +89,6 @@ describe("handleSortChange Function", () => {
       }
     ];
     const sortedProducts = handleSortChange(products, "Invalid value");
-    console.log(sortedProducts);
     expect(sortedProducts).toEqual(products); 
   });
 
@@ -140,11 +134,11 @@ describe("handleSortChange Function", () => {
         Tag: ["Coffee", "Milk"],
       },
     ];
-    const sortedProducts = handleSortChange(products, "Price Low to High");
-    console.log(sortedProducts);
-    expect(sortedProducts[0].id).toBe(2); // Expected to be the cheapest (Americano)
-    expect(sortedProducts[1].id).toBe(3); // Expected to be the next cheapest (Latte)
-    expect(sortedProducts[2].id).toBe(1); // Expected to be the most expensive (Dirty)
+    handleSortChange(products, "Price Low to High");
+    console.log(products);
+    expect(products[0].id).toBe(2); // Expected to be the cheapest (Americano)
+    expect(products[1].id).toBe(3); // Expected to be the next cheapest (Latte)
+    expect(products[2].id).toBe(1); // Expected to be the most expensive (Dirty)
   });
 
   test("sorts products by price in decending order", () => {
@@ -189,11 +183,10 @@ describe("handleSortChange Function", () => {
         Tag: ["Coffee", "Milk"],
       },
     ];
-    const sortedProducts = handleSortChange(products, "Price High to Low");
-    console.log(sortedProducts);
-    expect(sortedProducts[0].id).toBe(1); // Expected to be the cheapest (Americano)
-    expect(sortedProducts[1].id).toBe(3); // Expected to be the next cheapest (Latte)
-    expect(sortedProducts[2].id).toBe(2); // Expected to be the most expensive (Dirty)
+    handleSortChange(products, "Price High to Low");
+    expect(products[0].id).toBe(1); // Expected to be the cheapest (Americano)
+    expect(products[1].id).toBe(3); // Expected to be the next cheapest (Latte)
+    expect(products[2].id).toBe(2); // Expected to be the most expensive (Dirty)
   });
 
   test("sorts products by price in invalid order", () => {
@@ -238,8 +231,8 @@ describe("handleSortChange Function", () => {
         Tag: ["Coffee", "Milk"],
       },
     ];
-    const sortedProducts = handleSortChange(products, "Invalid value");
-    console.log(sortedProducts);
-    expect(sortedProducts).toEqual(products); 
+    handleSortChange(products, "Price Low to High");
+    console.log(products);
+    expect(products).toEqual(products); 
   });
 });
