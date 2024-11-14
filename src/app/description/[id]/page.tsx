@@ -167,7 +167,7 @@ export default function DescriptionPage() {
             alt={product.Drink_Name || product.Bakery_Name || "Product Image"}
             width={500}
             height={500}
-            className={styles["product-image"]}
+            className={product.category === "Bakery" ? styles["bakery-image"] : styles["product-image"]}
           />
           <h1 className="text-xl font-adlam text-[#674636] mb-5 text-left mt-7 font-extrabold">
             {product.Drink_Name || product.Bakery_Name}
