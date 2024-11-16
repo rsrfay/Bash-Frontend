@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1731607836319" clover="3.2.0">
-  <project timestamp="1731607836319" name="All files">
+<coverage generated="1731743582343" clover="3.2.0">
+  <project timestamp="1731743582343" name="All files">
     <metrics statements="112" coveredstatements="109" conditionals="28" coveredconditionals="22" methods="3" coveredmethods="3" elements="143" coveredelements="134" complexity="0" loc="112" ncloc="112" packages="1" files="2" classes="2"/>
     <file name="utilsCart.ts" path="/Users/russarin/Desktop/Practical-SE/Bash-Frontend/src/lib/utilsCart.ts">
       <metrics statements="78" coveredstatements="75" conditionals="16" coveredconditionals="12" methods="2" coveredmethods="2"/>

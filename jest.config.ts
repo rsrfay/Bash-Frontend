@@ -25,6 +25,7 @@ const customJestConfig: Config.InitialOptions = {
   collectCoverage: true,
   coverageDirectory: 'coverage',
   coverageProvider: 'v8',
+  coverageReporters: ['json', 'json-summary', 'lcov', 'text', 'clover'], // Reporters for coverage output
 };
 
 // Export as a function
