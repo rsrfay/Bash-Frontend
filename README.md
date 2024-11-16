@@ -90,6 +90,8 @@ bash-frontend/
 │   ├── lib/              # Helper functions and utilities
 │   └── styles/           # CSS modules
 ├── __tests__/            # Unit tests directory
+├── unit test cases/      # Unit tests document
+├── manual test cases/    # Manual tests and Traceability Matrix document 
 ├── automated_test_cases/ # Automated UI test cases
 ├── coverage/             # Jest coverage reports
 └── README.md             # Project documentation
