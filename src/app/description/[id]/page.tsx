@@ -53,7 +53,7 @@ export default function DescriptionPage() {
   useEffect(() => {
     const fetchProduct = async () => {
       try {
-        const response = await fetch(`http://localhost:3030/menu/${id}`);
+        const response = await fetch(`${baseURL}/menu/${id}`);
         if (response.ok) {
           const data = await response.json();
           const product: Product = {
