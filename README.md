@@ -109,8 +109,8 @@ Coverage reports will be generated under the `coverage/` directory.
 End-to-end tests are written in the Robot Framework. To execute the tests:
 1. Install [Robot Framework](https://robotframework.org/) by following this guideline [How To Install Robot Framework](https://docs.robotframework.org/docs/getting_started/testing)
 2. Run:
-   ```bash
+```bash
    robot tests/
-   ```
-
+```
+- UI test cases by Echo: AddToCartTest, SearchTest, SortTest
 ---
