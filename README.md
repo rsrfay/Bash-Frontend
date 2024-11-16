@@ -1,4 +1,5 @@
 ![Build Status](https://github.com/rsrfay/Bash-Frontend/actions/workflows/webpack.yml/badge.svg) 
+[![Coverage](https://img.shields.io/badge/Coverage-97%25-brightgreen.svg)](https://github.com/rsrfay/Bash-Frontend/blob/f5cdda.../README.md)
 
 # ❗ TODO Git ❗ 
 1. เวลาเริ่มทำงาน = pull เอา main เข้า branch ของตัวเอง
