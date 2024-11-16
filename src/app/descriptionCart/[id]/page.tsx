@@ -30,7 +30,8 @@ interface Product {
   AddOns?: AddOn[];
 }
 
-const baseURL = "http://localhost:3030";
+const baseURL = process.env.NEXT_PUBLIC_ROOT_URL;
+// const baseURL = "http://localhost:3030";
 
 const DescriptionPage = () => {
   const { id } = useParams();

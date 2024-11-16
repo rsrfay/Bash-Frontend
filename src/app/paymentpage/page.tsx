@@ -9,7 +9,8 @@ import NavBar from "../components/Nav/Nav";
 import QRCodeModal from "../components/QRCodeModal/QRCodeModal";
 import { CartItemType, useCart } from "@/context/CartContext";
 
-const baseURL = "http://localhost:3030";
+const baseURL = process.env.NEXT_PUBLIC_ROOT_URL;
+// const baseURL = "http://localhost:3030";
 // const PROMPTPAY_NUMBER = memberInfo ? memberInfo.Tel : "0000000000"; for make propmtpay_number dynamic
 
 const PROMPTPAY_NUMBER = "0866001234";
