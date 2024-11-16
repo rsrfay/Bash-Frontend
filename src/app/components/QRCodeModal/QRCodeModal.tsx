@@ -4,7 +4,8 @@ import { useRouter } from "next/navigation";
 import { useCart } from "../../../context/CartContext";
 import styles from "./QRCodeModal.module.css";
 
-const baseURL = "http://localhost:3030";
+const baseURL = process.env.NEXT_PUBLIC_ROOT_URL;
+// const baseURL = "http://localhost:3030";
 interface QRCodeModalProps {
   amount: number;
   phoneNumber?: string;
