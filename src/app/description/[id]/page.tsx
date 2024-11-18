@@ -33,8 +33,8 @@ interface Product {
   category?: string; // Optional, could be used for custom categorization if needed
   AddOns?: AddOn[]; // List of available add-ons for this product
 }
-// const baseURL = process.env.NEXT_PUBLIC_ROOT_URL;
-const baseURL = "http://10.34.112.130:3030/";
+const baseURL = process.env.NEXT_PUBLIC_ROOT_URL;
+// const baseURL = "http://10.34.112.130:3030/";
 console.log(baseURL);
 // const baseURL = "http://localhost:3030";
 
