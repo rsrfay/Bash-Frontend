@@ -44,6 +44,12 @@ export function handleAddToCart(
     console.error("Total Price is invalid.");
     return { success: false, message: "Product total price is invalid" };
   }
+  if (!product.category){
+    return { success: false, message: "Product category is invalid" };
+  }
+  if (product.category === "Beverage" && (!sweetness || !type)) {
+    return { success: false, message: "Product sweetness or type is invalid" };
+  }
 
   const isBakery = !!product.Bakery_Name;
 
