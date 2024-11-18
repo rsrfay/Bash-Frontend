@@ -20,7 +20,8 @@ import { handleSortChange as sortChangeUtility } from "@/lib/utilsSort";
 
 const ITEMS_PER_PAGE = 10; // number of items per page (not sure na just estimate)
 
-const baseURL = process.env.NEXT_PUBLIC_ROOT_URL;
+const baseURL = "http://10.34.112.130:3030/";
+// const baseURL = process.env.NEXT_PUBLIC_ROOT_URL;
 // const baseURL = "http://localhost:3030";
 
 const sectionVariants = {
