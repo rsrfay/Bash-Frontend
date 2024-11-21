@@ -18,7 +18,7 @@ This project was developed by using Next.js, performed unit tests using Jest, an
 - **Cart Integration:** Users can add items to the cart with selected customizations.
 
 ### Menu Features (Noppo Group Contribution)
-- **Update Items In Cart**: 
+- **Update Items In Cart**: Customer can add update and delete for each menu items in cart
 - **Payment**:
 
 ### User Experience
