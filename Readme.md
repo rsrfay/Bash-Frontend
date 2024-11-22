@@ -14,7 +14,6 @@
 - **Return Value**: Successfully retrieves and returns promotion data.  
 - **Exceptional Behavior**: Handles API errors or invalid responses gracefully.  
 
----
 
 **Interface-Based Characteristics**  
 **Combining Partitions to Define Test Requirements (ACOC):**  
