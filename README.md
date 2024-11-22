@@ -127,6 +127,32 @@ bash-frontend/
 | T8        | Invalid      | Single     | Promotion is ignored as it is invalid.            |  
 | T9        | Invalid      | Multiple   | Promotion is ignored as it is invalid.            |  
 
+
+**CartPage Test Suite**
+
+### Interface-Based Characteristics
+| Characteristic             | b1           | b2           | b3         |
+|----------------------------|--------------|--------------|------------|
+| **C1 = Cart Items Present**| Empty        | Non-empty    | Large cart |
+| **C2 = Select Mode**       | `false` (not in select mode) | `true` (in select mode) | N/A |
+| **C3 = Quantity Change Trigger** | Increase button is clicked | Decrease button clicked | N/A |
+
+---
+
+### Combining the Partitions (PWC)
+**By combining these partitions, we create test cases to validate the component's behavior.**
+
+| Test Case | Cart Items Present | Select Mode | Quantity Change Trigger | Expected Outcome |
+|-----------|--------------------|-------------|-------------------------|------------------|
+| **T1**    | Empty              | `false`     | None                    | Total is `0`. No items to display. Quantity buttons are disabled. |
+| **T2**    | Non-empty          | `false`     | Increase                | Item quantity is incremented. Total updates accordingly. Select mode UI is inactive. |
+| **T3**    | Non-empty          | `true`      | Increase                | Item quantity is incremented. Select mode UI is active. Total updates accordingly. |
+| **T4**    | Non-empty          | `false`     | Decrease                | Item quantity is decreased (if greater than 1). Total updates. Select mode UI is inactive. |
+| **T5**    | Large cart         | `false`     | Decrease                | Item quantity is decreased (if greater than 1). Total updates for a large cart. Select mode UI is inactive. |
+
+---
+
+
 ---
 
 
