@@ -129,7 +129,7 @@ bash-frontend/
 
 
 **CartPage Test Suite**
- **Interface-Based Characteristics**
+**Interface-Based Characteristics**
 | Characteristic             | b1           | b2           | b3         |
 |----------------------------|--------------|--------------|------------|
 | **C1 = Cart Items Present**| Empty        | Non-empty    | Large cart |
@@ -137,7 +137,7 @@ bash-frontend/
 | **C3 = Quantity Change Trigger** | Increase button is clicked | Decrease button clicked | N/A |
 
 
-** Combining the Partitions (PWC)**
+**Combining the Partitions (PWC)**
 **By combining these partitions, we create test cases to validate the component's behavior.**
 
 | Test Case | Cart Items Present | Select Mode | Quantity Change Trigger | Expected Outcome |
