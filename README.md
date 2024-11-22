@@ -98,7 +98,16 @@ bash-frontend/
 ---
 
 ## Testing
-## Promotion Handling Test Suite
+Here is the copied text from the images:
+
+---
+
+**Promotion Handling Test Suite**  
+**Partitioning the Characteristics**  
+| Characteristic    | b1       | b2       | b3       |  
+|--------------------|----------|----------|----------|  
+| C1 = Promotion ID | Valid    | Expired  | Invalid  |  
+| C2 = Cart Items   | None     | Single   | Multiple |  
 
 **Testable Functions**  
 **Method**: `fetchPromotions()`  
@@ -106,12 +115,8 @@ bash-frontend/
 - **Return Type**: `Array` of promotion objects  
 - **Return Value**: Successfully retrieves and returns promotion data.  
 - **Exceptional Behavior**: Handles API errors or invalid responses gracefully.  
-**Partitioning the Characteristics**  
-| Characteristic    | b1       | b2       | b3       |  
-|--------------------|----------|----------|----------|  
-| C1 = Promotion ID | Valid    | Expired  | Invalid  |  
-| C2 = Cart Items   | None     | Single   | Multiple |  
 
+---
 
 **Interface-Based Characteristics**  
 **Combining Partitions to Define Test Requirements (ACOC):**  
@@ -126,6 +131,9 @@ bash-frontend/
 | T7        | Invalid      | None       | Promotions are fetched but invalid promotion is ignored. |  
 | T8        | Invalid      | Single     | Promotion is ignored as it is invalid.            |  
 | T9        | Invalid      | Multiple   | Promotion is ignored as it is invalid.            |  
+
+---
+
 
 
 ## CartPage Test Suite
