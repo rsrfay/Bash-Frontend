@@ -98,7 +98,7 @@ bash-frontend/
 ---
 
 ## Testing
-#Promotion Handling Test Suite
+**Promotion Handling Test Suite**
 **Partitioning the Characteristics**  
 | Characteristic    | b1       | b2       | b3       |  
 |--------------------|----------|----------|----------|  
