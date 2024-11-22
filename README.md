@@ -128,18 +128,17 @@ bash-frontend/
 | T9        | Invalid      | Multiple   | Promotion is ignored as it is invalid.            |  
 
 
-**CartPage Test Suite**
+###CartPage Test Suite
 
-### Interface-Based Characteristics
+ **Interface-Based Characteristics**
 | Characteristic             | b1           | b2           | b3         |
 |----------------------------|--------------|--------------|------------|
 | **C1 = Cart Items Present**| Empty        | Non-empty    | Large cart |
 | **C2 = Select Mode**       | `false` (not in select mode) | `true` (in select mode) | N/A |
 | **C3 = Quantity Change Trigger** | Increase button is clicked | Decrease button clicked | N/A |
 
----
 
-### Combining the Partitions (PWC)
+** Combining the Partitions (PWC)**
 **By combining these partitions, we create test cases to validate the component's behavior.**
 
 | Test Case | Cart Items Present | Select Mode | Quantity Change Trigger | Expected Outcome |
@@ -153,8 +152,7 @@ bash-frontend/
 ---
 
 
----
-
+-
 
 
 ### Unit Tests
