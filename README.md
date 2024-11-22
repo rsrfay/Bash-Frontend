@@ -130,11 +130,14 @@ bash-frontend/
 
 ## CartPage Test Suite
 **Interface-Based Characteristics**
-| Characteristic             | b1           | b2           | b3         |
-|----------------------------|--------------|--------------|------------|
-| **C1 = Cart Items Present**| Empty        | Non-empty    | Large cart |
-| **C2 = Select Mode**       | `false` (not in select mode) | `true` (in select mode) | N/A |
-| **C3 = Quantity Change Trigger** | Increase button is clicked | Decrease button clicked | N/A |
+
+| **Test Case** | **Cart Items Present** | **Select Mode** | **Quantity Change Trigger** | **Expected Outcome**                                                                 |
+|---------------|-------------------------|-----------------|-----------------------------|-------------------------------------------------------------------------------------|
+| **T1**        | Empty                  | `false`         | None                        | Total is `0`. No items to display. Quantity buttons are disabled.                  |
+| **T2**        | Non-empty              | `false`         | Increase                    | Item quantity is incremented. Total updates accordingly. Select mode UI is inactive. |
+| **T3**        | Non-empty              | `true`          | Increase                    | Item quantity is incremented. Select mode UI is active. Total updates accordingly.  |
+| **T4**        | Non-empty              | `false`         | Decrease                    | Item quantity is decreased (if greater than 1). Total updates. Select mode UI is inactive. |
+| **T5**        | Large cart             | `false`         | Decrease                    | Item quantity is decreased (if greater than 1). Total 
 
 
 **Combining the Partitions (PWC)**
