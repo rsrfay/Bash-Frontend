@@ -128,7 +128,7 @@ bash-frontend/
 | T9        | Invalid      | Multiple   | Promotion is ignored as it is invalid.            |  
 
 
-##CartPage Test Suite
+#CartPage Test Suite
 
  **Interface-Based Characteristics**
 | Characteristic             | b1           | b2           | b3         |
