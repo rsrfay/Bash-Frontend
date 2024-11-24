@@ -19,9 +19,7 @@ import NoResult from "./components/NoResult/NoResult";
 import { handleSortChange as sortChangeUtility } from "@/lib/utilsSort";
 
 const ITEMS_PER_PAGE = 10; // number of items per page (not sure na just estimate)
-
-const baseURL = process.env.NEXT_PUBLIC_ROOT_URL;
-// const baseURL = "http://localhost:3030";
+const baseURL = "http://localhost:3030";
 
 const sectionVariants = {
   hidden: { opacity: 0, y: 50 },

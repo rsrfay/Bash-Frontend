@@ -33,10 +33,7 @@ interface Product {
   category?: string; // Optional, could be used for custom categorization if needed
   AddOns?: AddOn[]; // List of available add-ons for this product
 }
-const baseURL = process.env.NEXT_PUBLIC_ROOT_URL;
-// const baseURL = "http://10.34.112.130:3030/";
-console.log(baseURL);
-// const baseURL = "http://localhost:3030";
+const baseURL = "http://localhost:3030";
 
 export default function DescriptionPage() {
   const { id } = useParams();
@@ -55,7 +52,7 @@ export default function DescriptionPage() {
   useEffect(() => {
     const fetchProduct = async () => {
       try {
-        const response = await fetch(`${baseURL}/menu/${id}`);
+        const response = await fetch(`http://localhost:3030/menu/${id}`);
         if (response.ok) {
           const data = await response.json();
           const product: Product = {

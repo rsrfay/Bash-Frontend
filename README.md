@@ -17,10 +17,6 @@ This project was developed by using Next.js, performed unit tests using Jest, an
 - **Add-Ons:** Customers can customize their drinks with optional add-ons.
 - **Cart Integration:** Users can add items to the cart with selected customizations.
 
-### Menu Features (Noppo Group Contribution)
-- **Update Items In Cart**: 
-- **Payment**:
-
 ### User Experience
 - Fully responsive design for both mobile and desktop users.
 - "No results found" feedback for invalid search queries.
@@ -90,6 +86,8 @@ bash-frontend/
 │   ├── lib/              # Helper functions and utilities
 │   └── styles/           # CSS modules
 ├── __tests__/            # Unit tests directory
+├── unit test cases/      # Unit tests document
+├── manual test cases/    # Manual tests and Traceability Matrix document 
 ├── automated_test_cases/ # Automated UI test cases
 ├── coverage/             # Jest coverage reports
 └── README.md             # Project documentation
@@ -105,13 +103,14 @@ Unit tests are written in Jest and can be run with:
 npm test
 ```
 Coverage reports will be generated under the `coverage/` directory.
+- Unit test cases by Echo: handleAddOnClick.test, handleAddToCart.test, and handleSortChange.test
 
 ### End-to-End Tests
 End-to-end tests are written in the Robot Framework. To execute the tests:
 1. Install [Robot Framework](https://robotframework.org/) by following this guideline [How To Install Robot Framework](https://docs.robotframework.org/docs/getting_started/testing)
 2. Run:
-   ```bash
-   robot automated_test_cases
-   ```
-
+```bash
+   robot tests/
+```
+- UI test cases by Echo: AddToCartTest, SearchTest, SortTest
 ---
