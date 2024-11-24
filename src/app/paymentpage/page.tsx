@@ -9,7 +9,8 @@ import NavBar from "../components/Nav/Nav";
 import QRCodeModal from "../components/QRCodeModal/QRCodeModal";
 import { CartItemType, useCart } from "@/context/CartContext";
 
-const baseURL = "http://localhost:3030";
+const baseURL = process.env.NEXT_PUBLIC_ROOT_URL;
+// const baseURL = "http://localhost:3030";
 // const PROMPTPAY_NUMBER = memberInfo ? memberInfo.Tel : "0000000000"; for make propmtpay_number dynamic
 
 const PROMPTPAY_NUMBER = "0866001234";
@@ -93,7 +94,11 @@ const PaymentPage: React.FC = () => {
   };
 
   const handlePromotionSelect = async (promotion: Promotion) => {
-    if (!memberInfo) return;
+    if (
+      !memberInfo &&
+      (promotion.Pro_ID === "001" || promotion.Pro_ID === "003")
+    )
+      return;
 
     // If the user is selecting a new promotion different from the current one
     if (selectedPromotion && selectedPromotion.Pro_ID !== promotion.Pro_ID) {
@@ -107,7 +112,7 @@ const PaymentPage: React.FC = () => {
               "Content-Type": "application/json",
             },
             body: JSON.stringify({
-              MID: memberInfo.MID,
+              MID: memberInfo?.MID ?? "",
               points: 10,
             }),
           });
@@ -137,7 +142,7 @@ const PaymentPage: React.FC = () => {
               "Content-Type": "application/json",
             },
             body: JSON.stringify({
-              MID: memberInfo.MID,
+              MID: memberInfo?.MID ?? "",
               points: 10,
             }),
           });
@@ -171,7 +176,7 @@ const PaymentPage: React.FC = () => {
               "Content-Type": "application/json",
             },
             body: JSON.stringify({
-              MID: memberInfo.MID,
+              MID: memberInfo?.MID ?? "",
               points: 10,
             }),
           });
@@ -206,6 +211,17 @@ const PaymentPage: React.FC = () => {
       return membershipPoints !== null && membershipPoints >= 10;
     }
 
+    if (promotion.Pro_ID === "003") {
+      return memberInfo?.Alumni === true;
+    }
+
+    if (promotion.Pro_ID === "002") {
+      const now = new Date();
+      const day = now.getDay(); // 0 is Sunday, 5 is Friday
+      const hour = now.getHours();
+      return day === 5 && hour >= 13 && hour < 16;
+    }
+
     if (!promotion.start_date || !promotion.expiry_date) return true;
 
     const now = new Date();
@@ -229,11 +245,13 @@ const PaymentPage: React.FC = () => {
         return 0;
       }
       case "002": {
-        if (cartItems.length >= 2) {
-          const secondItemPrice = cartItems[1].price;
-          return secondItemPrice * 0.5;
+        // 50% discount for every second drink
+        let discount = 0;
+        const sortedItems = [...cartItems].sort((a, b) => a.price - b.price);
+        for (let i = 1; i < sortedItems.length; i += 2) {
+          discount += sortedItems[i].price * 0.5;
         }
-        return 0;
+        return discount;
       }
       case "003": {
         if (memberInfo?.Alumni) {
