@@ -18,7 +18,7 @@ This project was developed by using Next.js, performed unit tests using Jest, an
 - **Cart Integration:** Users can add items to the cart with selected customizations.
 
 ### Menu Features (Noppo Group Contribution)
-- **Update Items In Cart**: 
+- **Update Items In Cart**: Customer can add update and delete for each menu items in cart
 - **Payment**:
 
 ### User Experience
@@ -98,6 +98,60 @@ bash-frontend/
 ---
 
 ## Testing
+**Promotion Handling Test Suite**  
+**Partitioning the Characteristics**  
+| Characteristic    | b1       | b2       | b3       |  
+|--------------------|----------|----------|----------|  
+| C1 = Promotion ID | Valid    | Expired  | Invalid  |  
+| C2 = Cart Items   | None     | Single   | Multiple |  
+
+**Testable Functions**  
+**Method**: `fetchPromotions()`  
+- **Parameters**: None  
+- **Return Type**: `Array` of promotion objects  
+- **Return Value**: Successfully retrieves and returns promotion data.  
+- **Exceptional Behavior**: Handles API errors or invalid responses gracefully.  
+
+**Interface-Based Characteristics**  
+**Combining Partitions to Define Test Requirements (ACOC):**  
+| Test Case | Promotion ID | Cart Items | Expected Outcome                                   |  
+|-----------|--------------|------------|---------------------------------------------------|  
+| T1        | Valid        | None       | Promotions are fetched but no discount applied.   |  
+| T2        | Valid        | Single     | Promotion is successfully applied.                |  
+| T3        | Valid        | Multiple   | Promotion is successfully applied to multiple items. |  
+| T4        | Expired      | None       | Promotions are fetched but no discount applied.   |  
+| T5        | Expired      | Single     | Promotion is not applied due to expiration.       |  
+| T6        | Expired      | Multiple   | Promotion is not applied due to expiration.       |  
+| T7        | Invalid      | None       | Promotions are fetched but invalid promotion is ignored. |  
+| T8        | Invalid      | Single     | Promotion is ignored as it is invalid.            |  
+| T9        | Invalid      | Multiple   | Promotion is ignored as it is invalid.            |  
+
+
+## CartPage Test Suite
+**Interface-Based Characteristics**
+
+| **Test Case** | **Cart Items Present** | **Select Mode** | **Quantity Change Trigger** | **Expected Outcome**                                                                 |
+|---------------|-------------------------|-----------------|-----------------------------|-------------------------------------------------------------------------------------|
+| **T1**        | Empty                  | `false`         | None                        | Total is `0`. No items to display. Quantity buttons are disabled.                  |
+| **T2**        | Non-empty              | `false`         | Increase                    | Item quantity is incremented. Total updates accordingly. Select mode UI is inactive. |
+| **T3**        | Non-empty              | `true`          | Increase                    | Item quantity is incremented. Select mode UI is active. Total updates accordingly.  |
+| **T4**        | Non-empty              | `false`         | Decrease                    | Item quantity is decreased (if greater than 1). Total updates. Select mode UI is inactive. |
+| **T5**        | Large cart             | `false`         | Decrease                    | Item quantity is decreased (if greater than 1). Total 
+
+
+**Combining the Partitions (PWC)**
+**By combining these partitions, we create test cases to validate the component's behavior.**
+
+| Test Case | Cart Items Present | Select Mode | Quantity Change Trigger | Expected Outcome |
+|-----------|--------------------|-------------|-------------------------|------------------|
+| **T1**    | Empty              | `false`     | None                    | Total is `0`. No items to display. Quantity buttons are disabled. |
+| **T2**    | Non-empty          | `false`     | Increase                | Item quantity is incremented. Total updates accordingly. Select mode UI is inactive. |
+| **T3**    | Non-empty          | `true`      | Increase                | Item quantity is incremented. Select mode UI is active. Total updates accordingly. |
+| **T4**    | Non-empty          | `false`     | Decrease                | Item quantity is decreased (if greater than 1). Total updates. Select mode UI is inactive. |
+| **T5**    | Large cart         | `false`     | Decrease                | Item quantity is decreased (if greater than 1). Total updates for a large cart. Select mode UI is inactive. |
+
+
+
 
 ### Unit Tests
 Unit tests are written in Jest and can be run with:
