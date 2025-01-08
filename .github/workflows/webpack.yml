@@ -53,6 +53,7 @@ jobs:
           message: ${{ steps.coverageComment.outputs.coverage }}%
           color: ${{ steps.coverageComment.outputs.color }}
           namedLogo: javascript
+          
       - name: Upload coverage reports to Codecov
         uses: codecov/codecov-action@v5
         with:
