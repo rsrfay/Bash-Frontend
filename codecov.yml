@@ -1,0 +1,15 @@
+codecov:
+  branch: Codecov-Fay # set new Default branch for codecov
+  require_ci_to_pass: yes
+coverage:
+  precision: 2
+  round: down
+  range: "70...100"
+  status:
+    project:
+      default: # This can be anything, but it needs to exist as the name
+        # basic settings
+        target: auto
+        threshold: 5%
+        base: auto 
+        if_ci_failed: error #success, failure, error, ignore
