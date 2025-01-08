@@ -1,6 +1,7 @@
 # Bash Coffee Shop Frontend ☕️
 ![Build Status](https://github.com/rsrfay/Bash-Frontend/actions/workflows/webpack.yml/badge.svg) 
 [![Coverage](https://img.shields.io/badge/Coverage-97%25-brightgreen.svg)](https://github.com/rsrfay/Bash-Frontend/blob/f5cdda.../README.md)
+[![codecov](https://codecov.io/github/rsrfay/Bash-Frontend/branch/Codecov-Fay/graph/badge.svg?token=5OXH3JROHV)](https://codecov.io/github/rsrfay/Bash-Frontend)
 
 This project is the frontend application for the **Bash Coffee Shop**, designed to provide a dynamic, user-friendly web-based interface for customers to browse the menu, search for items, sort by preferences, and customize orders before adding them to the cart.
 
